@@ -307,8 +307,8 @@
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-primary" onclick="ask('Erstelle mir einen Wochenplan für Instagram, TikTok und YouTube. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Ägypten), Tauchen, Yoga/Meditation. Kein persönlicher Werdegang, rein nischen-fokussierter Content. Ton: authentisch, direkt. Inkl. Posting-Zeiten.', \'dashboard-response\')">Wochenplan erstellen ✨</button>
-          <button class="btn btn-secondary" onclick="ask('Welche 3 Quick Wins kann ich diese Woche umsetzen um auf Instagram und TikTok schnell Reichweite zu gewinnen? Meine Themen: Reisen, Tauchen, Yoga. Konkret und umsetzbar.', \'dashboard-response\')">Quick Wins</button>
+          <button class="btn btn-primary" onclick="runPrompt('wochenplan', 'dashboard-response')">Wochenplan erstellen ✨</button>
+          <button class="btn btn-secondary" onclick="runPrompt('quickwins', 'dashboard-response')">Quick Wins</button>
         </div>
         <div class="ai-box" id="dashboard-response"></div>
       </div>
@@ -381,8 +381,8 @@
         <div class="sc" style="margin-top:14px">
           <div class="sc-title">Reise Content-Ideen</div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="ask('Erstelle mir 10 Reel-Ideen basierend auf meinen Reisen: Istanbul/Türkei, Thailand (Ko Lipe, Phuket, Bangkok, Taucherlizenz dort gemacht), Spanien (Barcelona, Valencia), Ägypten (Rotes Meer, Tauchen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Format: TikTok/Instagram Reel. Kein persönlicher Werdegang, rein Travel-Content.', \'reisen-response\')">10 Reel-Ideen ✨</button>
-            <button class="btn btn-secondary" onclick="ask('Welche meiner Reisen hat das größte Content-Potenzial für TikTok und Instagram 2026? Bewerte: Istanbul, Thailand (Ko Lipe/Phuket/Bangkok + Tauchen), Spanien, Ägypten (Tauchen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Begründe kurz.', \'reisen-response\')">Bestes Potenzial?</button>
+            <button class="btn btn-primary" onclick="runPrompt('reel10', 'reisen-response')">10 Reel-Ideen ✨</button>
+            <button class="btn btn-secondary" onclick="runPrompt('potenzial', 'reisen-response')">Bestes Potenzial?</button>
           </div>
           <div class="ai-box" id="reisen-response"></div>
         </div>
@@ -408,8 +408,8 @@
           <div class="prog"><div class="prog-label">Facebook</div><div class="prog-bg"><div class="prog-fill" style="width:55%;background:var(--accent2)"></div></div><div class="prog-val">Mi & So 12–14 Uhr</div></div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-primary" onclick="ask('Erstelle mir eine 30-Tage Content-Challenge für Instagram und TikTok. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Ägypten), Tauchen, Yoga/Meditation. Kein persönlicher Werdegang. Ziel: Reichweite und Community aufbauen. Konkrete tägliche Aufgaben.', \'wachstum-response\')">30-Tage Challenge ✨</button>
-          <button class="btn btn-secondary" onclick="ask('Schreibe mir 5 starke Hooks für Travel-Content auf TikTok und Instagram. Basierend auf meinen Reisen: Istanbul, Ko Lipe, Phuket, Ägypten, Barcelona. Format: Fehler vermeiden oder Geheimtipp Stil.', \'wachstum-response\')">Hook-Ideen ✨</button>
+          <button class="btn btn-primary" onclick="runPrompt('challenge30', 'wachstum-response')">30-Tage Challenge ✨</button>
+          <button class="btn btn-secondary" onclick="runPrompt('hooks', 'wachstum-response')">Hook-Ideen ✨</button>
         </div>
         <div class="ai-box" id="wachstum-response"></div>
       </div>
@@ -440,8 +440,8 @@
         <div class="sc">
           <div class="sc-title">Community Tools</div>
           <div class="btn-row">
-            <button class="btn btn-secondary btn-sm" onclick="ask('Erstelle mir 10 Call-to-Action Fragen für Instagram und TikTok Posts die Kommentare fördern. Passend zu meinen Themen: Reisen, Tauchen, Yoga. Kurz und direkt.', \'comment-response\')">CTA-Fragen ✨</button>
-            <button class="btn btn-secondary btn-sm" onclick="ask('Schreibe mir eine kurze Willkommensnachricht für neue Follower auf Instagram. Ton: authentisch, herzlich, kurz. Ich bin Travel & Dive Creator @faruksueer.', \'comment-response\')">Willkommens-DM ✨</button>
+            <button class="btn btn-secondary btn-sm" onclick="runPrompt('cta', 'comment-response')">CTA-Fragen ✨</button>
+            <button class="btn btn-secondary btn-sm" onclick="runPrompt('welcome', 'comment-response')">Willkommens-DM ✨</button>
           </div>
         </div>
       </div>
@@ -457,8 +457,8 @@
         </div>
         <div class="sc" id="trends-list"></div>
         <div class="btn-row">
-          <button class="btn btn-primary" onclick="ask('Recherchiere und erkläre aktuelle Trends 2026 auf Instagram und TikTok für Travel Creator und Dive Creator. Meine Reisen: Istanbul, Thailand (Ko Lipe, Phuket, Bangkok), Spanien, Ägypten, Dom. Republik, Rom, Prag, Kopenhagen. Erstelle 5 konkrete Post-Ideen die zu mir passen.', \'trends-response\')">Trends recherchieren ✨</button>
-          <button class="btn btn-secondary" onclick="ask('Welche Hashtag-Strategie empfiehlst du für @faruksueer auf Instagram? Themen: Reisen, Tauchen, Yoga. Gib mir 30 Hashtags aufgeteilt in groß (1M+), mittel (100K-1M) und Nischen (unter 100K).', \'trends-response\')">Hashtag-Strategie ✨</button>
+          <button class="btn btn-primary" onclick="runPrompt('trends', 'trends-response')">Trends recherchieren ✨</button>
+          <button class="btn btn-secondary" onclick="runPrompt('hashtags', 'trends-response')">Hashtag-Strategie ✨</button>
         </div>
         <div class="ai-box" id="trends-response"></div>
       </div>
@@ -468,7 +468,24 @@
 </div>
 
 <script>
-const SYSTEM = `Du bist der persönliche Social Media Agent von Ömer Faruk Süer (@faruksueer auf Instagram und TikTok, @Faruksueer55 auf YouTube, faruk.suer.77 auf Facebook). 
+const PROMPTS = {
+  wochenplan: 'Erstelle mir einen Wochenplan fuer Instagram, TikTok und YouTube. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Aegypten), Tauchen, Yoga/Meditation. Kein persoenlicher Werdegang, rein nischen-fokussierter Content. Ton: authentisch, direkt. Inkl. Posting-Zeiten.',
+  quickwins: 'Welche 3 Quick Wins kann ich diese Woche umsetzen um auf Instagram und TikTok schnell Reichweite zu gewinnen? Meine Themen: Reisen, Tauchen, Yoga. Konkret und umsetzbar.',
+  reel10: 'Erstelle mir 10 Reel-Ideen basierend auf meinen Reisen: Istanbul/Tuerkei, Thailand (Ko Lipe, Phuket, Bangkok, Taucherlizenz dort gemacht), Spanien (Barcelona, Valencia), Aegypten (Rotes Meer, Tauchen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Format: TikTok/Instagram Reel. Kein persoenlicher Werdegang, rein Travel-Content.',
+  potenzial: 'Welche meiner Reisen hat das groesste Content-Potenzial fuer TikTok und Instagram 2026? Bewerte: Istanbul, Thailand (Ko Lipe/Phuket/Bangkok + Tauchen), Spanien, Aegypten (Tauchen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Begruende kurz.',
+  challenge30: 'Erstelle mir eine 30-Tage Content-Challenge fuer Instagram und TikTok. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Aegypten), Tauchen, Yoga/Meditation. Kein persoenlicher Werdegang. Ziel: Reichweite und Community aufbauen. Konkrete taegliche Aufgaben.',
+  hooks: 'Schreibe mir 5 starke Hooks fuer Travel-Content auf TikTok und Instagram. Basierend auf meinen Reisen: Istanbul, Ko Lipe, Phuket, Aegypten, Barcelona. Format: Fehler vermeiden oder Geheimtipp Stil.',
+  cta: 'Erstelle mir 10 Call-to-Action Fragen fuer Instagram und TikTok Posts die Kommentare foerdern. Passend zu meinen Themen: Reisen, Tauchen, Yoga. Kurz und direkt.',
+  welcome: 'Schreibe mir eine kurze Willkommensnachricht fuer neue Follower auf Instagram. Ton: authentisch, herzlich, kurz. Ich bin Travel und Dive Creator @faruksueer.',
+  trends: 'Erklaere aktuelle Trends 2026 auf Instagram und TikTok fuer Travel Creator und Dive Creator. Meine Reisen: Istanbul, Thailand (Ko Lipe, Phuket, Bangkok), Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen. Erstelle 5 konkrete Post-Ideen die zu mir passen.',
+  hashtags: 'Welche Hashtag-Strategie empfiehlst du fuer @faruksueer auf Instagram? Themen: Reisen, Tauchen, Yoga. Gib mir 30 Hashtags aufgeteilt in gross (1M+), mittel (100K-1M) und Nischen (unter 100K).'
+};
+
+function runPrompt(key, responseId) {
+  ask(PROMPTS[key], responseId);
+}
+
+const SYSTEM = `Du bist der persoenliche Social Media Agent von Ömer Faruk Süer (@faruksueer auf Instagram und TikTok, @Faruksueer55 auf YouTube, faruk.suer.77 auf Facebook). 
 
 Über ihn: 31 Jahre, Prokurist und Innendienstleiter in Lüdenscheid, türkische Wurzeln, in Köln geboren, hat als Kind ein Jahr in Istanbul gelebt.
 
