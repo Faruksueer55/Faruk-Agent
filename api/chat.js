@@ -6,18 +6,12 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // PIN check
   const pin = req.headers['x-pin'];
   const correctPin = process.env.APP_PIN;
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
-  if (!correctPin || !apiKey) {
-    return res.status(500).json({ error: 'Server nicht konfiguriert. Bitte Environment Variables setzen.' });
-  }
-
-  if (pin !== correctPin) {
-    return res.status(401).json({ error: 'Falscher PIN' });
-  }
+  if (!correctPin || !apiKey) return res.status(500).json({ error: 'Server nicht konfiguriert' });
+  if (pin !== correctPin) return res.status(401).json({ error: 'Falscher PIN' });
 
   const { model, max_tokens, system, messages, useWebSearch } = req.body;
 
@@ -32,6 +26,11 @@ export default async function handler(req, res) {
     body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
   }
 
+  // Stream response for faster perceived speed
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -44,15 +43,21 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    if (!response.ok) return res.status(response.status).json(data);
+    if (!response.ok) {
+      res.write(`data: ${JSON.stringify({ error: data.error?.message || 'API Error' })}\n\n`);
+      res.end();
+      return;
+    }
 
     const textBlocks = (data.content || [])
-      .filter(block => block.type === 'text')
-      .map(block => block.text)
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
       .join('\n\n');
 
-    return res.status(200).json({ text: textBlocks, raw: data });
+    res.write(`data: ${JSON.stringify({ text: textBlocks, done: true })}\n\n`);
+    res.end();
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
+    res.end();
   }
 }
