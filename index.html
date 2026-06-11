@@ -3,235 +3,454 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Social Media Agent</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<title>@faruksueer Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0e0e10;--s:#18181b;--s2:#232329;--bd:#2e2e36;--ac:#6c63ff;--ac2:#a78bfa;--tx:#f4f4f5;--mt:#71717a;--gn:#4ade80;--am:#fbbf24;--rd:#f87171;--ig:#e1306c;--yt:#ff0000;--r:12px;--rs:8px}
+:root{
+  --bg:#080810;--s:#0f0f1a;--s2:#161625;--s3:#1e1e32;
+  --bd:#2a2a42;--bd2:#353555;
+  --ac:#7c6fff;--ac2:#a78bfa;--ac3:#c4b5fd;
+  --tx:#f0f0ff;--tx2:#a0a0c0;--tx3:#606080;
+  --gn:#34d399;--am:#fbbf24;--rd:#f87171;--pk:#f472b6;
+  --tt:#69c9d0;--yt:#ff4444;
+  --r:14px;--rs:10px;
+  --sh:0 4px 24px rgba(0,0,0,0.5);
+  --glow:0 0 60px rgba(124,111,255,0.12);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:15px}
-.pin-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
-.pin-box{background:var(--s);border:1px solid var(--bd);border-radius:var(--r);padding:36px;max-width:420px;width:100%;text-align:center}
-.pin-logo{font-size:40px;margin-bottom:16px}
-.pin-title{font-size:22px;font-weight:600;margin-bottom:8px}
-.pin-sub{font-size:13px;color:var(--mt);margin-bottom:28px;line-height:1.6}
-.pin-input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);color:var(--tx);font-family:'Inter',sans-serif;font-size:28px;font-weight:600;padding:14px;outline:none;text-align:center;letter-spacing:12px;margin-bottom:12px;transition:border-color 0.15s}
-.pin-input:focus{border-color:var(--ac)}
-.pin-err{color:var(--rd);font-size:13px;margin-bottom:12px;display:none}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;overflow-x:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+
+/* PIN */
+.pin-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(124,111,255,0.2) 0%,transparent 70%)}
+.pin-box{background:var(--s);border:1px solid var(--bd);border-radius:20px;padding:40px 36px;max-width:380px;width:100%;text-align:center;box-shadow:var(--sh),var(--glow)}
+.pin-logo{font-size:52px;margin-bottom:20px}
+.pin-title{font-size:26px;font-weight:700;margin-bottom:6px;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pin-sub{font-size:13px;color:var(--tx3);margin-bottom:28px}
+.pin-dots{display:flex;justify-content:center;gap:14px;margin-bottom:24px}
+.pin-dot{width:16px;height:16px;border-radius:50%;background:var(--s3);border:2px solid var(--bd2);transition:all 0.2s}
+.pin-dot.filled{background:var(--ac);border-color:var(--ac);box-shadow:0 0 12px rgba(124,111,255,0.5)}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.pin-key{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;font-size:18px;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--tx);font-family:'Inter',sans-serif}
+.pin-key:hover{background:var(--s3);border-color:var(--ac);color:var(--ac2)}
+.pin-key:active{transform:scale(0.95)}
+.pin-key.del{font-size:14px;color:var(--tx3)}
+.pin-err{color:var(--rd);font-size:12px;min-height:18px;margin-bottom:8px}
+.pin-checking{color:var(--tx3);font-size:12px;min-height:18px;margin-bottom:8px}
+
+/* LAYOUT */
 .shell{display:flex;min-height:100vh}
-.sidebar{width:240px;flex-shrink:0;background:var(--s);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:0 0 24px;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.25s}
-.main{margin-left:240px;flex:1}
-.profile{padding:20px 20px 16px;border-bottom:1px solid var(--bd)}
-.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#fff;margin-bottom:10px}
-.pname{font-weight:600;font-size:14px}
-.psub{font-size:12px;color:var(--mt);margin-top:2px}
-.handles{margin-top:8px;display:flex;flex-direction:column;gap:3px}
-.hlink{font-size:11px;color:var(--ac2);text-decoration:none}
-.hlink:hover{color:#fff}
-.kstatus{margin-top:10px;font-size:11px;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,0.1);color:var(--gn)}
-.kchange{font-size:11px;color:var(--mt);cursor:pointer;margin-top:4px;text-decoration:underline;display:inline-block}
-.kchange:hover{color:var(--tx)}
-.nav{padding:10px;flex:1}
-.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;color:var(--mt);font-size:14px;font-weight:500;transition:all 0.15s;margin-bottom:2px}
-.ni:hover{background:var(--s2);color:var(--tx)}
-.ni.active{background:var(--s2);color:var(--tx)}
-.topbar{display:none;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--s);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
-.tbtitle{font-weight:600;font-size:15px}
-.hbtn{background:none;border:none;cursor:pointer;color:var(--tx);font-size:22px}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:90}
+.sidebar{width:220px;flex-shrink:0;background:var(--s);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.3s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.main{margin-left:220px;flex:1}
+
+/* PROFILE */
+.profile{padding:20px 16px 14px;border-bottom:1px solid var(--bd)}
+.av-wrap{position:relative;width:44px;height:44px;margin-bottom:10px}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--pk));display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff}
+.av-dot{position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:var(--gn);border:2px solid var(--s)}
+.pname{font-weight:700;font-size:13px}
+.psub{font-size:11px;color:var(--tx3);margin-top:1px}
+.handles{margin-top:8px;display:flex;flex-direction:column;gap:2px}
+.hlink{font-size:11px;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:6px;transition:all 0.15s}
+.hlink:hover{background:var(--s2);color:var(--ac2)}
+.hdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.kstatus{margin-top:10px;font-size:11px;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
+.kchange{font-size:11px;color:var(--tx3);cursor:pointer;margin-top:5px;display:inline-block;transition:color 0.15s}
+.kchange:hover{color:var(--rd)}
+
+/* NAV */
+.nav{padding:10px 8px;flex:1}
+.nav-sec{font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:0.12em;padding:10px 8px 4px;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;cursor:pointer;color:var(--tx3);font-size:13px;font-weight:500;transition:all 0.15s;margin-bottom:1px;white-space:nowrap}
+.ni:hover{background:var(--s2);color:var(--tx2)}
+.ni.active{background:rgba(124,111,255,0.12);color:var(--ac2);border:1px solid rgba(124,111,255,0.18)}
+.ni-ic{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+
+/* TOPBAR */
+.topbar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
+.tbtitle{font-weight:700;font-size:14px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hbtn{background:none;border:none;cursor:pointer;color:var(--tx2);font-size:20px;padding:4px;line-height:1}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:90}
 .overlay.on{display:block}
-.page{display:none;padding:24px}
-.page.active{display:block}
-.ptitle{font-size:20px;font-weight:600;margin-bottom:4px}
-.psub2{font-size:13px;color:var(--mt);margin-bottom:20px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.card{background:var(--s);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
-.clabel{font-size:12px;color:var(--mt);margin-bottom:5px}
-.cval{font-size:14px;font-weight:600}
-.csub{font-size:11px;color:var(--mt);margin-top:3px}
-.sc{background:var(--s);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:14px}
-.sct{font-size:14px;font-weight:600;margin-bottom:14px}
-.insight{background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--ac2);line-height:1.6;margin-bottom:16px}
+
+/* PAGES */
+.page{display:none;padding:22px;max-width:860px}
+.page.active{display:block;animation:fadeIn 0.25s ease}
+.ptitle{font-size:22px;font-weight:700;margin-bottom:3px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.psub2{font-size:12px;color:var(--tx3);margin-bottom:20px}
+
+/* GLASS CARD */
+.gc{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.gc-title{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;text-transform:uppercase;letter-spacing:0.05em}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.sc{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.15);border-radius:12px;padding:14px;text-align:center;transition:all 0.2s}
+.sc:hover{border-color:var(--ac);transform:translateY(-1px)}
+.sv{font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sl{font-size:10px;color:var(--tx3);margin-top:3px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+
+/* PLATFORM BADGES */
+.pb{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+.pb-ig{background:rgba(244,114,182,0.12);color:var(--pk);border:1px solid rgba(244,114,182,0.2)}
+.pb-tt{background:rgba(105,201,208,0.12);color:var(--tt);border:1px solid rgba(105,201,208,0.2)}
+.pb-yt{background:rgba(255,68,68,0.12);color:var(--yt);border:1px solid rgba(255,68,68,0.2)}
+.pb-fb{background:rgba(24,119,242,0.12);color:#60a5fa;border:1px solid rgba(24,119,242,0.2)}
+
+/* TAGS */
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;margin:2px}
+.tp{background:rgba(124,111,255,0.12);color:var(--ac2);border:1px solid rgba(124,111,255,0.2)}
+.tg{background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
+.ta{background:rgba(251,191,36,0.1);color:var(--am);border:1px solid rgba(251,191,36,0.2)}
+.tm{background:var(--s2);color:var(--tx3);border:1px solid var(--bd)}
+.tt2{background:rgba(105,201,208,0.1);color:var(--tt);border:1px solid rgba(105,201,208,0.2)}
+.tpk{background:rgba(244,114,182,0.1);color:var(--pk);border:1px solid rgba(244,114,182,0.2)}
+
+/* INSIGHT */
+.insight{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.2);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--ac3);line-height:1.6;margin-bottom:14px}
+
+/* FORMS */
+textarea,select{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);color:var(--tx);font-family:'Inter',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:all 0.2s;margin-bottom:10px;resize:vertical}
+textarea{min-height:76px}
+textarea:focus,select:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(124,111,255,0.12)}
+select option{background:var(--s2)}
+
+/* QUICK TAGS */
+.qtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.qtag{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);background:var(--s2);transition:all 0.15s}
+.qtag:hover,.qtag.sel{border-color:var(--ac);color:var(--ac2);background:rgba(124,111,255,0.08)}
+
+/* PILLS */
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pill{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);transition:all 0.15s}
+.pill.on{background:rgba(124,111,255,0.12);border-color:var(--ac);color:var(--ac2)}
+
+/* BUTTONS */
+.brow{display:flex;gap:7px;flex-wrap:wrap}
+.btn{padding:9px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.bp{background:linear-gradient(135deg,var(--ac),#6c5ce7);color:#fff;box-shadow:0 3px 12px rgba(124,111,255,0.25)}
+.bp:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(124,111,255,0.35)}
+.bp:active{transform:translateY(0)}
+.bs{background:var(--s2);color:var(--tx2);border:1px solid var(--bd)}
+.bs:hover{border-color:var(--ac);color:var(--ac2)}
+.bsm{padding:6px 11px;font-size:11px}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* PLATFORM ITEMS */
 .pitem{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .pitem:last-child{border-bottom:none}
-.picon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.ig{background:rgba(225,48,108,0.15);color:var(--ig)}
-.tt{background:rgba(255,255,255,0.08);color:#fff}
-.yt{background:rgba(255,0,0,0.15);color:var(--yt)}
-.fb{background:rgba(108,99,255,0.15);color:var(--ac2)}
-.plabel{font-size:14px;font-weight:500}
-.pdesc{font-size:12px;color:var(--mt);margin-top:2px;line-height:1.5}
-.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;margin:2px}
-.tp{background:rgba(108,99,255,0.2);color:var(--ac2)}
-.tg{background:rgba(74,222,128,0.12);color:var(--gn)}
-.ta{background:rgba(251,191,36,0.12);color:var(--am)}
-.tm{background:var(--s2);color:var(--mt)}
-.tt2{background:rgba(45,212,191,0.12);color:#2dd4bf}
-textarea,select{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);color:var(--tx);font-family:'Inter',sans-serif;font-size:14px;padding:10px 12px;outline:none;transition:border-color 0.15s;margin-bottom:10px;resize:vertical}
-textarea{min-height:80px}
-textarea:focus,select:focus{border-color:var(--ac)}
-.qtags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.qtag{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--mt);background:var(--s2);transition:all 0.15s}
-.qtag:hover{border-color:var(--ac);color:var(--ac2)}
-.brow{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:10px 16px;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;border:none}
-.bp{background:var(--ac);color:#fff}
-.bp:hover{background:#5b52e0}
-.bs{background:var(--s2);color:var(--tx);border:1px solid var(--bd)}
-.bs:hover{border-color:var(--ac);color:var(--ac2)}
-.bsm{padding:7px 12px;font-size:12px}
-.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
-.pill{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--mt);transition:all 0.15s}
-.pill.on{background:rgba(108,99,255,0.2);border-color:var(--ac);color:var(--ac2)}
-.gi{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}
+.picon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.pig{background:rgba(244,114,182,0.12);color:var(--pk)}
+.ptt{background:rgba(105,201,208,0.12);color:var(--tt)}
+.pyt{background:rgba(255,68,68,0.12);color:var(--yt)}
+.pfb{background:rgba(24,119,242,0.12);color:#60a5fa}
+.plabel{font-size:13px;font-weight:600}
+.pdesc{font-size:11px;color:var(--tx3);margin-top:2px;line-height:1.5}
+
+/* GROWTH */
+.gi{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .gi:last-child{border-bottom:none}
-.gn2{font-size:18px;font-weight:600;color:var(--ac);min-width:26px}
-.gt{font-size:14px;font-weight:500}
-.gs{font-size:12px;color:var(--mt);margin-top:3px;line-height:1.5}
-.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:500;margin-left:5px;vertical-align:middle}
-.bg2{background:rgba(74,222,128,0.15);color:var(--gn)}
-.ba{background:rgba(251,191,36,0.15);color:var(--am)}
-.prog{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-.prlabel{font-size:12px;color:var(--mt);min-width:90px}
-.prbg{flex:1;height:5px;background:var(--s2);border-radius:3px}
+.gnum{min-width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.gt{font-size:13px;font-weight:600}
+.gs{font-size:11px;color:var(--tx3);margin-top:2px;line-height:1.5}
+.badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;margin-left:5px;vertical-align:middle}
+.bg2{background:rgba(52,211,153,0.12);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
+.ba{background:rgba(251,191,36,0.12);color:var(--am);border:1px solid rgba(251,191,36,0.2)}
+
+/* PROGRESS */
+.prog{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.prlabel{font-size:12px;color:var(--tx2);min-width:90px;font-weight:500}
+.prbg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
 .prfill{height:5px;border-radius:3px}
-.prval{font-size:11px;color:var(--mt);min-width:80px;text-align:right}
-.ti{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.prval{font-size:11px;color:var(--tx3);min-width:90px;text-align:right}
+
+/* TREND ITEMS */
+.ti{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .ti:last-child{border-bottom:none}
-.tr2{font-size:15px;font-weight:600;color:var(--mt);min-width:22px}
-.tn{font-size:14px;font-weight:500}
-.ts{font-size:11px;color:var(--mt);margin-top:2px}
-.tbb{height:3px;background:var(--s2);border-radius:2px;margin-top:5px}
-.tbf{height:3px;border-radius:2px;background:var(--ac)}
+.tr2{min-width:26px;height:26px;border-radius:7px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ac2);flex-shrink:0}
+.tn{font-size:13px;font-weight:600}
+.ts{font-size:11px;color:var(--tx3);margin-top:1px}
+.tbb{height:3px;background:var(--s3);border-radius:2px;margin-top:5px;overflow:hidden}
+.tbf{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+
+/* DEST GRID */
 .dg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.dc{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px;cursor:pointer;transition:all 0.15s}
-.dc:hover{border-color:var(--ac)}
-.df{font-size:20px;margin-bottom:4px}
-.dn{font-size:12px;font-weight:500}
-.ds{font-size:10px;color:var(--mt);margin-top:1px}
-.aibox{background:var(--s);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-top:14px;display:none;word-break:break-word}
+.dc{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;transition:all 0.2s}
+.dc:hover{border-color:var(--ac);background:rgba(124,111,255,0.06);transform:translateY(-1px)}
+.df{font-size:22px;margin-bottom:5px}
+.dn{font-size:12px;font-weight:600}
+.ds{font-size:10px;color:var(--tx3);margin-top:1px}
+
+/* CREATOR CARDS */
+.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
+.creator-card{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:all 0.2s;text-align:center}
+.creator-card:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:var(--sh)}
+.cav{width:56px;height:56px;border-radius:50%;margin:0 auto 8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;border:2px solid var(--bd)}
+.cav img{width:100%;height:100%;object-fit:cover}
+.cname{font-size:13px;font-weight:600;margin-bottom:1px}
+.chandle{font-size:11px;color:var(--ac2);margin-bottom:7px}
+.cstats{display:flex;justify-content:center;gap:12px;margin-bottom:7px}
+.csval{font-size:13px;font-weight:700}
+.cslabel{font-size:10px;color:var(--tx3)}
+.clearn{margin-top:8px;font-size:11px;color:var(--tx3);line-height:1.4;text-align:left;border-top:1px solid var(--bd);padding-top:7px}
+
+/* INSTAGRAM GRID */
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.ig-post{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--s2);cursor:pointer;transition:all 0.2s}
+.ig-post:hover{transform:scale(1.02);z-index:1}
+.ig-post img{width:100%;height:100%;object-fit:cover;display:block}
+.ig-post video{width:100%;height:100%;object-fit:cover;display:block}
+.ig-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:10px 7px 6px;display:flex;gap:8px}
+.ig-stat{font-size:11px;color:#fff;font-weight:600}
+.ig-type{position:absolute;top:6px;right:6px;font-size:13px;background:rgba(0,0,0,0.5);border-radius:4px;padding:2px 4px}
+.ig-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3)}
+.ig-play-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.2s}
+.ig-play-btn:hover{background:#fff;transform:scale(1.1)}
+
+/* VIDEO MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal-content{background:var(--s);border:1px solid var(--bd);border-radius:16px;overflow:hidden;max-width:500px;width:100%;max-height:90vh}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.modal-title{font-size:14px;font-weight:600}
+.modal-close{background:var(--s2);border:1px solid var(--bd);border-radius:8px;cursor:pointer;color:var(--tx2);font-size:18px;padding:4px 10px;font-family:'Inter',sans-serif;transition:all 0.15s}
+.modal-close:hover{color:var(--rd);border-color:var(--rd)}
+.modal-video{width:100%;max-height:60vh;object-fit:contain;background:#000;display:block}
+.modal-meta{padding:14px 16px}
+.modal-caption{font-size:12px;color:var(--tx2);line-height:1.5;max-height:80px;overflow-y:auto;margin-bottom:10px}
+.modal-stats{display:flex;gap:14px}
+.modal-stat{font-size:13px;color:var(--tx2)}
+
+/* AI RESPONSE */
+.aibox{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-top:12px;display:none;word-break:break-word}
 .aibox.on{display:block}
-.aibox-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
-.ailive{font-size:11px;padding:3px 8px;border-radius:20px;background:rgba(74,222,128,0.12);color:var(--gn);font-weight:500}
-.aicopy{font-size:11px;color:var(--mt);cursor:pointer;padding:3px 8px;border-radius:6px;border:1px solid var(--bd);background:var(--s2)}
+.aihdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.ailive{font-size:10px;padding:3px 9px;border-radius:20px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2);font-weight:600;display:flex;align-items:center;gap:4px}
+.aildot{width:5px;height:5px;border-radius:50%;background:var(--gn);animation:pulse 1.5s infinite;flex-shrink:0}
+.aicopy{font-size:11px;color:var(--tx3);cursor:pointer;padding:3px 9px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);font-family:'Inter',sans-serif;transition:all 0.15s}
 .aicopy:hover{color:var(--ac2);border-color:var(--ac)}
+
+/* AI CONTENT */
+.ai-num{display:flex;gap:11px;padding:11px 13px;background:rgba(124,111,255,0.06);border:1px solid rgba(124,111,255,0.12);border-radius:10px;margin-bottom:7px}
+.ai-nbadge{min-width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.ai-ntitle{font-size:13px;font-weight:600;margin-bottom:2px}
+.ai-ndesc{font-size:12px;color:var(--tx3);line-height:1.5}
+.ai-bullet{display:flex;gap:7px;align-items:flex-start;padding:7px 11px;background:var(--s2);border-radius:8px;margin-bottom:4px}
+.ai-bdot{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:4px;flex-shrink:0}
+.ai-sec{font-size:10px;font-weight:700;color:var(--ac2);text-transform:uppercase;letter-spacing:0.1em;margin:16px 0 8px;padding-top:12px;border-top:1px solid var(--bd)}
+.ai-htag{padding:3px 9px;background:rgba(124,111,255,0.1);border:1px solid rgba(124,111,255,0.18);border-radius:20px;font-size:11px;color:var(--ac2);display:inline-block;margin:2px}
+.ai-text{font-size:13px;color:var(--tx2);line-height:1.7;margin:2px 0}
+
+/* LOADING */
+.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:var(--tx3);gap:10px}
+.spin{width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin 0.7s linear infinite}
+.sm-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+
+/* ANIMATIONS */
+@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* MOBILE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .main{margin-left:0}
   .topbar{display:flex}
-  .page{padding:16px}
-  .g3{grid-template-columns:repeat(2,1fr)}
+  .page{padding:14px}
+  .sg{grid-template-columns:1fr 1fr}
   .dg{grid-template-columns:repeat(2,1fr)}
+  .creator-grid{grid-template-columns:repeat(2,1fr)}
+  .ig-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
+<!-- PIN SCREEN -->
 <div class="pin-screen" id="pinscreen">
   <div class="pin-box">
-    <div class="pin-logo">🔐</div>
-    <div class="pin-title">@faruksueer Agent</div>
-    <div class="pin-sub">Gib deinen 4-stelligen PIN ein</div>
-    <input class="pin-input" type="password" id="pininput" maxlength="4" inputmode="numeric" placeholder="••••"/>
-    <div class="pin-err" id="pinerr">Falscher PIN. Bitte nochmal versuchen.</div>
-    <button class="btn bp" style="width:100%" id="loginbtn">Einloggen</button>
+    <div class="pin-logo">🤖</div>
+    <div class="pin-title">faruksueer Agent</div>
+    <div class="pin-sub">PIN eingeben</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-err" id="pinerr"></div>
+    <div class="pin-keypad">
+      <button class="pin-key" data-k="1">1</button>
+      <button class="pin-key" data-k="2">2</button>
+      <button class="pin-key" data-k="3">3</button>
+      <button class="pin-key" data-k="4">4</button>
+      <button class="pin-key" data-k="5">5</button>
+      <button class="pin-key" data-k="6">6</button>
+      <button class="pin-key" data-k="7">7</button>
+      <button class="pin-key" data-k="8">8</button>
+      <button class="pin-key" data-k="9">9</button>
+      <button class="pin-key del" data-k="del">⌫</button>
+      <button class="pin-key" data-k="0">0</button>
+      <button class="pin-key del" data-k="ok">↵</button>
+    </div>
   </div>
 </div>
 
+<!-- VIDEO MODAL -->
+<div class="modal" id="video-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Post</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <video class="modal-video" id="modal-video" controls playsinline></video>
+    <div class="modal-meta">
+      <div class="modal-caption" id="modal-caption"></div>
+      <div class="modal-stats">
+        <span class="modal-stat" id="modal-likes">❤️ -</span>
+        <span class="modal-stat" id="modal-comments">💬 -</span>
+        <span class="modal-stat" id="modal-date"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
 <div id="app" style="display:none">
 <div class="overlay" id="overlay"></div>
 <div class="shell">
   <aside class="sidebar" id="sidebar">
     <div class="profile">
-      <div class="avatar">OF</div>
-      <div class="pname">Omer Faruk Suer</div>
-      <div class="psub">Prokurist - Reisen - Tauchen</div>
+      <div class="av-wrap"><div class="avatar">OF</div><div class="av-dot"></div></div>
+      <div class="pname">Ömer Faruk Süer</div>
+      <div class="psub">Prokurist · Creator</div>
       <div class="handles">
-        <a class="hlink" href="https://instagram.com/faruksueer" target="_blank">Instagram @faruksueer</a>
-        <a class="hlink" href="https://tiktok.com/@faruksueer" target="_blank">TikTok @faruksueer</a>
-        <a class="hlink" href="https://youtube.com/@Faruksueer55" target="_blank">YouTube @Faruksueer55</a>
-        <a class="hlink" href="https://facebook.com/faruk.suer.77" target="_blank">Facebook faruk.suer.77</a>
+        <a class="hlink" href="https://instagram.com/faruksueer" target="_blank"><span class="hdot" style="background:var(--pk)"></span>@faruksueer</a>
+        <a class="hlink" href="https://tiktok.com/@faruksueer" target="_blank"><span class="hdot" style="background:var(--tt)"></span>@faruksueer</a>
+        <a class="hlink" href="https://youtube.com/@Faruksueer55" target="_blank"><span class="hdot" style="background:var(--yt)"></span>@Faruksueer55</a>
+        <a class="hlink" href="https://facebook.com/faruk.suer.77" target="_blank"><span class="hdot" style="background:#1877f2"></span>faruk.suer.77</a>
       </div>
-      <div class="kstatus">Agent aktiv</div>
+      <div class="kstatus"><span class="av-dot" style="position:static;width:7px;height:7px;border:none;display:inline-block;flex-shrink:0"></span>Agent aktiv</div>
       <div class="kchange" id="logoutbtn">Ausloggen</div>
     </div>
     <nav class="nav">
-      <div class="ni active" data-page="dashboard">Dashboard</div>
-      <div class="ni" data-page="posts">Posts erstellen</div>
-      <div class="ni" data-page="reisen">Meine Reisen</div>
-      <div class="ni" data-page="wachstum">Wachstum</div>
-      <div class="ni" data-page="kommentare">Kommentare</div>
-      <div class="ni" data-page="trends">Trends</div>
-      <div class="ni" data-page="creator">Creator & Nische</div>
-      <div class="ni" data-page="instagram">Instagram Insights</div>
+      <div class="nav-sec">Übersicht</div>
+      <div class="ni active" data-page="dashboard"><span class="ni-ic">🏠</span>Dashboard</div>
+      <div class="ni" data-page="instagram"><span class="ni-ic">📊</span>IG Insights</div>
+      <div class="nav-sec">Content</div>
+      <div class="ni" data-page="posts"><span class="ni-ic">✏️</span>Post erstellen</div>
+      <div class="ni" data-page="reisen"><span class="ni-ic">✈️</span>Meine Reisen</div>
+      <div class="ni" data-page="kommentare"><span class="ni-ic">💬</span>Kommentare</div>
+      <div class="nav-sec">Strategie</div>
+      <div class="ni" data-page="wachstum"><span class="ni-ic">🚀</span>Wachstum</div>
+      <div class="ni" data-page="trends"><span class="ni-ic">📈</span>Trends</div>
+      <div class="ni" data-page="creator"><span class="ni-ic">👥</span>Creator & Nische</div>
     </nav>
   </aside>
 
   <main class="main">
     <div class="topbar">
-      <button class="hbtn" id="hambtn">&#9776;</button>
-      <span class="tbtitle">@faruksueer Agent</span>
+      <button class="hbtn" id="hambtn">☰</button>
+      <span class="tbtitle">faruksueer Agent</span>
       <span style="width:32px"></span>
     </div>
 
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
-      <div class="ptitle">Hallo Omer!</div>
-      <div class="psub2">Dein persoenlicher Social Media Agent</div>
-      <div class="insight">Fokus: Nischen-Content zuerst - Reisen, Tauchen, Yoga. Alle Anfragen werden live im Web recherchiert.</div>
-      <div class="g3">
-        <div class="card"><div class="clabel">Instagram</div><div class="cval">@faruksueer</div><div class="csub">Visitenkarte</div></div>
-        <div class="card"><div class="clabel">TikTok</div><div class="cval">@faruksueer</div><div class="csub" style="color:var(--gn)">Wachstumsmotor</div></div>
-        <div class="card"><div class="clabel">YouTube</div><div class="cval">@Faruksueer55</div><div class="csub">Tiefe & Vlogs</div></div>
+      <div class="ptitle">Hallo Ömer 👋</div>
+      <div class="psub2">Dein KI-gestützter Social Media Agent · Alle Inhalte live recherchiert</div>
+      <div class="sg">
+        <div class="sc"><div class="sv">@faruksueer</div><div class="sl">Instagram & TikTok</div></div>
+        <div class="sc"><div class="sv">@Faruksueer55</div><div class="sl">YouTube</div></div>
+        <div class="sc"><div class="sv">9 Länder</div><div class="sl">Reise-Content</div></div>
       </div>
-      <div class="sc">
-        <div class="sct">Content-Saeulen</div>
-        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px">
-          <span class="tag tp">Reisen & Istanbul</span>
-          <span class="tag tt2">Tauchen & Natur</span>
-          <span class="tag ta">Yoga & Meditation</span>
-          <span class="tag tg">Karriere</span>
+      <div class="gc">
+        <div class="gc-title">Plattform-Strategie</div>
+        <div class="pitem"><div class="picon pig">📸</div><div><div class="plabel">Instagram <span class="pb pb-ig">Visitenkarte</span></div><div class="pdesc">Reels + Karussell · 4-5x/Woche · Saves & Follower-Bindung</div></div></div>
+        <div class="pitem"><div class="picon ptt">🎵</div><div><div class="plabel">TikTok <span class="pb pb-tt">Wachstum</span></div><div class="pdesc">30-60s Clips · Hook in 2 Sek. · Größtes virales Potenzial</div></div></div>
+        <div class="pitem"><div class="picon pyt">▶️</div><div><div class="plabel">YouTube <span class="pb pb-yt">Tiefe</span></div><div class="pdesc">Vlogs 8-15 Min + Shorts · 1x/Woche</div></div></div>
+        <div class="pitem"><div class="picon pfb">👤</div><div><div class="plabel">Facebook <span class="pb pb-fb">Crosspost</span></div><div class="pdesc">IG-Content crossposten · Kein Mehraufwand</div></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-title">Content-Säulen & Reisen</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+          <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span>
+          <span class="tag ta">🧘 Yoga</span><span class="tag tg">💼 Karriere</span>
         </div>
-        <div style="border-top:1px solid var(--bd);padding-top:12px">
-          <div style="font-size:12px;color:var(--mt);margin-bottom:8px">Deine Reisen</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px">
-            <span class="tag tm">Istanbul</span><span class="tag tm">Thailand</span>
-            <span class="tag tm">Spanien</span><span class="tag tm">Dom. Republik</span>
-            <span class="tag tm">Rom</span><span class="tag tm">Prag</span>
-            <span class="tag tm">Kopenhagen</span><span class="tag tm">Aegypten</span>
-            <span class="tag tm">Niederlande</span>
-          </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="tag tm">🇹🇷 Istanbul</span><span class="tag tm">🇹🇭 Thailand</span>
+          <span class="tag tm">🇪🇸 Spanien</span><span class="tag tm">🇩🇴 Dom. Rep.</span>
+          <span class="tag tm">🇮🇹 Rom</span><span class="tag tm">🇨🇿 Prag</span>
+          <span class="tag tm">🇩🇰 Kopenhagen</span><span class="tag tm">🇪🇬 Ägypten</span>
+          <span class="tag tm">🇳🇱 Niederlande</span>
         </div>
       </div>
       <div class="brow">
-        <button class="btn bp" data-prompt="wochenplan" data-target="db-res">Wochenplan erstellen</button>
-        <button class="btn bs" data-prompt="quickwins" data-target="db-res">Quick Wins</button>
+        <button class="btn bp" data-prompt="wochenplan" data-target="db-res">📅 Wochenplan</button>
+        <button class="btn bs" data-prompt="quickwins" data-target="db-res">⚡ Quick Wins</button>
       </div>
       <div class="aibox" id="db-res"></div>
     </div>
 
+    <!-- INSTAGRAM INSIGHTS -->
+    <div class="page" id="page-instagram">
+      <div class="ptitle">Instagram Insights</div>
+      <div class="psub2">Live-Daten von @faruksueer · Videos direkt abspielbar</div>
+      <div id="ig-loading" class="ldg"><div class="spin"></div><div>Verbinde mit Instagram...</div></div>
+      <div id="ig-error" class="insight" style="display:none"></div>
+      <div id="ig-content" style="display:none">
+        <div class="sg">
+          <div class="sc"><div class="sv" id="ig-followers">-</div><div class="sl">Follower</div></div>
+          <div class="sc"><div class="sv" id="ig-following">-</div><div class="sl">Following</div></div>
+          <div class="sc"><div class="sv" id="ig-posts-count">-</div><div class="sl">Posts</div></div>
+        </div>
+        <div class="gc">
+          <div class="gc-title">Profil <span id="ig-username-disp" style="font-size:11px;color:var(--tx3);text-transform:none;font-weight:400"></span></div>
+          <div id="ig-bio-disp" style="font-size:13px;color:var(--tx2);line-height:1.6"></div>
+        </div>
+        <div class="gc">
+          <div class="gc-title">Posts & Videos <span style="font-size:11px;color:var(--tx3);font-weight:400;text-transform:none">▶ Videos direkt abspielen</span></div>
+          <div class="ig-grid" id="ig-media-grid"></div>
+        </div>
+        <div class="gc">
+          <div class="gc-title">KI-Analyse</div>
+          <div class="brow">
+            <button class="btn bp" id="ig-analyze-btn">🔍 Insights analysieren</button>
+            <button class="btn bs" id="ig-strategy-btn">📈 Strategie</button>
+            <button class="btn bs bsm" id="ig-refresh-btn">↻</button>
+          </div>
+          <div class="aibox" id="ig-ai-res"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POSTS -->
     <div class="page" id="page-posts">
       <div class="ptitle">Post erstellen</div>
-      <div class="psub2">Format waehlen, Thema eingeben, generieren</div>
+      <div class="psub2">KI generiert Content basierend auf aktuellen Web-Trends</div>
       <div class="pills" id="post-pills">
         <div class="pill on">Instagram</div>
         <div class="pill on">TikTok</div>
         <div class="pill">YouTube</div>
         <div class="pill">Facebook</div>
       </div>
-      <div class="sc">
-        <div class="sct">Schnell-Themen</div>
+      <div class="gc">
+        <div class="gc-title">Schnell-Themen</div>
         <div class="qtags">
-          <span class="qtag" data-topic="Istanbul - versteckte Ecken die kein Tourist kennt">Istanbul Geheimtipps</span>
-          <span class="qtag" data-topic="Ko Lipe vs Phuket - welche Insel lohnt sich wirklich?">Ko Lipe vs Phuket</span>
-          <span class="qtag" data-topic="Taucherlizenz in Thailand machen - alles was du wissen musst">Taucherlizenz Thailand</span>
-          <span class="qtag" data-topic="Barcelona vs Valencia - welche Stadt gewinnt?">Barcelona vs Valencia</span>
-          <span class="qtag" data-topic="Aegypten unter Wasser - Tauchen im Roten Meer">Tauchen Aegypten</span>
-          <span class="qtag" data-topic="Kopenhagen - teuerste Stadt Europas, lohnt sie sich?">Kopenhagen</span>
-          <span class="qtag" data-topic="30 Tage Meditation - was sich wirklich veraendert hat">30 Tage Meditation</span>
-          <span class="qtag" data-topic="Erster Tauchgang - was wirklich passiert">Erster Tauchgang</span>
-          <span class="qtag" data-topic="Bangkok in 48 Stunden - ehrlicher Guide">Bangkok Guide</span>
-          <span class="qtag" data-topic="Dominikanische Republik - was ich nicht erwartet haette">Dom. Republik</span>
+          <span class="qtag" data-topic="Istanbul versteckte Ecken die kein Tourist kennt">🇹🇷 Istanbul Geheimtipps</span>
+          <span class="qtag" data-topic="Ko Lipe vs Phuket welche Insel lohnt sich wirklich">🇹🇭 Ko Lipe vs Phuket</span>
+          <span class="qtag" data-topic="Taucherlizenz in Thailand alles was du wissen musst">🤿 Taucherlizenz Thailand</span>
+          <span class="qtag" data-topic="Barcelona vs Valencia welche Stadt gewinnt">🇪🇸 Barcelona vs Valencia</span>
+          <span class="qtag" data-topic="Aegypten Tauchen im Roten Meer beste Spots">🇪🇬 Tauchen Ägypten</span>
+          <span class="qtag" data-topic="Kopenhagen teuerste Stadt Europas lohnt sie sich">🇩🇰 Kopenhagen</span>
+          <span class="qtag" data-topic="30 Tage Meditation was sich wirklich veraendert hat">🧘 30 Tage Meditation</span>
+          <span class="qtag" data-topic="Erster Tauchgang was wirklich passiert">🌊 Erster Tauchgang</span>
+          <span class="qtag" data-topic="Bangkok in 48 Stunden ehrlicher Guide">🇹🇭 Bangkok Guide</span>
+          <span class="qtag" data-topic="Dominikanische Republik was ich nicht erwartet haette">🇩🇴 Dom. Republik</span>
         </div>
         <textarea id="post-topic" placeholder="Oder eigenes Thema eingeben..."></textarea>
         <div style="display:flex;gap:8px">
@@ -251,234 +470,165 @@ textarea:focus,select:focus{border-color:var(--ac)}
             <option>Motivierend</option>
           </select>
         </div>
-        <div class="brow" style="margin-top:4px">
-          <button class="btn bp" id="gen-post-btn">Generieren</button>
-          <button class="btn bs" id="gen-hooks-btn">Nur Hooks</button>
+        <div class="brow">
+          <button class="btn bp" id="gen-post-btn">✨ Generieren</button>
+          <button class="btn bs" id="gen-hooks-btn">🪝 Hooks</button>
         </div>
         <div class="aibox" id="post-res"></div>
       </div>
     </div>
 
+    <!-- REISEN -->
     <div class="page" id="page-reisen">
       <div class="ptitle">Meine Reisen</div>
-      <div class="psub2">9 Laender - 12+ Destinationen - Monate an Content</div>
+      <div class="psub2">9 Länder · 12+ Destinationen · Klicken für Post-Ideen</div>
       <div class="dg">
-        <div class="dc" data-dest="Istanbul und Tuerkei - Insider-Tipps und was kein Reisefuehrer zeigt"><div class="df">🇹🇷</div><div class="dn">Istanbul</div><div class="ds">Mehrfach besucht</div></div>
-        <div class="dc" data-dest="Thailand Bangkok Ko Lipe Phuket - Taucherlizenz gemacht dort"><div class="df">🇹🇭</div><div class="dn">Thailand</div><div class="ds">Bangkok Ko Lipe Phuket</div></div>
-        <div class="dc" data-dest="Spanien Barcelona und Valencia - welche Stadt gewinnt?"><div class="df">🇪🇸</div><div class="dn">Spanien</div><div class="ds">Barcelona Valencia</div></div>
-        <div class="dc" data-dest="Aegypten Tauchen im Roten Meer - Highlights"><div class="df">🇪🇬</div><div class="dn">Aegypten</div><div class="ds">Rotes Meer Tauchen</div></div>
-        <div class="dc" data-dest="Dominikanische Republik Karibik - Erfahrungen und Tipps"><div class="df">🇩🇴</div><div class="dn">Dom. Republik</div><div class="ds">Karibik</div></div>
-        <div class="dc" data-dest="Rom Italien - Highlights und Geheimtipps"><div class="df">🇮🇹</div><div class="dn">Rom</div><div class="ds">Italien</div></div>
-        <div class="dc" data-dest="Prag Tschechien - unterschaetzte Hauptstadt Europas"><div class="df">🇨🇿</div><div class="dn">Prag</div><div class="ds">Tschechien</div></div>
-        <div class="dc" data-dest="Kopenhagen Daenemark - lohnt sich die teuerste Stadt Europas?"><div class="df">🇩🇰</div><div class="dn">Kopenhagen</div><div class="ds">Daenemark</div></div>
-        <div class="dc" data-dest="Niederlande - Tipps abseits von Amsterdam"><div class="df">🇳🇱</div><div class="dn">Niederlande</div><div class="ds">Mehrfach besucht</div></div>
+        <div class="dc" data-dest="Istanbul Tuerkei Insider-Tipps was kein Reisefuehrer zeigt"><div class="df">🇹🇷</div><div class="dn">Istanbul</div><div class="ds">Mehrfach besucht</div></div>
+        <div class="dc" data-dest="Thailand Bangkok Ko Lipe Phuket Taucherlizenz gemacht"><div class="df">🇹🇭</div><div class="dn">Thailand</div><div class="ds">Bangkok · Ko Lipe · Phuket</div></div>
+        <div class="dc" data-dest="Spanien Barcelona Valencia welche Stadt gewinnt"><div class="df">🇪🇸</div><div class="dn">Spanien</div><div class="ds">Barcelona · Valencia</div></div>
+        <div class="dc" data-dest="Aegypten Tauchen Rotes Meer Highlights Tipps"><div class="df">🇪🇬</div><div class="dn">Ägypten</div><div class="ds">Rotes Meer · Tauchen</div></div>
+        <div class="dc" data-dest="Dominikanische Republik Karibik Erfahrungen Tipps"><div class="df">🇩🇴</div><div class="dn">Dom. Republik</div><div class="ds">Karibik</div></div>
+        <div class="dc" data-dest="Rom Italien Highlights Geheimtipps"><div class="df">🇮🇹</div><div class="dn">Rom</div><div class="ds">Italien</div></div>
+        <div class="dc" data-dest="Prag Tschechien unterschaetzte Hauptstadt Europa"><div class="df">🇨🇿</div><div class="dn">Prag</div><div class="ds">Tschechien</div></div>
+        <div class="dc" data-dest="Kopenhagen Daenemark teuerste Stadt lohnt sich"><div class="df">🇩🇰</div><div class="dn">Kopenhagen</div><div class="ds">Dänemark</div></div>
+        <div class="dc" data-dest="Niederlande Tipps abseits Amsterdam"><div class="df">🇳🇱</div><div class="dn">Niederlande</div><div class="ds">Mehrfach besucht</div></div>
       </div>
-      <div class="sc" style="margin-top:14px">
-        <div class="sct">Reise Content-Ideen</div>
+      <div class="gc" style="margin-top:14px">
+        <div class="gc-title">Content-Ideen generieren</div>
         <div class="brow">
-          <button class="btn bp" data-prompt="reel10" data-target="rs-res">10 Reel-Ideen</button>
-          <button class="btn bs" data-prompt="potenzial" data-target="rs-res">Bestes Potenzial?</button>
+          <button class="btn bp" data-prompt="reel10" data-target="rs-res">🎬 10 Reel-Ideen</button>
+          <button class="btn bs" data-prompt="potenzial" data-target="rs-res">🏆 Bestes Potenzial?</button>
         </div>
         <div class="aibox" id="rs-res"></div>
       </div>
     </div>
 
+    <!-- WACHSTUM -->
     <div class="page" id="page-wachstum">
       <div class="ptitle">Wachstumsstrategie</div>
-      <div class="psub2">Alles live aus dem Web recherchiert</div>
-
-      <div class="sc">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div class="sct" style="margin-bottom:0">Top 5 Wachstums-Hebel</div>
-          <button class="btn bs bsm" data-prompt="hebel" data-target="hebel-res">Aktuell recherchieren</button>
-        </div>
-        <div id="hebel-static">
-          <div class="gi"><div class="gn2">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Hoechste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment. Fehler-Formate und Geheimtipps performen am staerksten.</div></div></div>
-          <div class="gi"><div class="gn2">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Hoechste Prio</span></div><div class="gs">4-5x pro Woche Instagram, 3-4x TikTok. Algorithmen belohnen Regelmaessigkeit.</div></div></div>
-          <div class="gi"><div class="gn2">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich - das ist dein Vorteil gegenueber anderen Travel Creatorn.</div></div></div>
-          <div class="gi"><div class="gn2">4</div><div><div class="gt">Crossposting IG TikTok Facebook <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen. Facebook holt dir die 30-45 jaehrige Zielgruppe.</div></div></div>
-          <div class="gi"><div class="gn2">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Kommentare direkt beantworten - der Algorithmus misst Early Engagement als Reichweiten-Signal.</div></div></div>
-        </div>
+      <div class="psub2">Alle Daten live aus dem Web recherchiert</div>
+      <div class="gc">
+        <div class="gc-title">Top 5 Hebel <button class="btn bs bsm" data-prompt="hebel" data-target="hebel-res">🔄 Aktualisieren</button></div>
+        <div class="gi"><div class="gnum">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Höchste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment. Fehler-Formate performen am stärksten.</div></div></div>
+        <div class="gi"><div class="gnum">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Höchste Prio</span></div><div class="gs">4-5x pro Woche Instagram, 3-4x TikTok. Algorithmen belohnen Regelmäßigkeit.</div></div></div>
+        <div class="gi"><div class="gnum">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich — dein Vorteil gegenüber anderen Travel Creatorn.</div></div></div>
+        <div class="gi"><div class="gnum">4</div><div><div class="gt">Crossposting IG → TikTok → FB <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen. Kein Mehraufwand.</div></div></div>
+        <div class="gi"><div class="gnum">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Kommentare direkt beantworten — Early Engagement = mehr Reichweite.</div></div></div>
         <div class="aibox" id="hebel-res"></div>
       </div>
-
-      <div class="sc">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div class="sct" style="margin-bottom:0">Beste Posting-Zeiten</div>
-          <button class="btn bs bsm" data-prompt="postingzeiten" data-target="zeit-res">Aktuell recherchieren</button>
-        </div>
-        <div id="zeit-static">
-          <div class="prog"><div class="prlabel">Instagram</div><div class="prbg"><div class="prfill" style="width:90%;background:#e1306c"></div></div><div class="prval">Mo-Fr 18-20 Uhr</div></div>
-          <div class="prog"><div class="prlabel">TikTok</div><div class="prbg"><div class="prfill" style="width:85%;background:var(--ac)"></div></div><div class="prval">Di-Sa 19-22 Uhr</div></div>
-          <div class="prog"><div class="prlabel">YouTube</div><div class="prbg"><div class="prfill" style="width:70%;background:var(--yt)"></div></div><div class="prval">Fr-Sa 15-18 Uhr</div></div>
-          <div class="prog"><div class="prlabel">Facebook</div><div class="prbg"><div class="prfill" style="width:55%;background:var(--ac2)"></div></div><div class="prval">Mi & So 12-14 Uhr</div></div>
-        </div>
+      <div class="gc">
+        <div class="gc-title">Beste Posting-Zeiten <button class="btn bs bsm" data-prompt="postingzeiten" data-target="zeit-res">🔄 Aktualisieren</button></div>
+        <div class="prog"><div class="prlabel">📸 Instagram</div><div class="prbg"><div class="prfill" style="width:90%;background:linear-gradient(90deg,var(--pk),#e879a0)"></div></div><div class="prval">Mo-Fr 18-20 Uhr</div></div>
+        <div class="prog"><div class="prlabel">🎵 TikTok</div><div class="prbg"><div class="prfill" style="width:85%;background:linear-gradient(90deg,var(--tt),#4ecdc4)"></div></div><div class="prval">Di-Sa 19-22 Uhr</div></div>
+        <div class="prog"><div class="prlabel">▶️ YouTube</div><div class="prbg"><div class="prfill" style="width:70%;background:linear-gradient(90deg,var(--yt),#ff6b6b)"></div></div><div class="prval">Fr-Sa 15-18 Uhr</div></div>
+        <div class="prog"><div class="prlabel">👤 Facebook</div><div class="prbg"><div class="prfill" style="width:55%;background:linear-gradient(90deg,#1877f2,#60a5fa)"></div></div><div class="prval">Mi & So 12-14 Uhr</div></div>
         <div class="aibox" id="zeit-res"></div>
       </div>
-
-      <div class="sc">
-        <div class="sct">KI-Aktionen</div>
+      <div class="gc">
+        <div class="gc-title">KI-Aktionen</div>
         <div class="brow">
-          <button class="btn bp" data-prompt="challenge30" data-target="wt-res">30-Tage Challenge</button>
-          <button class="btn bs" data-prompt="hooks" data-target="wt-res">Hook-Ideen</button>
+          <button class="btn bp" data-prompt="challenge30" data-target="wt-res">📅 30-Tage Challenge</button>
+          <button class="btn bs" data-prompt="hooks" data-target="wt-res">🪝 Hook-Ideen</button>
         </div>
         <div class="aibox" id="wt-res"></div>
       </div>
     </div>
 
+    <!-- KOMMENTARE -->
     <div class="page" id="page-kommentare">
-      <div class="ptitle">Kommentare und Community</div>
+      <div class="ptitle">Kommentare & Community</div>
       <div class="psub2">Antworten die zu dir klingen</div>
-      <div class="insight">In den ersten 30 Minuten nach dem Post antworten - das verdoppelt oft die Reichweite.</div>
-      <div class="sc">
-        <div class="sct">Kommentar beantworten</div>
-        <textarea id="comment-input" placeholder="Kommentar oder DM hier einfuegen..."></textarea>
+      <div class="insight">⏱️ In den ersten 30 Minuten nach dem Post antworten — das verdoppelt oft die Reichweite.</div>
+      <div class="gc">
+        <div class="gc-title">Kommentar beantworten</div>
+        <textarea id="comment-input" placeholder="Kommentar oder DM hier einfügen..."></textarea>
         <div style="display:flex;gap:8px">
           <select id="reply-style" style="flex:1">
-            <option>Warm und persoenlich</option>
-            <option>Kurz und direkt</option>
-            <option>Humorvoll</option>
-            <option>Professionell</option>
+            <option>Warm & persönlich</option><option>Kurz & direkt</option>
+            <option>Humorvoll</option><option>Professionell</option>
           </select>
           <select id="reply-platform" style="flex:1">
-            <option>Instagram</option>
-            <option>TikTok</option>
-            <option>YouTube</option>
-            <option>Facebook</option>
+            <option>Instagram</option><option>TikTok</option>
+            <option>YouTube</option><option>Facebook</option>
           </select>
         </div>
-        <button class="btn bp" id="reply-btn">Antwort generieren</button>
+        <button class="btn bp" id="reply-btn">💬 Antwort generieren</button>
         <div class="aibox" id="cm-res"></div>
       </div>
-      <div class="sc">
-        <div class="sct">Community Tools</div>
+      <div class="gc">
+        <div class="gc-title">Community Tools</div>
         <div class="brow">
-          <button class="btn bs bsm" data-prompt="cta" data-target="cm-res">CTA-Fragen</button>
-          <button class="btn bs bsm" data-prompt="welcome" data-target="cm-res">Willkommens-DM</button>
+          <button class="btn bs bsm" data-prompt="cta" data-target="cm-res">❓ CTA-Fragen</button>
+          <button class="btn bs bsm" data-prompt="welcome" data-target="cm-res">👋 Willkommens-DM</button>
         </div>
       </div>
     </div>
 
+    <!-- TRENDS -->
     <div class="page" id="page-trends">
       <div class="ptitle">Trends</div>
       <div class="psub2">Live aus dem Web recherchiert</div>
-      <div class="pills" id="trend-pills">
-        <div class="pill on" data-tp="ig">Instagram</div>
-        <div class="pill" data-tp="tt">TikTok</div>
-        <div class="pill" data-tp="yt">YouTube</div>
+      <div class="pills">
+        <div class="pill on" data-tp="ig">📸 Instagram</div>
+        <div class="pill" data-tp="tt">🎵 TikTok</div>
+        <div class="pill" data-tp="yt">▶️ YouTube</div>
       </div>
-      <div class="sc" id="trends-static"></div>
+      <div class="gc" id="trends-static"></div>
       <div class="brow">
-        <button class="btn bp" data-prompt="trends" data-target="tr-res">Trends recherchieren</button>
-        <button class="btn bs" data-prompt="hashtags" data-target="tr-res">Hashtag-Strategie</button>
+        <button class="btn bp" data-prompt="trends" data-target="tr-res">🌐 Live recherchieren</button>
+        <button class="btn bs" data-prompt="hashtags" data-target="tr-res"># Hashtag-Strategie</button>
       </div>
       <div class="aibox" id="tr-res"></div>
     </div>
 
+    <!-- CREATOR -->
     <div class="page" id="page-creator">
       <div class="ptitle">Creator & Nische</div>
-      <div class="psub2">Wer dominiert gerade deine Nische - live recherchiert</div>
-      <div class="insight">Alle Ergebnisse werden live aus dem Web geholt - aktuelle Posts, Follower-Zahlen und Content-Strategien.</div>
-
-      <div class="sc">
-        <div class="sct">Plattform waehlen</div>
+      <div class="psub2">Wer dominiert deine Nische — live mit Profilkarten</div>
+      <div class="gc">
+        <div class="gc-title">Suche</div>
         <div class="pills" id="creator-pills">
           <div class="pill on">Instagram</div>
           <div class="pill">TikTok</div>
           <div class="pill">YouTube</div>
         </div>
-        <div class="sct" style="margin-top:4px">Nische waehlen</div>
         <div class="qtags">
-          <span class="qtag" data-nische="Travel Creator Tuerkei Istanbul">Travel Tuerkei</span>
-          <span class="qtag" data-nische="Travel Creator Thailand">Travel Thailand</span>
-          <span class="qtag" data-nische="Scuba Diving Creator Tauchen">Tauchen & Diving</span>
-          <span class="qtag" data-nische="Yoga Meditation Creator deutsch">Yoga & Meditation</span>
-          <span class="qtag" data-nische="Travel Creator deutsch deutschsprachig">Travel Deutsch</span>
-          <span class="qtag" data-nische="Career Motivation Creator ohne Studium">Karriere ohne Studium</span>
-          <span class="qtag" data-nische="Budget Travel Creator Europa">Budget Travel Europa</span>
-          <span class="qtag" data-nische="Underwater Photography Diving">Unterwasser Fotografie</span>
+          <span class="qtag" data-nische="Travel Creator Tuerkei Istanbul">🇹🇷 Travel Türkei</span>
+          <span class="qtag" data-nische="Travel Creator Thailand Inseln">🇹🇭 Travel Thailand</span>
+          <span class="qtag" data-nische="Scuba Diving Tauchen Creator">🤿 Tauchen</span>
+          <span class="qtag" data-nische="Yoga Meditation Creator deutsch">🧘 Yoga deutsch</span>
+          <span class="qtag" data-nische="Travel Creator deutsch">✈️ Travel Deutsch</span>
+          <span class="qtag" data-nische="Karriere Motivation ohne Studium">💼 Karriere</span>
+          <span class="qtag" data-nische="Underwater Photography Diving">📸 Unterwasser</span>
+          <span class="qtag" data-nische="Budget Travel Europa">💰 Budget Travel</span>
         </div>
         <div class="brow">
-          <button class="btn bp" id="creator-search-btn">Top Creator suchen</button>
-          <button class="btn bs" id="creator-post-btn">Beste Posts analysieren</button>
+          <button class="btn bp" id="creator-search-btn">🔍 Top Creator suchen</button>
+          <button class="btn bs" id="creator-post-btn">📊 Posts analysieren</button>
+        </div>
+      </div>
+      <div id="creator-results" style="display:none">
+        <div class="gc">
+          <div class="gc-title" id="creator-results-title">Ergebnisse</div>
+          <div class="creator-grid" id="creator-grid"></div>
+        </div>
+      </div>
+      <div class="gc">
+        <div class="gc-title">Schnell-Analysen</div>
+        <div class="brow">
+          <button class="btn bs bsm" data-prompt="competitor_ig" data-target="cr-res">📸 Top 5 IG</button>
+          <button class="btn bs bsm" data-prompt="competitor_tt" data-target="cr-res">🎵 Top 5 TT</button>
+          <button class="btn bs bsm" data-prompt="competitor_yt" data-target="cr-res">▶️ Top 5 YT</button>
+          <button class="btn bs bsm" data-prompt="content_gaps" data-target="cr-res">💡 Content-Lücken</button>
+          <button class="btn bs bsm" data-prompt="viral_posts" data-target="cr-res">🔥 Viral Posts</button>
         </div>
         <div class="aibox" id="cr-res"></div>
       </div>
-
-      <div class="sc">
-        <div class="sct">Direktsuche</div>
-        <textarea id="creator-custom" style="min-height:60px" placeholder="z.B. Wer sind die Top Travel Creator auf TikTok die auch tauchen? Was posten sie gerade?"></textarea>
-        <button class="btn bp" id="creator-custom-btn">Recherchieren</button>
+      <div class="gc">
+        <div class="gc-title">Direktsuche</div>
+        <textarea id="creator-custom" style="min-height:60px" placeholder="z.B. Wer sind die Top Travel Creator auf TikTok die auch tauchen?"></textarea>
+        <button class="btn bp" id="creator-custom-btn">🌐 Recherchieren</button>
         <div class="aibox" id="cr-custom-res"></div>
-      </div>
-
-      <div class="sc">
-        <div class="sct">Schnell-Analysen</div>
-        <div class="brow">
-          <button class="btn bs bsm" data-prompt="competitor_ig" data-target="cr-res">Top 5 Instagram</button>
-          <button class="btn bs bsm" data-prompt="competitor_tt" data-target="cr-res">Top 5 TikTok</button>
-          <button class="btn bs bsm" data-prompt="competitor_yt" data-target="cr-res">Top 5 YouTube</button>
-          <button class="btn bs bsm" data-prompt="content_gaps" data-target="cr-res">Content-Luecken finden</button>
-          <button class="btn bs bsm" data-prompt="viral_posts" data-target="cr-res">Virale Posts analysieren</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="page" id="page-instagram">
-      <div class="ptitle">Instagram Insights</div>
-      <div class="psub2">Deine echten Daten von @faruksueer</div>
-
-      <div id="ig-loading" style="text-align:center;padding:40px;color:var(--mt)">
-        <div style="font-size:32px;margin-bottom:12px">📊</div>
-        <div>Insights werden geladen...</div>
-      </div>
-
-      <div id="ig-error" style="display:none" class="insight" style="background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.3);color:var(--rd)"></div>
-
-      <div id="ig-content" style="display:none">
-
-        <!-- Profile Card -->
-        <div class="sc" id="ig-profile-card">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff;flex-shrink:0" id="ig-avatar">OF</div>
-            <div>
-              <div style="font-size:16px;font-weight:600" id="ig-username">@faruksueer</div>
-              <div style="font-size:12px;color:var(--mt);margin-top:2px" id="ig-bio"></div>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="ig-stats">
-            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
-              <div style="font-size:20px;font-weight:600" id="ig-followers">-</div>
-              <div style="font-size:11px;color:var(--mt);margin-top:2px">Follower</div>
-            </div>
-            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
-              <div style="font-size:20px;font-weight:600" id="ig-following">-</div>
-              <div style="font-size:11px;color:var(--mt);margin-top:2px">Following</div>
-            </div>
-            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
-              <div style="font-size:20px;font-weight:600" id="ig-posts">-</div>
-              <div style="font-size:11px;color:var(--mt);margin-top:2px">Posts</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Top Posts -->
-        <div class="sc">
-          <div class="sct">Letzte Posts</div>
-          <div id="ig-media-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div>
-        </div>
-
-        <!-- AI Analysis -->
-        <div class="sc">
-          <div class="sct">KI-Analyse deiner Insights</div>
-          <div class="brow">
-            <button class="btn bp" id="ig-analyze-btn">Insights analysieren</button>
-            <button class="btn bs" id="ig-strategy-btn">Strategie vorschlagen</button>
-            <button class="btn bs" id="ig-refresh-btn">Daten aktualisieren</button>
-          </div>
-          <div class="aibox" id="ig-ai-res"></div>
-        </div>
-
       </div>
     </div>
 
@@ -487,211 +637,344 @@ textarea:focus,select:focus{border-color:var(--ac)}
 </div>
 
 <script>
-var PIN = sessionStorage.getItem('pin');
-var SYSTEM = 'Du bist der persoenliche Social Media Agent von Oemer Faruk Suer (@faruksueer auf Instagram und TikTok, @Faruksueer55 auf YouTube, faruk.suer.77 auf Facebook). Seine Reisen: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort gemacht), Spanien (Barcelona und Valencia), Aegypten (Rotes Meer, Tauchen), Dominikanische Republik, Rom, Prag, Kopenhagen, Niederlande (mehrfach). Content-Themen: Reisen, Tauchen, Yoga/Meditation (seit 2025), Karriere. Stil: Mix aus authentisch, aesthetisch und spontan. Ziel: Community und Reichweite aufbauen. WICHTIG: Erwaehne keinen persoenlichen Werdegang ausser er fragt explizit. Antworte auf Deutsch. Sei konkret und praxisnah. Alle Antworten sollen auf aktuellen Web-Recherchen basieren.';
+// =====================
+// CORE CONFIG
+// =====================
+var SYS = 'Du bist der Social Media Agent von Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT). Reisen: Istanbul, Thailand (Ko Lipe/Phuket/Bangkok, Taucherlizenz), Spanien (Barcelona/Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Themen: Reisen, Tauchen, Yoga/Meditation, Karriere. Stil: authentisch, spontan. Ziel: Community und Reichweite. Antworte auf Deutsch. Konkret und praxisnah.';
 
-var PROMPTS = {
-  wochenplan: 'Recherchiere aktuelle Trends und erstelle einen Wochenplan fuer Instagram, TikTok und YouTube. Themen: Reisen, Tauchen, Yoga. Inkl. Posting-Zeiten.',
-  quickwins: 'Recherchiere aktuelle Tipps und nenne 3 Quick Wins die ich diese Woche umsetzen kann um auf Instagram und TikTok Reichweite zu gewinnen. Themen: Reisen, Tauchen, Yoga.',
-  reel10: 'Recherchiere aktuelle Trends und erstelle 10 Reel-Ideen basierend auf meinen Reisen: Istanbul, Thailand (Ko Lipe, Phuket, Bangkok, Taucherlizenz), Spanien, Aegypten (Tauchen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Format: TikTok/Instagram.',
-  potenzial: 'Recherchiere aktuell welche Reisedestinationen auf TikTok und Instagram 2024/2025 am meisten performen. Welche meiner Reisen hat das groesste Content-Potenzial: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande?',
-  challenge30: 'Recherchiere aktuelle Content-Strategien und erstelle eine 30-Tage Challenge fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga. Ziel: Reichweite aufbauen.',
-  hooks: 'Recherchiere aktuelle virale Hook-Formate auf TikTok und Instagram. Erstelle 5 starke Hooks fuer Travel und Dive Content basierend auf meinen Reisen: Istanbul, Ko Lipe, Phuket, Aegypten, Barcelona.',
-  cta: 'Recherchiere aktuelle Engagement-Strategien und erstelle 10 Call-to-Action Fragen fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
-  welcome: 'Schreibe eine kurze Willkommensnachricht fuer neue Instagram Follower. Ton: authentisch, herzlich. Ich bin Travel und Dive Creator @faruksueer.',
-  trends: 'Recherchiere jetzt aktuelle Trends auf Instagram und TikTok fuer Travel Creator und Dive Creator. Was performt gerade am besten? Erstelle 5 konkrete Post-Ideen fuer meine Reiseziele: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen.',
-  hashtags: 'Recherchiere aktuelle Hashtag-Performance auf Instagram. Gib mir 30 Hashtags fuer @faruksueer aufgeteilt in gross (1M+), mittel (100K-1M) und Nischen (unter 100K). Themen: Reisen, Tauchen, Yoga.',
-  competitor_ig: 'Recherchiere jetzt die erfolgreichsten Travel und Diving Creator auf Instagram. Welche 5 Accounts wachsen gerade am staerksten? Was posten sie, welche Formate nutzen sie, wie oft posten sie? Gib mir konkrete Insights die ich fuer @faruksueer nutzen kann.',
-  competitor_tt: 'Recherchiere jetzt die erfolgreichsten Travel und Diving Creator auf TikTok. Welche 5 Accounts haben gerade die meisten Views und das staerkste Wachstum? Was ist ihr Content-Stil, welche Hooks nutzen sie? Konkrete Insights fuer @faruksueer.',
-  competitor_yt: 'Recherchiere jetzt erfolgreiche Travel und Diving Creator auf YouTube. Welche 5 Kanaele wachsen gerade am staerksten? Welche Video-Formate und Themen performen am besten? Was kann @faruksueer davon lernen?',
-  content_gaps: 'Recherchiere den Travel und Diving Creator Markt auf Instagram und TikTok. Welche Themen und Formate sind noch unterversorgt - also wo gibt es wenig gute Creator aber hohe Nachfrage? Besonders fuer: Istanbul/Tuerkei, Thailand-Inseln, Tauchen Mittelmeer/Rotes Meer, Yoga auf Reisen.',
-  viral_posts: 'Recherchiere die aktuell viralensten Posts und Videos im Travel und Diving Bereich auf TikTok und Instagram. Was haben sie gemeinsam? Welche Hooks, Formate und Themen funktionieren gerade am besten? Erstelle daraus 3 konkrete Post-Ideen fuer @faruksueer.',
-  hebel: 'Recherchiere aktuell die wichtigsten Wachstums-Strategien fuer Social Media Creator auf Instagram und TikTok in 2025/2026. Was sind die Top 5 Hebel fuer Travel und Lifestyle Creator um Reichweite und Community aufzubauen? Basiere die Antwort auf aktuellen Studien und Creator-Erfolgsgeschichten.',
-  postingzeiten: 'Recherchiere die aktuell optimalen Posting-Zeiten fuer Travel Creator auf Instagram, TikTok, YouTube und Facebook in 2025/2026. Wann ist die Zielgruppe am aktivsten? Gibt es Unterschiede je nach Content-Typ? Nenne konkrete Uhrzeiten und Wochentage.'
+var P = {
+  wochenplan:'Recherchiere aktuelle Trends und erstelle einen Wochenplan fuer Instagram, TikTok, YouTube. Themen: Reisen, Tauchen, Yoga. Inkl. Posting-Zeiten.',
+  quickwins:'Recherchiere: 3 Quick Wins diese Woche fuer Reichweite auf Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
+  reel10:'Recherchiere aktuelle Trends. 10 Reel-Ideen fuer meine Reisen: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande.',
+  potenzial:'Recherchiere welche Reisedestinationen auf TikTok/IG gerade am meisten performen. Welche meiner Reisen hat das groesste Potenzial?',
+  challenge30:'Recherchiere Content-Strategien. 30-Tage Challenge fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
+  hooks:'Recherchiere virale Hooks. 5 starke Hooks fuer Travel und Dive Content: Istanbul, Ko Lipe, Phuket, Aegypten, Barcelona.',
+  cta:'10 Call-to-Action Fragen fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
+  welcome:'Willkommensnachricht fuer neue Instagram Follower. Authentisch, herzlich. @faruksueer Travel und Dive Creator.',
+  trends:'Recherchiere jetzt aktuelle Trends auf Instagram und TikTok fuer Travel und Dive Creator. 5 konkrete Post-Ideen.',
+  hashtags:'Recherchiere Hashtag-Performance. 30 Hashtags fuer @faruksueer: gross (1M+), mittel (100K-1M), Nischen (<100K). Themen: Reisen, Tauchen, Yoga.',
+  hebel:'Recherchiere Top Wachstumsstrategien fuer Social Media Creator 2025/2026. Top 5 Hebel fuer Travel Creator.',
+  postingzeiten:'Recherchiere optimale Posting-Zeiten fuer Travel Creator auf IG, TikTok, YouTube, Facebook 2025/2026.',
+  competitor_ig:'Recherchiere TOP Travel und Diving Creator auf Instagram. 5 Accounts mit Handle, Follower, Posting-Frequenz, Content-Stil, Learnings fuer @faruksueer.',
+  competitor_tt:'Recherchiere TOP Travel und Diving Creator auf TikTok. 5 Accounts mit Handle, Views, Wachstum, Content-Strategie.',
+  competitor_yt:'Recherchiere TOP Travel und Diving Creator auf YouTube. 5 Kanaele mit Subscriber, Video-Formate, Learnings.',
+  content_gaps:'Recherchiere Travel und Diving Creator Markt. Welche Themen sind unterversorgt? Istanbul, Thailand, Tauchen, Yoga auf Reisen.',
+  viral_posts:'Recherchiere aktuell viralste Posts Travel und Diving auf TikTok und Instagram. 3 Post-Ideen fuer @faruksueer.'
 };
 
-// Check login
-if (PIN) {
-  document.getElementById('pinscreen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
+// =====================
+// PIN KEYPAD
+// =====================
+var pinVal = '';
+var pinChecking = false;
+
+function updateDots() {
+  for (var i = 0; i < 4; i++) {
+    var dot = document.getElementById('d' + i);
+    dot.classList.toggle('filled', i < pinVal.length);
+  }
 }
 
-// PIN login
-document.getElementById('loginbtn').addEventListener('click', function() {
-  var val = document.getElementById('pininput').value.trim();
-  document.getElementById('pinerr').style.display = 'none';
-  doLogin(val);
+document.querySelectorAll('.pin-key').forEach(function(key) {
+  key.addEventListener('click', function() {
+    if (pinChecking) return;
+    var k = this.dataset.k;
+    if (k === 'del') {
+      pinVal = pinVal.slice(0, -1);
+      document.getElementById('pinerr').textContent = '';
+    } else if (k === 'ok') {
+      if (pinVal.length === 4) checkPin();
+    } else if (pinVal.length < 4) {
+      pinVal += k;
+      if (pinVal.length === 4) setTimeout(checkPin, 150);
+    }
+    updateDots();
+  });
 });
 
-document.getElementById('pininput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    var val = this.value.trim();
-    doLogin(val);
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('app').style.display !== 'none') return;
+  if (pinChecking) return;
+  if (e.key >= '0' && e.key <= '9' && pinVal.length < 4) {
+    pinVal += e.key;
+    updateDots();
+    if (pinVal.length === 4) setTimeout(checkPin, 150);
+  } else if (e.key === 'Backspace') {
+    pinVal = pinVal.slice(0, -1);
+    updateDots();
   }
 });
 
-function doLogin(val) {
-  if (val.length !== 4) {
-    document.getElementById('pinerr').style.display = 'block';
-    return;
-  }
-  // Try PIN against server
+function checkPin() {
+  if (pinChecking || pinVal.length !== 4) return;
+  pinChecking = true;
+  document.getElementById('pinerr').textContent = '';
+  var checking = document.createElement('div');
+  checking.className = 'pin-checking';
+  checking.textContent = 'Verbinden...';
+  document.querySelector('.pin-box').appendChild(checking);
+
   fetch('/api/chat', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-pin': val },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 10, system: 'Say OK', messages: [{ role: 'user', content: 'OK' }] })
+    headers: { 'Content-Type': 'application/json', 'x-pin': pinVal },
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 5, system: 'Say hi', messages: [{ role: 'user', content: 'hi' }] })
   }).then(function(r) {
+    checking.remove();
+    pinChecking = false;
     if (r.status === 401) {
-      document.getElementById('pinerr').style.display = 'block';
+      document.getElementById('pinerr').textContent = 'Falscher PIN';
+      pinVal = '';
+      updateDots();
     } else {
-      sessionStorage.setItem('pin', val);
-      PIN = val;
+      sessionStorage.setItem('pin', pinVal);
       document.getElementById('pinscreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
+      // Preload Instagram in background
+      setTimeout(function() { loadIG(false); }, 800);
     }
   }).catch(function() {
-    document.getElementById('pinerr').textContent = 'Verbindungsfehler. Bitte nochmal versuchen.';
-    document.getElementById('pinerr').style.display = 'block';
+    checking.remove();
+    pinChecking = false;
+    document.getElementById('pinerr').textContent = 'Verbindungsfehler';
+    pinVal = '';
+    updateDots();
   });
 }
 
-// Logout
+// Auto-login if PIN cached
+if (sessionStorage.getItem('pin')) {
+  document.getElementById('pinscreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  setTimeout(function() { loadIG(false); }, 500);
+}
+
+// =====================
+// LOGOUT
+// =====================
 document.getElementById('logoutbtn').addEventListener('click', function() {
   sessionStorage.removeItem('pin');
-  PIN = null;
   document.getElementById('app').style.display = 'none';
   document.getElementById('pinscreen').style.display = 'flex';
-  document.getElementById('pininput').value = '';
+  pinVal = ''; updateDots();
 });
 
-// Navigation
+// =====================
+// NAVIGATION
+// =====================
 document.querySelectorAll('.ni').forEach(function(el) {
   el.addEventListener('click', function() {
     document.querySelectorAll('.ni').forEach(function(n) { n.classList.remove('active'); });
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
     el.classList.add('active');
-    document.getElementById('page-' + el.dataset.page).classList.add('active');
-    closeSidebar();
+    var pg = document.getElementById('page-' + el.dataset.page);
+    if (pg) pg.classList.add('active');
+    closeSB();
+    if (el.dataset.page === 'instagram') {
+      if (!igLoaded) loadIG(true);
+    }
   });
 });
 
-// Sidebar mobile
 document.getElementById('hambtn').addEventListener('click', function() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('on');
 });
-document.getElementById('overlay').addEventListener('click', closeSidebar);
-function closeSidebar() {
+document.getElementById('overlay').addEventListener('click', closeSB);
+function closeSB() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('on');
 }
 
-// Pills toggle
+// =====================
+// PILLS & TAGS
+// =====================
 document.querySelectorAll('.pill').forEach(function(el) {
-  el.addEventListener('click', function() { el.classList.toggle('on'); });
+  if (!el.dataset.tp) el.addEventListener('click', function() { el.classList.toggle('on'); });
 });
-
-// Quick topic tags
-document.querySelectorAll('.qtag').forEach(function(el) {
+document.querySelectorAll('[data-tp]').forEach(function(el) {
   el.addEventListener('click', function() {
-    document.getElementById('post-topic').value = el.dataset.topic;
+    document.querySelectorAll('[data-tp]').forEach(function(p) { p.classList.remove('on'); });
+    el.classList.add('on');
+    showTrends(el.dataset.tp);
   });
 });
-
-// Destination cards
-document.querySelectorAll('.dc').forEach(function(el) {
+document.querySelectorAll('[data-topic]').forEach(function(el) {
+  el.addEventListener('click', function() { document.getElementById('post-topic').value = el.dataset.topic; });
+});
+document.querySelectorAll('[data-nische]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('[data-nische]').forEach(function(t) { t.classList.remove('sel'); });
+    el.classList.add('sel');
+  });
+});
+document.querySelectorAll('[data-dest]').forEach(function(el) {
   el.addEventListener('click', function() {
     document.getElementById('post-topic').value = el.dataset.dest;
-    document.querySelectorAll('.ni').forEach(function(n) { n.classList.remove('active'); });
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-    document.querySelector('[data-page="posts"]').classList.add('active');
-    document.getElementById('page-posts').classList.add('active');
+    document.querySelector('[data-page="posts"]').click();
   });
 });
 
-// Generic prompt buttons
+// =====================
+// GENERIC PROMPT BUTTONS
+// =====================
 document.querySelectorAll('[data-prompt]').forEach(function(el) {
   el.addEventListener('click', function() {
-    var key = el.dataset.prompt;
-    var target = el.dataset.target;
-    callAI(PROMPTS[key], target);
+    callAI(P[el.dataset.prompt], el.dataset.target);
   });
 });
 
-// Generate post
+// =====================
+// POST GENERATION
+// =====================
 document.getElementById('gen-post-btn').addEventListener('click', function() {
-  var topic = document.getElementById('post-topic').value.trim();
+  var topic = document.getElementById('post-topic').value.trim() || 'passendes Travel oder Dive Thema';
   var format = document.getElementById('post-format').value;
   var tone = document.getElementById('post-tone').value;
-  var platforms = [];
-  document.querySelectorAll('#post-pills .pill.on').forEach(function(p) { platforms.push(p.textContent); });
-  var plat = platforms.join(', ') || 'Instagram';
-  var t = topic || 'ein passendes Travel oder Dive Thema aus meinen Reisen';
-  var prompt = 'Recherchiere aktuelle Trends und erstelle ein ' + format + ' fuer ' + plat + ' zum Thema: ' + t + '. Ton: ' + tone + '. Inkl. Hashtags.';
-  callAI(prompt, 'post-res');
+  var plats = [];
+  document.querySelectorAll('#post-pills .pill.on').forEach(function(p) { plats.push(p.textContent.trim()); });
+  callAI('Recherchiere aktuelle Trends. Erstelle ' + format + ' fuer ' + (plats.join(', ') || 'Instagram') + ' zum Thema: ' + topic + '. Ton: ' + tone + '. Inkl. Hashtags.', 'post-res');
 });
-
-// Generate hooks
 document.getElementById('gen-hooks-btn').addEventListener('click', function() {
   var topic = document.getElementById('post-topic').value.trim() || 'Travel und Tauchen';
-  callAI('Recherchiere aktuelle virale Hook-Formate und erstelle 5 starke Hooks fuer TikTok und Instagram zum Thema: ' + topic + '. Insider-Tipp oder Kontrast-Hook Stil. Max 2 Saetze pro Hook.', 'post-res');
+  callAI('Recherchiere virale Hooks. 5 starke Hooks fuer TikTok/Instagram zum Thema: ' + topic + '. Max 2 Saetze pro Hook.', 'post-res');
 });
 
-// Generate reply
+// =====================
+// COMMENTS
+// =====================
 document.getElementById('reply-btn').addEventListener('click', function() {
-  var comment = document.getElementById('comment-input').value.trim();
-  var style = document.getElementById('reply-style').value;
-  var platform = document.getElementById('reply-platform').value;
-  if (!comment) {
-    callAI('Gib mir 5 Tipps wie ich als Travel und Dive Creator auf ' + platform + ' am besten mit meiner Community interagiere.', 'cm-res');
-    return;
-  }
-  callAI('Schreibe eine Antwort auf diesen ' + platform + '-Kommentar im Stil ' + style + ': "' + comment + '". Authentisch, kurz, zu mir passend.', 'cm-res');
+  var c = document.getElementById('comment-input').value.trim();
+  var s = document.getElementById('reply-style').value;
+  var pl = document.getElementById('reply-platform').value;
+  callAI(c ? 'Antworte auf diesen ' + pl + '-Kommentar im Stil "' + s + '": "' + c + '". Authentisch, kurz.' : '5 Community-Tipps als Travel Creator auf ' + pl, 'cm-res');
 });
 
-// AI call
-function callAI(prompt, boxId) {
-  var pin = sessionStorage.getItem('pin');
-  if (!pin) { doLogout(); return; }
-  var box = document.getElementById(boxId);
+// =====================
+// CREATOR SEARCH
+// =====================
+document.getElementById('creator-search-btn').addEventListener('click', function() {
+  var plats = [];
+  document.querySelectorAll('#creator-pills .pill.on').forEach(function(p) { plats.push(p.textContent.trim()); });
+  var sel = document.querySelector('[data-nische].sel');
+  var nische = sel ? sel.dataset.nische : 'Travel und Diving';
+  var plat = plats.join(', ') || 'Instagram';
+
+  var box = document.getElementById('cr-res');
   box.className = 'aibox on';
-  box.innerHTML = '<div class="aibox-header"><span class="ailive">Live aus dem Web</span></div><div style="color:var(--mt);font-size:13px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ac);animation:pulse 1s infinite"></span>Recherchiere gerade im Web...</div>';
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  box.innerHTML = mkLoader('Suche Top Creator in "' + nische + '"...');
+
+  var pin = sessionStorage.getItem('pin');
+  var prompt = 'Recherchiere TOP Creator in der Nische "' + nische + '" auf ' + plat + '. Antworte NUR mit JSON, kein Text davor/danach:\n{"creators":[{"name":"Name","handle":"@handle","platform":"' + plat + '","followers":"z.B. 450K","niche":"Nische","content":"Was sie posten","posting":"Frequenz","learn":"Learning fuer @faruksueer","emoji":"emoji"}]}';
+
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, system: SYSTEM, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
-  }).then(function(r) {
-    return r.json().then(function(data) { return { status: r.status, data: data }; });
-  }).then(function(res) {
-    if (res.status === 401) { box.innerHTML = 'Falscher PIN. Bitte neu einloggen.'; sessionStorage.removeItem('pin'); return; }
-    if (res.status !== 200) { box.innerHTML = 'Fehler: ' + (res.data.error || 'Unbekannt'); return; }
-    var text = res.data.text || '';
-    box.innerHTML = '<div class="aibox-header"><span class="ailive">Live aus dem Web</span><span class="aicopy" id="copy-' + boxId + '">Kopieren</span></div>' + renderAI(text);
-    document.getElementById('copy-' + boxId).addEventListener('click', function() {
-      navigator.clipboard.writeText(text).then(function() {
-        document.getElementById('copy-' + boxId).textContent = 'Kopiert!';
-        setTimeout(function() { var el = document.getElementById('copy-' + boxId); if(el) el.textContent = 'Kopieren'; }, 2000);
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+  }).then(function(r) { return r.text(); }).then(function(raw) {
+    try {
+      var lines = raw.split('\n');
+      var text = '';
+      lines.forEach(function(line) {
+        if (line.startsWith('data: ')) {
+          try { var d = JSON.parse(line.slice(6)); if (d.text) text = d.text; } catch(e) {}
+        }
       });
-    });
-    box.querySelector('.aicopy').addEventListener('click', function() {
-      var t = box.innerText.replace('Kopieren\n', '');
-      navigator.clipboard.writeText(t).then(function() {
-        box.querySelector('.aicopy').textContent = 'Kopiert!';
-        setTimeout(function() { if(box.querySelector('.aicopy')) box.querySelector('.aicopy').textContent = 'Kopieren'; }, 2000);
-      });
-    });
-  }).catch(function(e) {
-    box.innerHTML = 'Verbindungsfehler: ' + e.message;
+      var jm = text.match(/\{[\s\S]*\}/);
+      if (jm) {
+        var parsed = JSON.parse(jm[0]);
+        if (parsed.creators && parsed.creators.length) {
+          document.getElementById('creator-results').style.display = 'block';
+          document.getElementById('creator-results-title').textContent = 'Top Creator: ' + nische;
+          renderCreators(parsed.creators);
+          box.className = 'aibox';
+          return;
+        }
+      }
+      box.innerHTML = mkAIHeader() + renderAI(text);
+    } catch(e) { box.innerHTML = 'Fehler: ' + e.message; }
+  }).catch(function(e) { box.innerHTML = 'Fehler: ' + e.message; });
+});
+
+function renderCreators(creators) {
+  var grid = document.getElementById('creator-grid');
+  grid.innerHTML = '';
+  var grads = ['linear-gradient(135deg,#7c6fff,#a78bfa)','linear-gradient(135deg,#f472b6,#ec4899)','linear-gradient(135deg,#34d399,#059669)','linear-gradient(135deg,#fbbf24,#f59e0b)','linear-gradient(135deg,#69c9d0,#0891b2)'];
+  creators.forEach(function(c, i) {
+    var card = document.createElement('div');
+    card.className = 'creator-card';
+    card.innerHTML =
+      '<div class="cav" style="background:' + grads[i % grads.length] + '">' + esc(c.emoji || c.name[0]) + '</div>' +
+      '<div class="cname">' + esc(c.name) + '</div>' +
+      '<div class="chandle">' + esc(c.handle) + '</div>' +
+      '<div class="cstats"><div class="creator-stat"><div class="csval">' + esc(c.followers) + '</div><div class="cslabel">Follower</div></div><div class="creator-stat"><div class="csval">' + esc(c.posting) + '</div><div class="cslabel">Posts</div></div></div>' +
+      '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:3px"><span class="tag tp" style="font-size:10px">' + esc(c.niche) + '</span></div>' +
+      (c.learn ? '<div class="clearn"><span style="color:var(--ac2);font-weight:600">Learning: </span>' + esc(c.learn) + '</div>' : '');
+    grid.appendChild(card);
   });
 }
 
-function escText(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+document.getElementById('creator-post-btn').addEventListener('click', function() {
+  var sel = document.querySelector('[data-nische].sel');
+  var nische = sel ? sel.dataset.nische : 'Travel und Diving';
+  callAI('Recherchiere aktuell viralste Posts in der Nische ' + nische + '. Neueste virale Posts, Themen, Formate. 3 Post-Ideen fuer @faruksueer.', 'cr-res');
+});
+document.getElementById('creator-custom-btn').addEventListener('click', function() {
+  var q = document.getElementById('creator-custom').value.trim();
+  if (q) callAI('Recherchiere fuer @faruksueer als Travel und Dive Creator: ' + q, 'cr-custom-res');
+});
+
+// =====================
+// AI CALL (SSE)
+// =====================
+function callAI(prompt, boxId) {
+  var pin = sessionStorage.getItem('pin');
+  if (!pin) return;
+  var box = document.getElementById(boxId);
+  if (!box) return;
+  box.className = 'aibox on';
+  box.innerHTML = mkLoader('Recherchiere im Web...');
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+  }).then(function(r) {
+    if (r.status === 401) { box.innerHTML = 'Falscher PIN.'; sessionStorage.removeItem('pin'); return; }
+    return r.text();
+  }).then(function(raw) {
+    if (!raw) return;
+    var text = '';
+    raw.split('\n').forEach(function(line) {
+      if (line.startsWith('data: ')) {
+        try { var d = JSON.parse(line.slice(6)); if (d.text) text = d.text; if (d.error) text = 'Fehler: ' + d.error; } catch(e) {}
+      }
+    });
+    var cid = 'cp-' + boxId + '-' + Date.now();
+    box.innerHTML = mkAIHeader(cid) + renderAI(text);
+    var cpBtn = document.getElementById(cid);
+    if (cpBtn) {
+      cpBtn.addEventListener('click', function() {
+        navigator.clipboard.writeText(text);
+        cpBtn.textContent = '✓ Kopiert';
+        setTimeout(function() { cpBtn.textContent = 'Kopieren'; }, 2000);
+      });
+    }
+  }).catch(function(e) { box.innerHTML = 'Fehler: ' + e.message; });
 }
 
+function mkLoader(msg) {
+  return '<div class="aihdr"><span class="ailive"><span class="aildot"></span>Live</span></div><div style="display:flex;align-items:center;gap:8px;color:var(--tx3);font-size:13px"><div class="sm-spin"></div>' + esc(msg) + '</div>';
+}
+function mkAIHeader(cid) {
+  return '<div class="aihdr"><span class="ailive"><span class="aildot"></span>Live aus dem Web</span>' + (cid ? '<button class="aicopy" id="' + cid + '">Kopieren</button>' : '') + '</div>';
+}
+
+// =====================
+// RENDER AI RESPONSE
+// =====================
 function renderAI(text) {
-  // Convert markdown-style text to modern HTML cards
+  if (!text) return '';
   var lines = text.split('\n');
   var html = '';
   var inList = false;
@@ -700,230 +983,263 @@ function renderAI(text) {
     var t = line.trim();
     if (!t) {
       if (inList) { html += '</div>'; inList = false; }
-      html += '<div style="height:8px"></div>';
+      html += '<div style="height:5px"></div>';
       return;
     }
-
-    // H2 headings (## or **Title**)
-    if (t.startsWith('## ') || (t.startsWith('**') && t.endsWith('**') && t.length < 80)) {
+    // Section headings
+    if (t.match(/^#{1,3} /) || (t.startsWith('**') && t.endsWith('**') && t.length < 70 && !t.match(/\*\*.+\*\*.+/))) {
       if (inList) { html += '</div>'; inList = false; }
-      var heading = t.replace(/^## /, '').replace(/\*\*/g, '');
-      html += '<div style="font-size:13px;font-weight:600;color:var(--ac2);text-transform:uppercase;letter-spacing:0.08em;margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--bd)">' + escText(heading) + '</div>';
+      html += '<div class="ai-sec">' + esc(t.replace(/^#+\s*/,'').replace(/\*\*/g,'')) + '</div>';
       return;
     }
-
-    // Numbered items (1. 2. 3.)
-    var numMatch = t.match(/^(\d+)[\.\)]/);
-    if (numMatch) {
+    // Numbered
+    var nm = t.match(/^(\d+)[\.\)]\s*(.*)/);
+    if (nm) {
       if (inList) { html += '</div>'; inList = false; }
-      var num = numMatch[1];
-      var rest = t.replace(/^\d+[\.\)]\s*/, '');
-      // Extract bold title if present
-      var boldMatch = rest.match(/^\*\*(.+?)\*\*/);
-      var title = boldMatch ? boldMatch[1] : rest.split(':')[0];
-      var desc = boldMatch ? rest.replace(/^\*\*.+?\*\*:?\s*/, '') : rest.replace(/^[^:]+:\s*/, '');
-      html += '<div style="display:flex;gap:12px;padding:12px 14px;background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.15);border-radius:10px;margin-bottom:8px;align-items:flex-start">';
-      html += '<div style="min-width:28px;height:28px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0">' + num + '</div>';
-      html += '<div><div style="font-size:14px;font-weight:600;color:var(--tx);margin-bottom:3px">' + escText(title) + '</div>';
-      if (desc) html += '<div style="font-size:12px;color:var(--mt);line-height:1.5">' + escText(desc) + '</div>';
-      html += '</div></div>';
+      var rest = nm[2];
+      var bm = rest.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
+      var title = bm ? bm[1] : rest.split(':')[0];
+      var desc = bm ? bm[2] : (rest.includes(':') ? rest.split(':').slice(1).join(':').trim() : '');
+      html += '<div class="ai-num"><div class="ai-nbadge">' + nm[1] + '</div><div><div class="ai-ntitle">' + esc(title) + '</div>' + (desc ? '<div class="ai-ndesc">' + esc(desc) + '</div>' : '') + '</div></div>';
       return;
     }
-
-    // Bullet points (- or *)
-    if (t.startsWith('- ') || t.startsWith('* ')) {
-      var item = t.replace(/^[-*] /, '');
-      var boldItem = item.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
-      if (!inList) { html += '<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0">'; inList = true; }
-      if (boldItem) {
-        html += '<div style="display:flex;gap:8px;align-items:flex-start;padding:8px 12px;background:var(--s2);border-radius:8px"><div style="width:6px;height:6px;border-radius:50%;background:var(--ac);margin-top:5px;flex-shrink:0"></div><div><span style="font-size:13px;font-weight:600;color:var(--tx)">' + escText(boldItem[1]) + '</span>' + (boldItem[2] ? '<span style="font-size:12px;color:var(--mt)"> — ' + escText(boldItem[2]) + '</span>' : '') + '</div></div>';
+    // Bullets
+    if (t.match(/^[-*•] /)) {
+      var item = t.replace(/^[-*•] /,'');
+      var bm2 = item.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
+      if (!inList) { html += '<div style="display:flex;flex-direction:column;gap:4px">'; inList = true; }
+      if (bm2) {
+        html += '<div class="ai-bullet"><div class="ai-bdot"></div><div><span style="font-size:13px;font-weight:600;color:var(--tx)">' + esc(bm2[1]) + '</span>' + (bm2[2] ? '<span style="font-size:12px;color:var(--tx3)"> — ' + esc(bm2[2]) + '</span>' : '') + '</div></div>';
       } else {
-        html += '<div style="display:flex;gap:8px;align-items:flex-start;padding:8px 12px;background:var(--s2);border-radius:8px"><div style="width:6px;height:6px;border-radius:50%;background:var(--ac);margin-top:5px;flex-shrink:0"></div><div style="font-size:13px;color:var(--tx);line-height:1.5">' + escText(item) + '</div></div>';
+        html += '<div class="ai-bullet"><div class="ai-bdot"></div><div style="font-size:13px;color:var(--tx2);line-height:1.5">' + esc(item) + '</div></div>';
       }
       return;
     }
-
-    // Hashtags line
-    if (t.startsWith('#') && t.includes(' #')) {
+    // Hashtag lines
+    if (t.match(/^#\w/) && t.split(' ').filter(function(w){return w.startsWith('#');}).length > 2) {
       if (inList) { html += '</div>'; inList = false; }
-      var tags = t.split(' ').filter(function(w) { return w.startsWith('#'); });
-      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin:8px 0">';
-      tags.forEach(function(tag) {
-        html += '<span style="padding:4px 10px;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.25);border-radius:20px;font-size:12px;color:var(--ac2)">' + escText(tag) + '</span>';
-      });
+      html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:5px 0">';
+      t.split(' ').forEach(function(w) { if (w.startsWith('#')) html += '<span class="ai-htag">' + esc(w) + '</span>'; });
       html += '</div>';
       return;
     }
-
-    // Bold inline text
+    // Regular text
     if (inList) { html += '</div>'; inList = false; }
-    var formatted = t
-      .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--tx)">$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em style="color:var(--ac2)">$1</em>');
-    html += '<div style="font-size:13px;color:var(--mt);line-height:1.7;margin:2px 0">' + formatted + '</div>';
+    var fmt = t.replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--tx)">$1</strong>').replace(/\*(.+?)\*/g,'<em style="color:var(--ac2)">$1</em>');
+    html += '<div class="ai-text">' + fmt + '</div>';
   });
 
   if (inList) html += '</div>';
   return html;
 }
 
-// Trends static data
-var trendsData = {
-  ig: [['Insider-Tipp Travel Format','"Was kein Tourist weiss" - meistgespeichertes Format',96],['Ko Lipe / Phuket Vergleich','Thailand-Inseln - hohes Suchvolumen',87],['Tauchen POV Clips','Visuell stark + ruhige Musik',79],['Fehler die Touristen machen','Kontrast-Hook + Mehrwert = viral',71],['Yoga an besonderen Orten','Wellness + Travel kombiniert',55]],
-  tt: [['Tourist vs Insider Format','Zwei Cuts, ein Kontrast - hohe Completion Rate',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren gerade',88],['Tauchen POV Rotes Meer','Aegypten + Unterwasser = wenig Konkurrenz',78],['Istanbul Geheimtipps','Tuerkei-Content steigt stark',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
-  yt: [['Reise-Vlogs mit Storytelling','Thailand oder Istanbul - hohe Watchtime',90],['Tauch-Guide fuer Einsteiger','Educational + Passion = treue Subscriber',78],['Destination Vergleiche','Barcelona vs Valencia, Ko Lipe vs Phuket',68],['Lohnt es sich wirklich?','Kopenhagen, Dom. Republik, Prag',59],['Yoga und Meditation unterwegs','Reisen + Wellness - wachsende Nische',44]]
-};
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
-function showTrends(key) {
-  document.querySelectorAll('#trend-pills .pill').forEach(function(p) { p.classList.remove('on'); });
-  document.querySelector('[data-tp="' + key + '"]').classList.add('on');
-  var d = trendsData[key];
-  var names = { ig: 'Instagram', tt: 'TikTok', yt: 'YouTube' };
-  var html = '<div class="sct">Trends auf ' + names[key] + '</div>';
-  d.forEach(function(item, i) {
-    html += '<div class="ti"><div class="tr2">#' + (i+1) + '</div><div style="flex:1"><div class="tn">' + item[0] + '</div><div class="ts">' + item[1] + '</div><div class="tbb"><div class="tbf" style="width:' + item[2] + '%"></div></div></div></div>';
+// =====================
+// TRENDS
+// =====================
+var TD = {
+  ig:[['Insider-Tipp Travel','"Was kein Tourist weiss" — meistgespeichert',96],['Ko Lipe / Phuket Vergleich','Thailand-Inseln — hohes Suchvolumen',87],['Tauchen POV Clips','Visuell stark + ruhige Musik',79],['Fehler die Touristen machen','Kontrast-Hook + Mehrwert',71],['Yoga an besonderen Orten','Wellness + Travel',55]],
+  tt:[['Tourist vs Insider','Zwei Cuts, ein Kontrast — hohe Completion',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren',88],['Tauchen POV Rotes Meer','Aegypten + Unterwasser — wenig Konkurrenz',78],['Istanbul Geheimtipps','Tuerkei-Content steigt stark',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
+  yt:[['Reise-Vlogs Storytelling','Thailand oder Istanbul — hohe Watchtime',90],['Tauch-Guide Einsteiger','Educational + Passion',78],['Destination Vergleiche','Barcelona vs Valencia, Ko Lipe vs Phuket',68],['Lohnt es sich wirklich?','Kopenhagen, Dom. Republik, Prag',59],['Yoga unterwegs','Reisen + Wellness — wachsende Nische',44]]
+};
+function showTrends(k) {
+  var d = TD[k];
+  var n = {ig:'Instagram',tt:'TikTok',yt:'YouTube'};
+  var html = '<div class="gc-title">Trends auf ' + n[k] + '</div>';
+  d.forEach(function(item,i) {
+    html += '<div class="ti"><div class="tr2">' + (i+1) + '</div><div style="flex:1"><div class="tn">' + item[0] + '</div><div class="ts">' + item[1] + '</div><div class="tbb"><div class="tbf" style="width:' + item[2] + '%"></div></div></div></div>';
   });
   document.getElementById('trends-static').innerHTML = html;
 }
-
-document.querySelectorAll('[data-tp]').forEach(function(el) {
-  el.addEventListener('click', function() { showTrends(el.dataset.tp); });
-});
-
 showTrends('ig');
 
-// Instagram Insights
-var igData = {};
+// =====================
+// INSTAGRAM
+// =====================
+var igLoaded = false;
+var igCache = null;
 
-function loadInstagram() {
-  document.getElementById('ig-loading').style.display = 'block';
-  document.getElementById('ig-content').style.display = 'none';
-  document.getElementById('ig-error').style.display = 'none';
+function fmtN(n) {
+  if (!n && n !== 0) return '-';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return '' + n;
+}
 
+function loadIG(show) {
+  if (igCache) { renderIG(igCache); return; }
+  if (show) {
+    document.getElementById('ig-loading').style.display = 'flex';
+    document.getElementById('ig-content').style.display = 'none';
+    document.getElementById('ig-error').style.display = 'none';
+  }
   var pin = sessionStorage.getItem('pin');
   fetch('/api/instagram', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
     body: JSON.stringify({ type: 'all' })
   }).then(function(r) { return r.json(); }).then(function(data) {
+    igLoaded = true;
     if (data.error) {
-      document.getElementById('ig-loading').style.display = 'none';
-      document.getElementById('ig-error').style.display = 'block';
-      document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
+      if (show) {
+        document.getElementById('ig-loading').style.display = 'none';
+        document.getElementById('ig-error').style.display = 'block';
+        document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
+      }
       return;
     }
-    igData = data;
-    renderInstagram(data);
+    igCache = data;
+    if (show) renderIG(data);
   }).catch(function(e) {
-    document.getElementById('ig-loading').style.display = 'none';
-    document.getElementById('ig-error').style.display = 'block';
-    document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
+    igLoaded = true;
+    if (show) {
+      document.getElementById('ig-loading').style.display = 'none';
+      document.getElementById('ig-error').style.display = 'block';
+      document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
+    }
   });
 }
 
-function formatNum(n) {
-  if (!n) return '-';
-  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
-  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
-  return n.toString();
-}
-
-function renderInstagram(data) {
+function renderIG(data) {
   document.getElementById('ig-loading').style.display = 'none';
   document.getElementById('ig-content').style.display = 'block';
 
   if (data.profile && !data.profile.error) {
     var p = data.profile;
-    document.getElementById('ig-username').textContent = '@' + (p.username || 'faruksueer');
-    document.getElementById('ig-bio').textContent = p.biography || '';
-    document.getElementById('ig-followers').textContent = formatNum(p.followers_count);
-    document.getElementById('ig-following').textContent = formatNum(p.follows_count);
-    document.getElementById('ig-posts').textContent = formatNum(p.media_count);
+    document.getElementById('ig-followers').textContent = fmtN(p.followers_count);
+    document.getElementById('ig-following').textContent = fmtN(p.follows_count);
+    document.getElementById('ig-posts-count').textContent = fmtN(p.media_count);
+    document.getElementById('ig-username-disp').textContent = '@' + (p.username || 'faruksueer');
+    document.getElementById('ig-bio-disp').textContent = p.biography || '';
   }
 
-  if (data.media && data.media.data) {
+  if (data.media && data.media.data && data.media.data.length) {
     var grid = document.getElementById('ig-media-grid');
     grid.innerHTML = '';
     data.media.data.forEach(function(post) {
       var div = document.createElement('div');
-      div.style.cssText = 'position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--s2);cursor:pointer';
-      if (post.media_url) {
-        var img = document.createElement('img');
-        img.src = post.media_url;
-        img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-        img.onerror = function() { div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:24px">' + (post.media_type === 'VIDEO' ? '🎬' : '📸') + '</div>'; };
-        div.appendChild(img);
+      div.className = 'ig-post';
+      var isVideo = post.media_type === 'VIDEO' || post.media_type === 'REELS';
+
+      if (isVideo && post.media_url) {
+        // Show thumbnail with play button
+        var thumb = post.thumbnail_url || post.media_url;
+        if (post.thumbnail_url) {
+          var img = document.createElement('img');
+          img.src = post.thumbnail_url;
+          img.alt = '';
+          img.loading = 'lazy';
+          div.appendChild(img);
+        } else {
+          div.style.background = 'var(--s3)';
+          div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px">🎬</div>';
+        }
+        // Play button overlay
+        var playDiv = document.createElement('div');
+        playDiv.className = 'ig-play';
+        playDiv.innerHTML = '<div class="ig-play-btn">▶</div>';
+        div.appendChild(playDiv);
+        // Type badge
+        var typeBadge = document.createElement('div');
+        typeBadge.className = 'ig-type';
+        typeBadge.textContent = '🎬';
+        div.appendChild(typeBadge);
+        // Click opens modal with video
+        div.addEventListener('click', (function(p) {
+          return function() { openVideoModal(p); };
+        })(post));
+      } else if (post.media_url) {
+        var img2 = document.createElement('img');
+        img2.src = post.media_url;
+        img2.alt = '';
+        img2.loading = 'lazy';
+        img2.onerror = function() {
+          div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">📸</div>';
+        };
+        div.appendChild(img2);
+        // Click opens image modal
+        div.addEventListener('click', (function(p) {
+          return function() { openImageModal(p); };
+        })(post));
       } else {
-        div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:24px">' + (post.media_type === 'VIDEO' ? '🎬' : '📸') + '</div>';
+        div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">📸</div>';
       }
-      var overlay = document.createElement('div');
-      overlay.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:8px 6px 5px;display:flex;gap:8px';
-      overlay.innerHTML = '<span style="font-size:11px;color:#fff">❤️ ' + formatNum(post.like_count) + '</span><span style="font-size:11px;color:#fff">💬 ' + formatNum(post.comments_count) + '</span>';
-      div.appendChild(overlay);
+
+      // Stats overlay
+      var ov = document.createElement('div');
+      ov.className = 'ig-overlay';
+      ov.innerHTML = '<span class="ig-stat">❤️ ' + fmtN(post.like_count) + '</span><span class="ig-stat">💬 ' + fmtN(post.comments_count) + '</span>';
+      div.appendChild(ov);
       grid.appendChild(div);
     });
   }
 }
 
+// VIDEO MODAL
+function openVideoModal(post) {
+  document.getElementById('modal-title').textContent = post.media_type || 'Video';
+  document.getElementById('modal-video').src = post.media_url || '';
+  document.getElementById('modal-caption').textContent = post.caption || '';
+  document.getElementById('modal-likes').textContent = '❤️ ' + fmtN(post.like_count);
+  document.getElementById('modal-comments').textContent = '💬 ' + fmtN(post.comments_count);
+  document.getElementById('modal-date').textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString('de') : '';
+  document.getElementById('video-modal').classList.add('on');
+}
+
+function openImageModal(post) {
+  // For images, show in modal too
+  var modal = document.getElementById('video-modal');
+  var vid = document.getElementById('modal-video');
+  // Replace video with image temporarily
+  vid.style.display = 'none';
+  var existing = document.getElementById('modal-img');
+  if (existing) existing.remove();
+  var img = document.createElement('img');
+  img.id = 'modal-img';
+  img.src = post.media_url;
+  img.style.cssText = 'width:100%;max-height:60vh;object-fit:contain;background:#000;display:block';
+  vid.parentNode.insertBefore(img, vid);
+  document.getElementById('modal-title').textContent = '📸 Post';
+  document.getElementById('modal-caption').textContent = post.caption || '';
+  document.getElementById('modal-likes').textContent = '❤️ ' + fmtN(post.like_count);
+  document.getElementById('modal-comments').textContent = '💬 ' + fmtN(post.comments_count);
+  document.getElementById('modal-date').textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString('de') : '';
+  modal.classList.add('on');
+}
+
+document.getElementById('modal-close').addEventListener('click', function() {
+  document.getElementById('video-modal').classList.remove('on');
+  document.getElementById('modal-video').pause();
+  document.getElementById('modal-video').src = '';
+  document.getElementById('modal-video').style.display = 'block';
+  var img = document.getElementById('modal-img');
+  if (img) img.remove();
+});
+document.getElementById('video-modal').addEventListener('click', function(e) {
+  if (e.target === this) document.getElementById('modal-close').click();
+});
+
+// IG Analysis with real data
 document.getElementById('ig-analyze-btn').addEventListener('click', function() {
-  if (!igData.profile) { loadInstagram(); return; }
-  var p = igData.profile;
-  var mediaInfo = igData.media && igData.media.data ? igData.media.data.slice(0,5).map(function(m) {
-    return 'Post vom ' + new Date(m.timestamp).toLocaleDateString('de') + ': ' + formatNum(m.like_count) + ' Likes, ' + formatNum(m.comments_count) + ' Kommentare';
-  }).join('; ') : 'keine Daten';
-  callAI('Analysiere diese Instagram Insights von @faruksueer: Follower: ' + p.followers_count + ', Following: ' + p.follows_count + ', Posts: ' + p.media_count + '. Letzte Posts: ' + mediaInfo + '. Was laeuft gut, was kann verbessert werden? Gib konkrete Handlungsempfehlungen.', 'ig-ai-res');
+  var profile = igCache && igCache.profile ? igCache.profile : {};
+  var mediaInfo = igCache && igCache.media && igCache.media.data
+    ? igCache.media.data.slice(0,5).map(function(m) {
+        return (m.media_type || 'POST') + ' vom ' + (m.timestamp ? new Date(m.timestamp).toLocaleDateString('de') : '?') + ': ' + fmtN(m.like_count) + ' Likes, ' + fmtN(m.comments_count) + ' Kommentare';
+      }).join('; ')
+    : 'keine Daten';
+  callAI('Analysiere Instagram Insights von @faruksueer: Follower: ' + (profile.followers_count || '?') + ', Following: ' + (profile.follows_count || '?') + ', Posts: ' + (profile.media_count || '?') + '. Letzte Posts: ' + mediaInfo + '. Konkrete Handlungsempfehlungen fuer Wachstum.', 'ig-ai-res');
 });
-
 document.getElementById('ig-strategy-btn').addEventListener('click', function() {
-  if (!igData.profile) { loadInstagram(); return; }
-  var p = igData.profile;
-  callAI('Basierend auf diesen Instagram Daten von @faruksueer (Follower: ' + p.followers_count + ', Posts: ' + p.media_count + '): Erstelle eine konkrete Wachstumsstrategie fuer die naechsten 30 Tage. Themen: Reisen, Tauchen, Yoga. Recherchiere aktuelle Best Practices.', 'ig-ai-res');
+  var fc = igCache && igCache.profile ? igCache.profile.followers_count : '?';
+  callAI('Erstelle 30-Tage Wachstumsstrategie fuer @faruksueer auf Instagram (aktuell ' + fc + ' Follower). Themen: Reisen, Tauchen, Yoga. Recherchiere aktuelle Algorithmus-Updates.', 'ig-ai-res');
 });
-
-document.getElementById('ig-refresh-btn').addEventListener('click', loadInstagram);
-
-// Load Instagram when tab is opened
-document.querySelector('[data-page="instagram"]').addEventListener('click', function() {
-  if (!igData.profile) loadInstagram();
-});
-
-// Creator search button
-document.getElementById('creator-search-btn').addEventListener('click', function() {
-  var platforms = [];
-  document.querySelectorAll('#creator-pills .pill.on').forEach(function(p) { platforms.push(p.textContent); });
-  var nische = document.querySelector('.qtag.selected') ? document.querySelector('.qtag.selected').dataset.nische : 'Travel und Diving';
-  var plat = platforms.join(', ') || 'Instagram';
-  callAI('Recherchiere jetzt die erfolgreichsten Creator in der Nische ' + nische + ' auf ' + plat + '. Welche Accounts wachsen am staerksten? Was posten sie aktuell, wie oft, welche Formate? Gib mir konkrete Namen, Follower-Zahlen und Content-Strategie. Was kann @faruksueer davon lernen?', 'cr-res');
-});
-
-document.getElementById('creator-post-btn').addEventListener('click', function() {
-  var platforms = [];
-  document.querySelectorAll('#creator-pills .pill.on').forEach(function(p) { platforms.push(p.textContent); });
-  var nische = document.querySelector('.qtag.selected') ? document.querySelector('.qtag.selected').dataset.nische : 'Travel und Diving';
-  var plat = platforms.join(', ') || 'Instagram';
-  callAI('Recherchiere die aktuell erfolgreichsten Posts in der Nische ' + nische + ' auf ' + plat + '. Was sind die neusten viralen Posts? Welche Themen, Formate und Hooks funktionieren gerade? Erstelle 3 konkrete Post-Ideen fuer @faruksueer basierend auf diesen Erkenntnissen.', 'cr-res');
-});
-
-document.getElementById('creator-custom-btn').addEventListener('click', function() {
-  var q = document.getElementById('creator-custom').value.trim();
-  if (!q) return;
-  callAI('Recherchiere folgendes fuer @faruksueer als Travel und Dive Creator: ' + q, 'cr-custom-res');
-});
-
-// Nische tag selection
-document.querySelectorAll('[data-nische]').forEach(function(el) {
-  el.addEventListener('click', function() {
-    document.querySelectorAll('[data-nische]').forEach(function(t) { t.classList.remove('selected'); });
-    el.classList.add('selected');
-    el.style.borderColor = 'var(--ac)';
-    el.style.color = 'var(--ac2)';
-    document.querySelectorAll('[data-nische]').forEach(function(t) {
-      if (!t.classList.contains('selected')) {
-        t.style.borderColor = '';
-        t.style.color = '';
-      }
-    });
-  });
+document.getElementById('ig-refresh-btn').addEventListener('click', function() {
+  igCache = null; igLoaded = false;
+  loadIG(true);
 });
 </script>
 </body>
