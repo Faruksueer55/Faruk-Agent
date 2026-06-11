@@ -79,7 +79,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 .overlay.on{display:block}
 
 /* PAGES */
-.page{display:none;padding:20px;max-width:840px}
+.page{display:none;padding:20px 20px 110px;max-width:840px}
 .page.active{display:block;animation:fadeIn 0.2s ease}
 .ptitle{font-size:21px;font-weight:700;margin-bottom:3px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .psub2{font-size:12px;color:var(--tx3);margin-bottom:18px}
@@ -189,7 +189,7 @@ select option{background:var(--s2)}
 .ds{font-size:10px;color:var(--tx3);margin-top:1px}
 
 /* CREATOR CARDS */
-.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin-top:10px}
+.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px}
 .creator-card{background:var(--s2);border:1px solid var(--bd);border-radius:11px;padding:13px;transition:all 0.2s;text-align:center}
 .creator-card:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:var(--sh)}
 .cav{width:52px;height:52px;border-radius:50%;margin:0 auto 8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;border:2px solid var(--bd)}
@@ -387,7 +387,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
       <div class="gc">
         <div class="gc-title">Content-Säulen & Reisen</div>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px">
-          <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span><span class="tag tp">📷 Landschaft Cinematic</span>
+          <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span><span class="tag tp">📷 Landschaft Cinematic</span><span class="tag tg">📝 Blogging</span>
           <span class="tag ta">🧘 Yoga</span><span class="tag tg">💼 Karriere</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:4px">
@@ -465,6 +465,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
           <span class="qtag" data-topic="Dominikanische Republik was ich nicht erwartet haette">🇩🇴 Dom. Republik</span>
           <span class="qtag" data-topic="Cinematische Landschaftsfotografie wie ich meine Reels color grade fuer den Film-Look">📷 Cinematic Landschaft</span>
           <span class="qtag" data-topic="Hinter den Kulissen Landschaftsvideografie welche Spots Einstellungen und Drohnenshots wirklich funktionieren">🎥 BTS Videografie</span>
+          <span class="qtag" data-topic="Blog-Artikel ueber meine Reise-Erfahrungen mit praktischen Tipps und persoenlichen Eindruecken">📝 Reise-Blogpost</span>
         </div>
         <textarea id="post-topic" placeholder="Eigenes Thema eingeben..."></textarea>
         <div style="display:flex;gap:8px">
@@ -472,6 +473,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
             <option>Caption + Hashtags</option><option>Reels-Skript 30-60s</option>
             <option>TikTok-Skript mit Hook</option><option>Karussell 5-7 Slides</option>
             <option>YouTube Vlog-Outline</option><option>YouTube Short</option>
+            <option>Blog-Artikel (SEO-optimiert)</option>
           </select>
           <select id="post-tone" style="flex:1">
             <option>Authentisch & direkt</option><option>Insider-Tipp Stil</option>
@@ -621,7 +623,6 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
           <span class="qtag" data-vidprompt="Slow motion waves on a white sand beach in Thailand, palm trees swaying, paradise island, cinematic travel shot">🏖️ Thailand Beach</span>
           <span class="qtag" data-vidprompt="Person doing yoga at sunrise on a rooftop terrace, peaceful atmosphere, soft golden light, slow camera movement">🧘 Yoga Sunrise</span>
           <span class="qtag" data-vidprompt="Busy Bangkok night market street food scene, colorful neon lights, steam rising from food stalls, vibrant atmosphere">🇹🇭 Bangkok Nacht</span>
-          <span class="qtag" data-vidprompt="Cinematic shot of Red Sea coral reef Egypt, school of fish, deep blue water, National Geographic documentary style">🇪🇬 Rotes Meer</span>
           <span class="qtag" data-vidprompt="Epic cinematic landscape shot, dramatic mountains at golden hour, moving clouds timelapse style, teal and orange color grading, film look">🏔️ Cinematic Berge</span>
           <span class="qtag" data-vidprompt="Slow cinematic drone shot over misty forest at sunrise, god rays through fog, epic nature documentary style, moody atmosphere">🌲 Nebelwald Drohne</span>
         </div>
@@ -632,9 +633,13 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
             <option value="1280x720">16:9 Querformat (YouTube)</option>
           </select>
           <select id="vid-seconds" style="flex:1">
-            <option value="4">4 Sekunden (~$0,40)</option>
-            <option value="8">8 Sekunden (~$0,80)</option>
-            <option value="12">12 Sekunden (~$1,20)</option>
+            <option value="4">4 Sekunden</option>
+            <option value="8">8 Sekunden</option>
+            <option value="12">12 Sekunden</option>
+          </select>
+          <select id="vid-model" style="flex:1">
+            <option value="sora-2">Standard 720p (~$0,10/Sek)</option>
+            <option value="sora-2-pro">Pro - hoehere Aufloesung (~$0,30/Sek)</option>
           </select>
         </div>
         <button class="btn bp" id="gen-vid-btn">🎬 Video generieren</button>
@@ -814,7 +819,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 // =====================
 // CONFIG
 // =====================
-var SYS = 'Du bist die KI-Engine eines High-Performance Social-Media-Dashboards fuer Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT, faruk.suer.77 FB). WISSENSDATENBANK: 31 Jahre, Prokurist und Innendienstleiter in Luedenscheid, tuerkische Wurzeln, in Koeln geboren, lebte als Kind 1 Jahr in Istanbul (Familienhaus dort). Werdegang: schwieriger Schulweg, mit 19 Neuanfang, Abschluesse auf Abendschule nachgeholt (Realschulabschluss 1,3), Ausbildung Buerokaufmann, Innendienstleitung, Prokura. Yoga und Meditation seit 2025. Verheiratet, Frau war grosse Stuetze. REISEN: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort), Spanien (Barcelona, Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. BRAND VOICE: authentisch, aesthetisch, spontan, kein Hochglanz, ehrlich, nahbar. NEUE SAEULE: Professionelle Landschaftsfotografie und -videografie mit cinematischem Look, verarbeitet in kurzen Reels und Shorts (Color Grading, Teal-Orange, Golden Hour, dramatische Natur). Persoenlichen Werdegang NUR erwaehnen wenn explizit gefragt. REGELN: 1) Hook-First - erste Zeile MUSS fesseln (Neugier, Kontrast oder Nutzen). 2) Verknuepfe Trends mit seinen echten Erlebnissen fuer Authentizitaet. 3) Skripte max 45 Sek Sprechzeit. 4) Immer plattformspezifisch optimieren. Ziel: maximale organische Reichweite. Antworte auf Deutsch, kurz und konkret.';
+var SYS = 'Du bist die KI-Engine eines High-Performance Social-Media-Dashboards fuer Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT, faruk.suer.77 FB). WISSENSDATENBANK: 31 Jahre, Prokurist und Innendienstleiter in Luedenscheid, tuerkische Wurzeln, in Koeln geboren, lebte als Kind 1 Jahr in Istanbul (Familienhaus dort). Werdegang: schwieriger Schulweg, mit 19 Neuanfang, Abschluesse auf Abendschule nachgeholt (Realschulabschluss 1,3), Ausbildung Buerokaufmann, Innendienstleitung, Prokura. Yoga und Meditation seit 2025. Verheiratet, Frau war grosse Stuetze. REISEN: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort), Spanien (Barcelona, Valencia), Aegypten (Tauchen Rotes Meer - ACHTUNG: wenig Videomaterial vorhanden, Rotes Meer nicht als Video-Thema vorschlagen), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. BRAND VOICE: authentisch, aesthetisch, spontan, kein Hochglanz, ehrlich, nahbar. SAEULE BLOGGING: Er schreibt Blog-Artikel zu Reisen, Fotografie und Persoenlichkeitsentwicklung (SEO-optimiert, persoenlicher Ton). NEUE SAEULE: Professionelle Landschaftsfotografie und -videografie mit cinematischem Look, verarbeitet in kurzen Reels und Shorts (Color Grading, Teal-Orange, Golden Hour, dramatische Natur). Persoenlichen Werdegang NUR erwaehnen wenn explizit gefragt. REGELN: 1) Hook-First - erste Zeile MUSS fesseln (Neugier, Kontrast oder Nutzen). 2) Verknuepfe Trends mit seinen echten Erlebnissen fuer Authentizitaet. 3) Skripte max 45 Sek Sprechzeit. 4) Immer plattformspezifisch optimieren. Ziel: maximale organische Reichweite. Antworte auf Deutsch, kurz und konkret.';
 
 var P = {
   wochenplan:'Recherchiere aktuelle Trends. Erstelle kompakten Wochenplan fuer Instagram, TikTok, YouTube. Themen: Reisen, Tauchen, Yoga.',
@@ -1012,7 +1017,7 @@ document.getElementById('gen-complete-btn').addEventListener('click', function()
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ max_tokens: 1200, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+    body: JSON.stringify({ max_tokens: 2000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
   }).then(function(r) { return r.json(); }).then(function(data) {
     if (data.error) {
       btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
@@ -1168,9 +1173,10 @@ document.getElementById('upload-input').addEventListener('change', function() {
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
+    var originalDataUrl = e.target.result; // Full resolution for Lightroom
     var img = new Image();
     img.onload = function() {
-      // Downscale to max 1024px for speed and Vercel size limit
+      // Downscale ONLY for AI edit (Vercel size limit) - Lightroom keeps full res
       var max = 1024;
       var scale = Math.min(1, max / Math.max(img.width, img.height));
       var canvas = document.createElement('canvas');
@@ -1179,12 +1185,12 @@ document.getElementById('upload-input').addEventListener('change', function() {
       canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
       var dataUrl = canvas.toDataURL('image/png');
       uploadedB64 = dataUrl.split(',')[1];
-      lrLoadImage(dataUrl);
+      lrLoadImage(originalDataUrl);
       document.getElementById('upload-preview').src = dataUrl;
       document.getElementById('upload-preview-wrap').style.display = 'block';
       document.getElementById('upload-info').textContent = canvas.width + 'x' + canvas.height + 'px · bereit zur Bearbeitung';
       document.getElementById('edit-img-btn').disabled = false;
-      document.getElementById('upload-btn').textContent = '📷 Anderes Bild wählen';
+      document.getElementById('upload-btn').textContent = '📷 Anderes Bild waehlen';
     };
     img.src = e.target.result;
   };
@@ -1247,7 +1253,7 @@ document.getElementById('upload-remove-btn').addEventListener('click', function(
   document.getElementById('upload-preview-wrap').style.display = 'none';
   document.getElementById('upload-info').textContent = '';
   document.getElementById('edit-img-btn').disabled = true;
-  document.getElementById('upload-btn').textContent = '📷 Bild aus Galerie wählen';
+  document.getElementById('upload-btn').textContent = '📷 Bild aus Galerie waehlen';
   document.getElementById('edit-prompt').value = '';
   // Also clear edited result since source is gone
   document.getElementById('edit-result').className = 'img-result';
@@ -1321,7 +1327,7 @@ document.getElementById('lr-export-btn').addEventListener('click', function() {
     var ctx = canvas.getContext('2d');
     ctx.filter = lrFilterString();
     ctx.drawImage(img, 0, 0);
-    var url = canvas.toDataURL('image/jpeg', 0.92);
+    var url = canvas.toDataURL('image/jpeg', 0.95);
     var a = document.createElement('a');
     a.href = url;
     a.download = 'faruksueer-lightroom.jpg';
@@ -1374,7 +1380,7 @@ document.getElementById('gen-vid-btn').addEventListener('click', function() {
   fetch('/api/video', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ action: 'create', prompt: prompt, size: size, seconds: seconds })
+    body: JSON.stringify({ action: 'create', prompt: prompt, size: size, seconds: seconds, model: document.getElementById('vid-model').value })
   }).then(function(r) { return r.json(); }).then(function(data) {
     if (data.error) {
       btn.disabled = false; btn.textContent = '🎬 Video generieren';
@@ -1469,22 +1475,23 @@ document.getElementById('creator-search-btn').addEventListener('click', function
 
   var pin = sessionStorage.getItem('pin');
   // Ask for plain text list instead of JSON to avoid parse errors
-  var prompt = 'Recherchiere die TOP 5 Creator in der Nische "' + nische + '" auf ' + plat + '. Fuer jeden Creator:\nName: [Name]\nHandle: [@handle]\nFollower: [Anzahl]\nContent: [Was sie posten, 1 Satz]\nLearning: [1 konkretes Learning fuer @faruksueer]\n---';
+  var prompt = 'Recherchiere die TOP 5 erfolgreichsten Creator in der Nische "' + nische + '" auf ' + plat + '. Antworte EXAKT in diesem Format ohne Markdown, ohne Fett, ohne Einleitung, fuer jeden Creator ein Block:\nNAME: vollstaendiger Name\nHANDLE: @handle\nFOLLOWER: Anzahl z.B. 450K\nCONTENT: was sie posten in einem Satz\nPOSTING: Frequenz z.B. 5x/Woche\nLEARNING: ein konkretes Learning fuer @faruksueer\n---';
 
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ max_tokens: 800, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+    body: JSON.stringify({ max_tokens: 1200, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
   }).then(function(r) { return r.json(); }).then(function(data) {
     if (data.error) { box.innerHTML = 'Fehler: ' + esc(data.error); return; }
     var text = data.text || '';
     // Try to parse as structured creator cards
     var creators = parseCreatorText(text);
-    if (creators.length >= 2) {
+    if (creators.length >= 1) {
       box.className = 'aibox';
       document.getElementById('creator-cards-section').style.display = 'block';
-      document.getElementById('creator-cards-title').textContent = 'Top Creator: ' + nische;
-      renderCreators(creators);
+      document.getElementById('creator-cards-title').textContent = 'Top Creator: ' + nische + ' (' + (plats[0] || 'Instagram') + ')';
+      renderCreators(creators, plats[0] || 'Instagram');
+      document.getElementById('creator-cards-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       // Fallback: show as formatted text
       var cid = 'cp-crs-' + Date.now();
@@ -1496,26 +1503,23 @@ document.getElementById('creator-search-btn').addEventListener('click', function
 
 function parseCreatorText(text) {
   var creators = [];
-  var blocks = text.split('---').filter(function(b) { return b.trim(); });
+  // Strip markdown bold everywhere first
+  text = text.replace(/\*\*/g, '');
+  var blocks = text.split(/-{3,}/).filter(function(b) { return b.trim().length > 10; });
   blocks.forEach(function(block) {
     var c = {};
-    var lines = block.split('\n');
-    lines.forEach(function(line) {
-      var m = line.match(/^(Name|Handle|Follower|Content|Learning|Posting):\s*(.+)/i);
-      if (m) {
-        var key = m[1].toLowerCase();
-        c[key] = m[2].trim();
-      }
+    block.split('\n').forEach(function(line) {
+      var m = line.trim().match(/^(NAME|HANDLE|FOLLOWER|FOLLOWERS|CONTENT|LEARNING|POSTING)\s*[:\uFF1A]\s*(.+)/i);
+      if (m) c[m[1].toLowerCase().replace('followers','follower')] = m[2].trim();
     });
     if (c.name || c.handle) {
       creators.push({
         name: c.name || c.handle || 'Creator',
-        handle: c.handle || '',
-        followers: c.follower || c.followers || '-',
+        handle: (c.handle || '').replace(/[\[\]]/g, ''),
+        followers: c.follower || '-',
         content: c.content || '',
         learn: c.learning || '',
-        posting: c.posting || '-',
-        emoji: getEmoji(c.name || '')
+        posting: c.posting || '-'
       });
     }
   });
@@ -1529,20 +1533,58 @@ function getEmoji(name) {
   return emojis[h % emojis.length];
 }
 
-function renderCreators(creators) {
+function renderCreators(creators, platform) {
   var grid = document.getElementById('creator-grid');
   grid.innerHTML = '';
   var grads = ['linear-gradient(135deg,#7c6fff,#a78bfa)','linear-gradient(135deg,#f472b6,#ec4899)','linear-gradient(135deg,#34d399,#059669)','linear-gradient(135deg,#fbbf24,#f59e0b)','linear-gradient(135deg,#69c9d0,#0891b2)','linear-gradient(135deg,#fb923c,#f43f5e)'];
+  var platSrc = { 'Instagram': 'instagram', 'TikTok': 'tiktok', 'YouTube': 'youtube' };
+  var platUrl = { 'Instagram': 'https://instagram.com/', 'TikTok': 'https://tiktok.com/@', 'YouTube': 'https://youtube.com/@' };
+  var src = platSrc[platform] || 'instagram';
+  var baseUrl = platUrl[platform] || 'https://instagram.com/';
+
   creators.forEach(function(c, i) {
+    var handleClean = (c.handle || '').replace('@', '').trim();
+    var initials = c.name.split(' ').map(function(w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase();
     var card = document.createElement('div');
     card.className = 'creator-card';
-    card.innerHTML =
-      '<div class="cav" style="background:' + grads[i % grads.length] + '">' + esc(c.emoji || '✈️') + '</div>' +
-      '<div class="cname">' + esc(c.name) + '</div>' +
-      '<div class="chandle">' + esc(c.handle) + '</div>' +
-      '<div class="cstats"><div><div class="csval">' + esc(c.followers) + '</div><div class="cslabel">Follower</div></div></div>' +
-      (c.content ? '<div style="font-size:11px;color:var(--tx3);margin:5px 0;line-height:1.4">' + esc(c.content) + '</div>' : '') +
-      (c.learn ? '<div class="clearn"><span style="color:var(--ac2);font-weight:600">Learning: </span>' + esc(c.learn) + '</div>' : '');
+    card.style.textAlign = 'left';
+
+    // Avatar with real profile picture (unavatar.io) + fallback
+    var avWrap = document.createElement('div');
+    avWrap.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px';
+    var av = document.createElement('div');
+    av.className = 'cav';
+    av.style.cssText = 'margin:0;width:48px;height:48px;background:' + grads[i % grads.length] + ';font-size:16px;flex-shrink:0';
+    av.textContent = initials;
+    if (handleClean) {
+      var pImg = new Image();
+      pImg.onload = function() {
+        av.textContent = '';
+        pImg.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+        av.appendChild(pImg);
+      };
+      pImg.src = 'https://unavatar.io/' + src + '/' + encodeURIComponent(handleClean) + '?fallback=false';
+    }
+    var nameWrap = document.createElement('div');
+    nameWrap.innerHTML = '<div class="cname" style="margin:0">' + esc(c.name) + '</div>' +
+      (handleClean ? '<a href="' + baseUrl + encodeURIComponent(handleClean) + '" target="_blank" class="chandle" style="margin:0;text-decoration:none;display:block">@' + esc(handleClean) + ' ↗</a>' : '');
+    avWrap.appendChild(av);
+    avWrap.appendChild(nameWrap);
+    card.appendChild(avWrap);
+
+    // Compact stats row
+    var stats = document.createElement('div');
+    stats.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
+    stats.innerHTML =
+      '<div style="flex:1;background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.15);border-radius:8px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:700">' + esc(c.followers) + '</div><div style="font-size:9px;color:var(--tx3);text-transform:uppercase">Follower</div></div>' +
+      '<div style="flex:1;background:var(--s3);border:1px solid var(--bd);border-radius:8px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:700">' + esc(c.posting) + '</div><div style="font-size:9px;color:var(--tx3);text-transform:uppercase">Posting</div></div>';
+    card.appendChild(stats);
+
+    var info = document.createElement('div');
+    info.innerHTML =
+      (c.content ? '<div style="font-size:11px;color:var(--tx2);line-height:1.45;margin-bottom:6px"><span style="color:var(--ac2);font-weight:600">Content: </span>' + esc(c.content) + '</div>' : '') +
+      (c.learn ? '<div style="font-size:11px;color:var(--tx3);line-height:1.45;border-top:1px solid var(--bd);padding-top:6px"><span style="color:var(--gn);font-weight:600">💡 Learning: </span>' + esc(c.learn) + '</div>' : '');
+    card.appendChild(info);
     grid.appendChild(card);
   });
 }
@@ -1573,7 +1615,7 @@ function callAI(prompt, boxId) {
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ max_tokens: 1000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+    body: JSON.stringify({ max_tokens: 1800, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
   }).then(function(r) { return r.json(); }).then(function(data) {
     if (data.error) { box.innerHTML = '<div class="insight insight-err" style="margin:0">Fehler: ' + esc(data.error) + '</div>'; box.className = 'aibox on'; return; }
     var text = data.text || '';
@@ -1665,7 +1707,7 @@ function esc(s) {
 // =====================
 var TD = {
   ig:[['Insider-Tipp Travel','"Was kein Tourist weiss" — meistgespeichert',96],['Ko Lipe / Phuket Vergleich','Thailand-Inseln — hohes Suchvolumen',87],['Tauchen POV Clips','Visuell stark + Musik',79],['Fehler die Touristen machen','Kontrast-Hook + Mehrwert',71],['Yoga an besonderen Orten','Wellness + Travel',55]],
-  tt:[['Tourist vs Insider','Kontrast — hohe Completion',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren',88],['Tauchen POV Rotes Meer','Aegypten + Unterwasser',78],['Istanbul Geheimtipps','Tuerkei-Content steigt',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
+  tt:[['Tourist vs Insider','Kontrast — hohe Completion',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren',88],['Cinematic Landscape Reels','Color Grading + epische Natur',78],['Istanbul Geheimtipps','Tuerkei-Content steigt',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
   yt:[['Reise-Vlogs Storytelling','Thailand oder Istanbul — hohe Watchtime',90],['Tauch-Guide Einsteiger','Educational + Passion',78],['Destination Vergleiche','Barcelona vs Valencia',68],['Lohnt es sich wirklich?','Kopenhagen, Dom. Republik',59],['Yoga unterwegs','Wachsende Nische',44]]
 };
 function showTrends(k) {
