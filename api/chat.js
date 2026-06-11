@@ -1,20 +1,29 @@
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-pin');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const apiKey = req.headers['x-api-key'];
-  if (!apiKey) return res.status(401).json({ error: 'Kein API Key' });
+  // PIN check
+  const pin = req.headers['x-pin'];
+  const correctPin = process.env.APP_PIN;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!correctPin || !apiKey) {
+    return res.status(500).json({ error: 'Server nicht konfiguriert. Bitte Environment Variables setzen.' });
+  }
+
+  if (pin !== correctPin) {
+    return res.status(401).json({ error: 'Falscher PIN' });
+  }
 
   const { model, max_tokens, system, messages, useWebSearch } = req.body;
 
-  // Build request body — add web search tool when requested
   const body = {
     model: model || 'claude-sonnet-4-6',
-    max_tokens: max_tokens || 1500,
+    max_tokens: max_tokens || 2000,
     system,
     messages
   };
@@ -37,7 +46,6 @@ export default async function handler(req, res) {
     const data = await response.json();
     if (!response.ok) return res.status(response.status).json(data);
 
-    // Extract all text blocks (web search may return multiple content blocks)
     const textBlocks = (data.content || [])
       .filter(block => block.type === 'text')
       .map(block => block.text)
