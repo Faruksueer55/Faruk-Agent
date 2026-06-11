@@ -16,7 +16,6 @@
   --tt:#69c9d0;--yt:#ff4444;
   --r:14px;--rs:10px;
   --sh:0 4px 24px rgba(0,0,0,0.5);
-  --glow:0 0 60px rgba(124,111,255,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;overflow-x:hidden}
@@ -26,235 +25,241 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 
 /* PIN */
 .pin-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(124,111,255,0.2) 0%,transparent 70%)}
-.pin-box{background:var(--s);border:1px solid var(--bd);border-radius:20px;padding:40px 36px;max-width:380px;width:100%;text-align:center;box-shadow:var(--sh),var(--glow)}
-.pin-logo{font-size:52px;margin-bottom:20px}
-.pin-title{font-size:26px;font-weight:700;margin-bottom:6px;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.pin-sub{font-size:13px;color:var(--tx3);margin-bottom:28px}
-.pin-dots{display:flex;justify-content:center;gap:14px;margin-bottom:24px}
-.pin-dot{width:16px;height:16px;border-radius:50%;background:var(--s3);border:2px solid var(--bd2);transition:all 0.2s}
-.pin-dot.filled{background:var(--ac);border-color:var(--ac);box-shadow:0 0 12px rgba(124,111,255,0.5)}
-.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.pin-key{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;font-size:18px;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--tx);font-family:'Inter',sans-serif}
-.pin-key:hover{background:var(--s3);border-color:var(--ac);color:var(--ac2)}
-.pin-key:active{transform:scale(0.95)}
-.pin-key.del{font-size:14px;color:var(--tx3)}
-.pin-err{color:var(--rd);font-size:12px;min-height:18px;margin-bottom:8px}
-.pin-checking{color:var(--tx3);font-size:12px;min-height:18px;margin-bottom:8px}
+.pin-box{background:var(--s);border:1px solid var(--bd);border-radius:20px;padding:36px 32px;max-width:360px;width:100%;text-align:center;box-shadow:var(--sh)}
+.pin-logo{font-size:48px;margin-bottom:16px}
+.pin-title{font-size:24px;font-weight:700;margin-bottom:4px;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pin-sub{font-size:13px;color:var(--tx3);margin-bottom:24px}
+.pin-dots{display:flex;justify-content:center;gap:12px;margin-bottom:20px}
+.pin-dot{width:14px;height:14px;border-radius:50%;background:var(--s3);border:2px solid var(--bd2);transition:all 0.2s}
+.pin-dot.filled{background:var(--ac);border-color:var(--ac);box-shadow:0 0 10px rgba(124,111,255,0.5)}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.pin-key{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:14px;font-size:18px;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--tx);font-family:'Inter',sans-serif}
+.pin-key:hover{background:var(--s3);border-color:var(--ac)}
+.pin-key:active{transform:scale(0.95);background:rgba(124,111,255,0.2)}
+.pin-key.del{font-size:13px;color:var(--tx3)}
+.pin-msg{font-size:12px;min-height:18px;margin-top:8px}
+.pin-err{color:var(--rd)}
+.pin-ok{color:var(--gn)}
 
 /* LAYOUT */
 .shell{display:flex;min-height:100vh}
-.sidebar{width:220px;flex-shrink:0;background:var(--s);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.3s cubic-bezier(.4,0,.2,1);overflow-y:auto}
-.main{margin-left:220px;flex:1}
+.sidebar{width:216px;flex-shrink:0;background:var(--s);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.3s;overflow-y:auto}
+.main{margin-left:216px;flex:1}
 
 /* PROFILE */
-.profile{padding:20px 16px 14px;border-bottom:1px solid var(--bd)}
+.profile{padding:18px 14px 14px;border-bottom:1px solid var(--bd)}
 .av-wrap{position:relative;width:44px;height:44px;margin-bottom:10px}
-.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--pk));display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff}
-.av-dot{position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:var(--gn);border:2px solid var(--s)}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--pk));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.av-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--gn);border:2px solid var(--s)}
 .pname{font-weight:700;font-size:13px}
 .psub{font-size:11px;color:var(--tx3);margin-top:1px}
 .handles{margin-top:8px;display:flex;flex-direction:column;gap:2px}
-.hlink{font-size:11px;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:6px;transition:all 0.15s}
+.hlink{font-size:11px;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:5px;padding:3px 5px;border-radius:6px;transition:all 0.15s}
 .hlink:hover{background:var(--s2);color:var(--ac2)}
 .hdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .kstatus{margin-top:10px;font-size:11px;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
-.kchange{font-size:11px;color:var(--tx3);cursor:pointer;margin-top:5px;display:inline-block;transition:color 0.15s}
+.kchange{font-size:11px;color:var(--tx3);cursor:pointer;margin-top:5px;display:inline-block}
 .kchange:hover{color:var(--rd)}
 
 /* NAV */
-.nav{padding:10px 8px;flex:1}
+.nav{padding:8px;flex:1}
 .nav-sec{font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:0.12em;padding:10px 8px 4px;text-transform:uppercase}
-.ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;cursor:pointer;color:var(--tx3);font-size:13px;font-weight:500;transition:all 0.15s;margin-bottom:1px;white-space:nowrap}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--tx3);font-size:13px;font-weight:500;transition:all 0.15s;margin-bottom:1px}
 .ni:hover{background:var(--s2);color:var(--tx2)}
 .ni.active{background:rgba(124,111,255,0.12);color:var(--ac2);border:1px solid rgba(124,111,255,0.18)}
-.ni-ic{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.ni-ic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 
 /* TOPBAR */
-.topbar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
+.topbar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(8,8,16,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
 .tbtitle{font-weight:700;font-size:14px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hbtn{background:none;border:none;cursor:pointer;color:var(--tx2);font-size:20px;padding:4px;line-height:1}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:90}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:90}
 .overlay.on{display:block}
 
 /* PAGES */
-.page{display:none;padding:22px;max-width:860px}
-.page.active{display:block;animation:fadeIn 0.25s ease}
-.ptitle{font-size:22px;font-weight:700;margin-bottom:3px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.psub2{font-size:12px;color:var(--tx3);margin-bottom:20px}
+.page{display:none;padding:20px;max-width:840px}
+.page.active{display:block;animation:fadeIn 0.2s ease}
+.ptitle{font-size:21px;font-weight:700;margin-bottom:3px;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.psub2{font-size:12px;color:var(--tx3);margin-bottom:18px}
 
-/* GLASS CARD */
-.gc{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:14px}
-.gc-title{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;text-transform:uppercase;letter-spacing:0.05em}
+/* CARDS */
+.gc{background:rgba(255,255,255,0.025);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.gc-title{font-size:11px;font-weight:700;color:var(--tx2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;text-transform:uppercase;letter-spacing:0.06em}
 
 /* STATS */
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.sc{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.15);border-radius:12px;padding:14px;text-align:center;transition:all 0.2s}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.sc{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.15);border-radius:12px;padding:14px;text-align:center;transition:all 0.2s;cursor:default}
 .sc:hover{border-color:var(--ac);transform:translateY(-1px)}
-.sv{font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sv{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--tx),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .sl{font-size:10px;color:var(--tx3);margin-top:3px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
 
 /* PLATFORM BADGES */
-.pb{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+.pb{display:inline-flex;align-items:center;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:600;margin-left:4px;vertical-align:middle}
 .pb-ig{background:rgba(244,114,182,0.12);color:var(--pk);border:1px solid rgba(244,114,182,0.2)}
 .pb-tt{background:rgba(105,201,208,0.12);color:var(--tt);border:1px solid rgba(105,201,208,0.2)}
 .pb-yt{background:rgba(255,68,68,0.12);color:var(--yt);border:1px solid rgba(255,68,68,0.2)}
 .pb-fb{background:rgba(24,119,242,0.12);color:#60a5fa;border:1px solid rgba(24,119,242,0.2)}
 
 /* TAGS */
-.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;margin:2px}
+.tag{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;margin:2px}
 .tp{background:rgba(124,111,255,0.12);color:var(--ac2);border:1px solid rgba(124,111,255,0.2)}
-.tg{background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
-.ta{background:rgba(251,191,36,0.1);color:var(--am);border:1px solid rgba(251,191,36,0.2)}
+.tg{background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.18)}
+.ta{background:rgba(251,191,36,0.1);color:var(--am);border:1px solid rgba(251,191,36,0.18)}
 .tm{background:var(--s2);color:var(--tx3);border:1px solid var(--bd)}
-.tt2{background:rgba(105,201,208,0.1);color:var(--tt);border:1px solid rgba(105,201,208,0.2)}
-.tpk{background:rgba(244,114,182,0.1);color:var(--pk);border:1px solid rgba(244,114,182,0.2)}
+.tt2{background:rgba(105,201,208,0.1);color:var(--tt);border:1px solid rgba(105,201,208,0.18)}
+.tpk{background:rgba(244,114,182,0.1);color:var(--pk);border:1px solid rgba(244,114,182,0.18)}
 
 /* INSIGHT */
-.insight{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.2);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--ac3);line-height:1.6;margin-bottom:14px}
+.insight{background:rgba(124,111,255,0.07);border:1px solid rgba(124,111,255,0.18);border-radius:var(--r);padding:11px 14px;font-size:13px;color:var(--ac3);line-height:1.6;margin-bottom:12px}
+.insight-warn{background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);color:var(--am)}
+.insight-err{background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);color:var(--rd)}
 
 /* FORMS */
 textarea,select{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);color:var(--tx);font-family:'Inter',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:all 0.2s;margin-bottom:10px;resize:vertical}
 textarea{min-height:76px}
-textarea:focus,select:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(124,111,255,0.12)}
+textarea:focus,select:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(124,111,255,0.1)}
 select option{background:var(--s2)}
 
 /* QUICK TAGS */
 .qtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qtag{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);background:var(--s2);transition:all 0.15s}
+.qtag{padding:5px 11px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);background:var(--s2);transition:all 0.15s;user-select:none}
 .qtag:hover,.qtag.sel{border-color:var(--ac);color:var(--ac2);background:rgba(124,111,255,0.08)}
 
 /* PILLS */
-.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.pill{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);transition:all 0.15s}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pill{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);color:var(--tx2);transition:all 0.15s;user-select:none}
 .pill.on{background:rgba(124,111,255,0.12);border-color:var(--ac);color:var(--ac2)}
 
 /* BUTTONS */
 .brow{display:flex;gap:7px;flex-wrap:wrap}
-.btn{padding:9px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn{padding:9px 15px;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .bp{background:linear-gradient(135deg,var(--ac),#6c5ce7);color:#fff;box-shadow:0 3px 12px rgba(124,111,255,0.25)}
 .bp:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(124,111,255,0.35)}
 .bp:active{transform:translateY(0)}
 .bs{background:var(--s2);color:var(--tx2);border:1px solid var(--bd)}
 .bs:hover{border-color:var(--ac);color:var(--ac2)}
-.bsm{padding:6px 11px;font-size:11px}
-.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.bsm{padding:6px 10px;font-size:11px}
+.btn:disabled{opacity:0.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 
 /* PLATFORM ITEMS */
-.pitem{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.pitem{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .pitem:last-child{border-bottom:none}
-.picon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.picon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .pig{background:rgba(244,114,182,0.12);color:var(--pk)}
 .ptt{background:rgba(105,201,208,0.12);color:var(--tt)}
 .pyt{background:rgba(255,68,68,0.12);color:var(--yt)}
 .pfb{background:rgba(24,119,242,0.12);color:#60a5fa}
 .plabel{font-size:13px;font-weight:600}
-.pdesc{font-size:11px;color:var(--tx3);margin-top:2px;line-height:1.5}
+.pdesc{font-size:11px;color:var(--tx3);margin-top:2px;line-height:1.4}
 
 /* GROWTH */
-.gi{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.gi{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .gi:last-child{border-bottom:none}
-.gnum{min-width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.gnum{min-width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
 .gt{font-size:13px;font-weight:600}
 .gs{font-size:11px;color:var(--tx3);margin-top:2px;line-height:1.5}
-.badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;margin-left:5px;vertical-align:middle}
+.badge{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:600;margin-left:4px;vertical-align:middle}
 .bg2{background:rgba(52,211,153,0.12);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
 .ba{background:rgba(251,191,36,0.12);color:var(--am);border:1px solid rgba(251,191,36,0.2)}
 
 /* PROGRESS */
-.prog{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.prlabel{font-size:12px;color:var(--tx2);min-width:90px;font-weight:500}
+.prog{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.prlabel{font-size:12px;color:var(--tx2);min-width:88px;font-weight:500}
 .prbg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
 .prfill{height:5px;border-radius:3px}
-.prval{font-size:11px;color:var(--tx3);min-width:90px;text-align:right}
+.prval{font-size:11px;color:var(--tx3);min-width:88px;text-align:right}
 
-/* TREND ITEMS */
+/* TRENDS */
 .ti{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .ti:last-child{border-bottom:none}
-.tr2{min-width:26px;height:26px;border-radius:7px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ac2);flex-shrink:0}
+.tr2{min-width:24px;height:24px;border-radius:6px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ac2);flex-shrink:0}
 .tn{font-size:13px;font-weight:600}
 .ts{font-size:11px;color:var(--tx3);margin-top:1px}
 .tbb{height:3px;background:var(--s3);border-radius:2px;margin-top:5px;overflow:hidden}
 .tbf{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 
 /* DEST GRID */
-.dg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.dc{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;transition:all 0.2s}
+.dg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dc{background:var(--s2);border:1px solid var(--bd);border-radius:11px;padding:12px;cursor:pointer;transition:all 0.2s;user-select:none}
 .dc:hover{border-color:var(--ac);background:rgba(124,111,255,0.06);transform:translateY(-1px)}
-.df{font-size:22px;margin-bottom:5px}
+.df{font-size:20px;margin-bottom:4px}
 .dn{font-size:12px;font-weight:600}
 .ds{font-size:10px;color:var(--tx3);margin-top:1px}
 
 /* CREATOR CARDS */
-.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
-.creator-card{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:all 0.2s;text-align:center}
+.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin-top:10px}
+.creator-card{background:var(--s2);border:1px solid var(--bd);border-radius:11px;padding:13px;transition:all 0.2s;text-align:center}
 .creator-card:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:var(--sh)}
-.cav{width:56px;height:56px;border-radius:50%;margin:0 auto 8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;border:2px solid var(--bd)}
+.cav{width:52px;height:52px;border-radius:50%;margin:0 auto 8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;border:2px solid var(--bd)}
 .cav img{width:100%;height:100%;object-fit:cover}
-.cname{font-size:13px;font-weight:600;margin-bottom:1px}
-.chandle{font-size:11px;color:var(--ac2);margin-bottom:7px}
-.cstats{display:flex;justify-content:center;gap:12px;margin-bottom:7px}
-.csval{font-size:13px;font-weight:700}
+.cname{font-size:12px;font-weight:600;margin-bottom:1px}
+.chandle{font-size:11px;color:var(--ac2);margin-bottom:6px}
+.cstats{display:flex;justify-content:center;gap:10px;margin-bottom:6px}
+.csval{font-size:12px;font-weight:700}
 .cslabel{font-size:10px;color:var(--tx3)}
-.clearn{margin-top:8px;font-size:11px;color:var(--tx3);line-height:1.4;text-align:left;border-top:1px solid var(--bd);padding-top:7px}
+.clearn{margin-top:7px;font-size:10px;color:var(--tx3);line-height:1.4;text-align:left;border-top:1px solid var(--bd);padding-top:7px}
 
-/* INSTAGRAM GRID */
-.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.ig-post{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--s2);cursor:pointer;transition:all 0.2s}
-.ig-post:hover{transform:scale(1.02);z-index:1}
-.ig-post img{width:100%;height:100%;object-fit:cover;display:block}
-.ig-post video{width:100%;height:100%;object-fit:cover;display:block}
-.ig-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:10px 7px 6px;display:flex;gap:8px}
-.ig-stat{font-size:11px;color:#fff;font-weight:600}
-.ig-type{position:absolute;top:6px;right:6px;font-size:13px;background:rgba(0,0,0,0.5);border-radius:4px;padding:2px 4px}
-.ig-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3)}
-.ig-play-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.2s}
-.ig-play-btn:hover{background:#fff;transform:scale(1.1)}
+/* IG GRID */
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ig-post{position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:var(--s2);cursor:pointer;transition:transform 0.2s}
+.ig-post:hover{transform:scale(1.03);z-index:1}
+.ig-post img,.ig-post video{width:100%;height:100%;object-fit:cover;display:block}
+.ig-ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:9px 6px 5px;display:flex;gap:7px}
+.ig-st{font-size:11px;color:#fff;font-weight:600}
+.ig-type{position:absolute;top:5px;right:5px;font-size:12px;background:rgba(0,0,0,0.5);border-radius:4px;padding:1px 4px}
+.ig-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25)}
+.ig-playbtn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform 0.2s}
+.ig-playbtn:hover{transform:scale(1.1);background:#fff}
 
-/* VIDEO MODAL */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;align-items:center;justify-content:center;padding:20px}
+/* IMAGE GEN */
+.img-result{border-radius:var(--r);overflow:hidden;margin-top:12px;display:none;position:relative}
+.img-result.on{display:block}
+.img-result img{width:100%;display:block;border-radius:var(--r)}
+.img-actions{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.img-prompt-used{font-size:11px;color:var(--tx3);margin-top:6px;line-height:1.5;font-style:italic}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;align-items:center;justify-content:center;padding:16px}
 .modal.on{display:flex}
-.modal-content{background:var(--s);border:1px solid var(--bd);border-radius:16px;overflow:hidden;max-width:500px;width:100%;max-height:90vh}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bd)}
-.modal-title{font-size:14px;font-weight:600}
-.modal-close{background:var(--s2);border:1px solid var(--bd);border-radius:8px;cursor:pointer;color:var(--tx2);font-size:18px;padding:4px 10px;font-family:'Inter',sans-serif;transition:all 0.15s}
+.modal-box{background:var(--s);border:1px solid var(--bd);border-radius:16px;overflow:hidden;max-width:480px;width:100%;max-height:92vh;display:flex;flex-direction:column}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.modal-title{font-size:13px;font-weight:600}
+.modal-close{background:var(--s2);border:1px solid var(--bd);border-radius:7px;cursor:pointer;color:var(--tx2);font-size:16px;padding:3px 9px;font-family:'Inter',sans-serif;transition:all 0.15s;line-height:1.4}
 .modal-close:hover{color:var(--rd);border-color:var(--rd)}
-.modal-video{width:100%;max-height:60vh;object-fit:contain;background:#000;display:block}
-.modal-meta{padding:14px 16px}
-.modal-caption{font-size:12px;color:var(--tx2);line-height:1.5;max-height:80px;overflow-y:auto;margin-bottom:10px}
-.modal-stats{display:flex;gap:14px}
-.modal-stat{font-size:13px;color:var(--tx2)}
+.modal-media{width:100%;max-height:55vh;object-fit:contain;background:#000;display:block;flex-shrink:0}
+.modal-meta{padding:12px 14px;overflow-y:auto}
+.modal-caption{font-size:12px;color:var(--tx2);line-height:1.5;max-height:70px;overflow-y:auto;margin-bottom:9px}
+.modal-stats{display:flex;gap:12px}
+.modal-stat{font-size:12px;color:var(--tx2)}
 
 /* AI RESPONSE */
-.aibox{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-top:12px;display:none;word-break:break-word}
+.aibox{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-top:10px;display:none;word-break:break-word}
 .aibox.on{display:block}
-.aihdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
-.ailive{font-size:10px;padding:3px 9px;border-radius:20px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2);font-weight:600;display:flex;align-items:center;gap:4px}
+.aihdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.ailive{font-size:10px;padding:3px 8px;border-radius:20px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2);font-weight:600;display:flex;align-items:center;gap:4px}
 .aildot{width:5px;height:5px;border-radius:50%;background:var(--gn);animation:pulse 1.5s infinite;flex-shrink:0}
-.aicopy{font-size:11px;color:var(--tx3);cursor:pointer;padding:3px 9px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);font-family:'Inter',sans-serif;transition:all 0.15s}
+.aicopy{font-size:11px;color:var(--tx3);cursor:pointer;padding:3px 8px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);font-family:'Inter',sans-serif;transition:all 0.15s}
 .aicopy:hover{color:var(--ac2);border-color:var(--ac)}
-
-/* AI CONTENT */
-.ai-num{display:flex;gap:11px;padding:11px 13px;background:rgba(124,111,255,0.06);border:1px solid rgba(124,111,255,0.12);border-radius:10px;margin-bottom:7px}
-.ai-nbadge{min-width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
-.ai-ntitle{font-size:13px;font-weight:600;margin-bottom:2px}
-.ai-ndesc{font-size:12px;color:var(--tx3);line-height:1.5}
-.ai-bullet{display:flex;gap:7px;align-items:flex-start;padding:7px 11px;background:var(--s2);border-radius:8px;margin-bottom:4px}
-.ai-bdot{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:4px;flex-shrink:0}
-.ai-sec{font-size:10px;font-weight:700;color:var(--ac2);text-transform:uppercase;letter-spacing:0.1em;margin:16px 0 8px;padding-top:12px;border-top:1px solid var(--bd)}
-.ai-htag{padding:3px 9px;background:rgba(124,111,255,0.1);border:1px solid rgba(124,111,255,0.18);border-radius:20px;font-size:11px;color:var(--ac2);display:inline-block;margin:2px}
-.ai-text{font-size:13px;color:var(--tx2);line-height:1.7;margin:2px 0}
+.ai-num{display:flex;gap:10px;padding:10px 12px;background:rgba(124,111,255,0.06);border:1px solid rgba(124,111,255,0.12);border-radius:9px;margin-bottom:6px}
+.ai-nb{min-width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.ai-nt{font-size:13px;font-weight:600;margin-bottom:2px}
+.ai-nd{font-size:12px;color:var(--tx3);line-height:1.5}
+.ai-bul{display:flex;gap:7px;align-items:flex-start;padding:7px 10px;background:var(--s2);border-radius:7px;margin-bottom:4px}
+.ai-bd{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:4px;flex-shrink:0}
+.ai-sec{font-size:10px;font-weight:700;color:var(--ac2);text-transform:uppercase;letter-spacing:0.1em;margin:14px 0 7px;padding-top:10px;border-top:1px solid var(--bd)}
+.ai-ht{padding:3px 8px;background:rgba(124,111,255,0.1);border:1px solid rgba(124,111,255,0.18);border-radius:20px;font-size:11px;color:var(--ac2);display:inline-block;margin:2px}
+.ai-tx{font-size:13px;color:var(--tx2);line-height:1.7;margin:2px 0}
 
 /* LOADING */
-.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:var(--tx3);gap:10px}
-.spin{width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin 0.7s linear infinite}
-.sm-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px;color:var(--tx3);gap:10px}
+.spin{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin 0.7s linear infinite}
+.sm-spin{width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:var(--ac2);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
 
-/* ANIMATIONS */
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-/* MOBILE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
@@ -264,56 +269,46 @@ select option{background:var(--s2)}
   .sg{grid-template-columns:1fr 1fr}
   .dg{grid-template-columns:repeat(2,1fr)}
   .creator-grid{grid-template-columns:repeat(2,1fr)}
-  .ig-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
-<!-- PIN SCREEN -->
+<!-- PIN -->
 <div class="pin-screen" id="pinscreen">
   <div class="pin-box">
     <div class="pin-logo">🤖</div>
     <div class="pin-title">faruksueer Agent</div>
     <div class="pin-sub">PIN eingeben</div>
     <div class="pin-dots">
-      <div class="pin-dot" id="d0"></div>
-      <div class="pin-dot" id="d1"></div>
-      <div class="pin-dot" id="d2"></div>
-      <div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div>
     </div>
-    <div class="pin-err" id="pinerr"></div>
     <div class="pin-keypad">
-      <button class="pin-key" data-k="1">1</button>
-      <button class="pin-key" data-k="2">2</button>
-      <button class="pin-key" data-k="3">3</button>
-      <button class="pin-key" data-k="4">4</button>
-      <button class="pin-key" data-k="5">5</button>
-      <button class="pin-key" data-k="6">6</button>
-      <button class="pin-key" data-k="7">7</button>
-      <button class="pin-key" data-k="8">8</button>
-      <button class="pin-key" data-k="9">9</button>
-      <button class="pin-key del" data-k="del">⌫</button>
-      <button class="pin-key" data-k="0">0</button>
-      <button class="pin-key del" data-k="ok">↵</button>
+      <button class="pin-key" data-k="1">1</button><button class="pin-key" data-k="2">2</button><button class="pin-key" data-k="3">3</button>
+      <button class="pin-key" data-k="4">4</button><button class="pin-key" data-k="5">5</button><button class="pin-key" data-k="6">6</button>
+      <button class="pin-key" data-k="7">7</button><button class="pin-key" data-k="8">8</button><button class="pin-key" data-k="9">9</button>
+      <button class="pin-key del" data-k="del">⌫</button><button class="pin-key" data-k="0">0</button><button class="pin-key del" data-k="ok">↵</button>
     </div>
+    <div class="pin-msg" id="pinmsg"></div>
   </div>
 </div>
 
-<!-- VIDEO MODAL -->
-<div class="modal" id="video-modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-title">Post</span>
-      <button class="modal-close" id="modal-close">✕</button>
+<!-- MODAL -->
+<div class="modal" id="vmodal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title" id="mtitle">Post</span>
+      <button class="modal-close" id="mclose">✕</button>
     </div>
-    <video class="modal-video" id="modal-video" controls playsinline></video>
+    <img class="modal-media" id="mimg" src="" alt="" style="display:none"/>
+    <video class="modal-media" id="mvid" controls playsinline style="display:none"></video>
     <div class="modal-meta">
-      <div class="modal-caption" id="modal-caption"></div>
+      <div class="modal-caption" id="mcap"></div>
       <div class="modal-stats">
-        <span class="modal-stat" id="modal-likes">❤️ -</span>
-        <span class="modal-stat" id="modal-comments">💬 -</span>
-        <span class="modal-stat" id="modal-date"></span>
+        <span class="modal-stat" id="mlikes">❤️ -</span>
+        <span class="modal-stat" id="mcomments">💬 -</span>
+        <span class="modal-stat" id="mdate"></span>
       </div>
     </div>
   </div>
@@ -325,7 +320,10 @@ select option{background:var(--s2)}
 <div class="shell">
   <aside class="sidebar" id="sidebar">
     <div class="profile">
-      <div class="av-wrap"><div class="avatar">OF</div><div class="av-dot"></div></div>
+      <div class="av-wrap">
+        <div class="avatar" id="sidebar-avatar">OF</div>
+        <div class="av-dot"></div>
+      </div>
       <div class="pname">Ömer Faruk Süer</div>
       <div class="psub">Prokurist · Creator</div>
       <div class="handles">
@@ -334,7 +332,7 @@ select option{background:var(--s2)}
         <a class="hlink" href="https://youtube.com/@Faruksueer55" target="_blank"><span class="hdot" style="background:var(--yt)"></span>@Faruksueer55</a>
         <a class="hlink" href="https://facebook.com/faruk.suer.77" target="_blank"><span class="hdot" style="background:#1877f2"></span>faruk.suer.77</a>
       </div>
-      <div class="kstatus"><span class="av-dot" style="position:static;width:7px;height:7px;border:none;display:inline-block;flex-shrink:0"></span>Agent aktiv</div>
+      <div class="kstatus"><span style="width:6px;height:6px;border-radius:50%;background:var(--gn);display:inline-block;flex-shrink:0"></span>Agent aktiv</div>
       <div class="kchange" id="logoutbtn">Ausloggen</div>
     </div>
     <nav class="nav">
@@ -343,6 +341,7 @@ select option{background:var(--s2)}
       <div class="ni" data-page="instagram"><span class="ni-ic">📊</span>IG Insights</div>
       <div class="nav-sec">Content</div>
       <div class="ni" data-page="posts"><span class="ni-ic">✏️</span>Post erstellen</div>
+      <div class="ni" data-page="imagegen"><span class="ni-ic">🎨</span>Bild generieren</div>
       <div class="ni" data-page="reisen"><span class="ni-ic">✈️</span>Meine Reisen</div>
       <div class="ni" data-page="kommentare"><span class="ni-ic">💬</span>Kommentare</div>
       <div class="nav-sec">Strategie</div>
@@ -362,7 +361,7 @@ select option{background:var(--s2)}
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="ptitle">Hallo Ömer 👋</div>
-      <div class="psub2">Dein KI-gestützter Social Media Agent · Alle Inhalte live recherchiert</div>
+      <div class="psub2">Dein KI-gestützter Social Media Agent · Live Web-Recherche</div>
       <div class="sg">
         <div class="sc"><div class="sv">@faruksueer</div><div class="sl">Instagram & TikTok</div></div>
         <div class="sc"><div class="sv">@Faruksueer55</div><div class="sl">YouTube</div></div>
@@ -377,7 +376,7 @@ select option{background:var(--s2)}
       </div>
       <div class="gc">
         <div class="gc-title">Content-Säulen & Reisen</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px">
           <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span>
           <span class="tag ta">🧘 Yoga</span><span class="tag tg">💼 Karriere</span>
         </div>
@@ -399,82 +398,138 @@ select option{background:var(--s2)}
     <!-- INSTAGRAM INSIGHTS -->
     <div class="page" id="page-instagram">
       <div class="ptitle">Instagram Insights</div>
-      <div class="psub2">Live-Daten von @faruksueer · Videos direkt abspielbar</div>
+      <div class="psub2">Live-Daten von @faruksueer · Videos direkt abspielen</div>
       <div id="ig-loading" class="ldg"><div class="spin"></div><div>Verbinde mit Instagram...</div></div>
-      <div id="ig-error" class="insight" style="display:none"></div>
+      <div id="ig-error" class="insight insight-err" style="display:none"></div>
       <div id="ig-content" style="display:none">
-        <div class="sg">
-          <div class="sc"><div class="sv" id="ig-followers">-</div><div class="sl">Follower</div></div>
-          <div class="sc"><div class="sv" id="ig-following">-</div><div class="sl">Following</div></div>
-          <div class="sc"><div class="sv" id="ig-posts-count">-</div><div class="sl">Posts</div></div>
+        <div class="gc" id="ig-profile-card">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+            <div style="width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--ac);background:linear-gradient(135deg,var(--ac),var(--pk));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff" id="ig-avatar-big">OF</div>
+            <div>
+              <div style="font-size:16px;font-weight:700" id="ig-uname">@faruksueer</div>
+              <div style="font-size:12px;color:var(--tx3);margin-top:2px" id="ig-bio"></div>
+            </div>
+          </div>
+          <div class="sg" style="margin-bottom:0">
+            <div class="sc"><div class="sv" id="ig-followers">-</div><div class="sl">Follower</div></div>
+            <div class="sc"><div class="sv" id="ig-following">-</div><div class="sl">Following</div></div>
+            <div class="sc"><div class="sv" id="ig-posts-count">-</div><div class="sl">Posts</div></div>
+          </div>
         </div>
         <div class="gc">
-          <div class="gc-title">Profil <span id="ig-username-disp" style="font-size:11px;color:var(--tx3);text-transform:none;font-weight:400"></span></div>
-          <div id="ig-bio-disp" style="font-size:13px;color:var(--tx2);line-height:1.6"></div>
-        </div>
-        <div class="gc">
-          <div class="gc-title">Posts & Videos <span style="font-size:11px;color:var(--tx3);font-weight:400;text-transform:none">▶ Videos direkt abspielen</span></div>
+          <div class="gc-title">Posts & Videos <span style="font-size:10px;color:var(--tx3);font-weight:400;text-transform:none">Klicken zum Abspielen</span></div>
           <div class="ig-grid" id="ig-media-grid"></div>
         </div>
         <div class="gc">
           <div class="gc-title">KI-Analyse</div>
           <div class="brow">
-            <button class="btn bp" id="ig-analyze-btn">🔍 Insights analysieren</button>
+            <button class="btn bp" id="ig-analyze-btn">🔍 Analysieren</button>
             <button class="btn bs" id="ig-strategy-btn">📈 Strategie</button>
-            <button class="btn bs bsm" id="ig-refresh-btn">↻</button>
+            <button class="btn bs bsm" id="ig-refresh-btn">↻ Aktualisieren</button>
           </div>
           <div class="aibox" id="ig-ai-res"></div>
         </div>
       </div>
     </div>
 
-    <!-- POSTS -->
+    <!-- POST ERSTELLEN -->
     <div class="page" id="page-posts">
       <div class="ptitle">Post erstellen</div>
       <div class="psub2">KI generiert Content basierend auf aktuellen Web-Trends</div>
       <div class="pills" id="post-pills">
-        <div class="pill on">Instagram</div>
-        <div class="pill on">TikTok</div>
-        <div class="pill">YouTube</div>
-        <div class="pill">Facebook</div>
+        <div class="pill on">Instagram</div><div class="pill on">TikTok</div>
+        <div class="pill">YouTube</div><div class="pill">Facebook</div>
       </div>
       <div class="gc">
         <div class="gc-title">Schnell-Themen</div>
         <div class="qtags">
-          <span class="qtag" data-topic="Istanbul versteckte Ecken die kein Tourist kennt">🇹🇷 Istanbul Geheimtipps</span>
+          <span class="qtag" data-topic="Istanbul versteckte Ecken die kein Tourist kennt">🇹🇷 Istanbul</span>
           <span class="qtag" data-topic="Ko Lipe vs Phuket welche Insel lohnt sich wirklich">🇹🇭 Ko Lipe vs Phuket</span>
-          <span class="qtag" data-topic="Taucherlizenz in Thailand alles was du wissen musst">🤿 Taucherlizenz Thailand</span>
+          <span class="qtag" data-topic="Taucherlizenz Thailand alles was du wissen musst">🤿 Taucherlizenz Thailand</span>
           <span class="qtag" data-topic="Barcelona vs Valencia welche Stadt gewinnt">🇪🇸 Barcelona vs Valencia</span>
-          <span class="qtag" data-topic="Aegypten Tauchen im Roten Meer beste Spots">🇪🇬 Tauchen Ägypten</span>
-          <span class="qtag" data-topic="Kopenhagen teuerste Stadt Europas lohnt sie sich">🇩🇰 Kopenhagen</span>
-          <span class="qtag" data-topic="30 Tage Meditation was sich wirklich veraendert hat">🧘 30 Tage Meditation</span>
+          <span class="qtag" data-topic="Aegypten Tauchen Rotes Meer beste Spots">🇪🇬 Tauchen Ägypten</span>
+          <span class="qtag" data-topic="Kopenhagen teuerste Stadt Europas lohnt sich">🇩🇰 Kopenhagen</span>
+          <span class="qtag" data-topic="30 Tage Meditation was sich veraendert hat">🧘 30 Tage Meditation</span>
           <span class="qtag" data-topic="Erster Tauchgang was wirklich passiert">🌊 Erster Tauchgang</span>
-          <span class="qtag" data-topic="Bangkok in 48 Stunden ehrlicher Guide">🇹🇭 Bangkok Guide</span>
+          <span class="qtag" data-topic="Bangkok 48 Stunden ehrlicher Guide">🇹🇭 Bangkok Guide</span>
           <span class="qtag" data-topic="Dominikanische Republik was ich nicht erwartet haette">🇩🇴 Dom. Republik</span>
         </div>
-        <textarea id="post-topic" placeholder="Oder eigenes Thema eingeben..."></textarea>
+        <textarea id="post-topic" placeholder="Eigenes Thema eingeben..."></textarea>
         <div style="display:flex;gap:8px">
           <select id="post-format" style="flex:1">
-            <option>Caption + Hashtags</option>
-            <option>Reels-Skript 30-60s</option>
-            <option>TikTok-Skript mit Hook</option>
-            <option>Karussell 5-7 Slides</option>
-            <option>YouTube Vlog-Outline</option>
-            <option>YouTube Short</option>
+            <option>Caption + Hashtags</option><option>Reels-Skript 30-60s</option>
+            <option>TikTok-Skript mit Hook</option><option>Karussell 5-7 Slides</option>
+            <option>YouTube Vlog-Outline</option><option>YouTube Short</option>
           </select>
           <select id="post-tone" style="flex:1">
-            <option>Authentisch & direkt</option>
-            <option>Insider-Tipp Stil</option>
-            <option>Nachdenklich</option>
-            <option>Humorvoll</option>
-            <option>Motivierend</option>
+            <option>Authentisch & direkt</option><option>Insider-Tipp Stil</option>
+            <option>Nachdenklich</option><option>Humorvoll</option><option>Motivierend</option>
           </select>
         </div>
         <div class="brow">
-          <button class="btn bp" id="gen-post-btn">✨ Generieren</button>
+          <button class="btn bp" id="gen-complete-btn">🚀 Komplett-Post (Text + Bild)</button>
+          <button class="btn bs" id="gen-post-btn">✨ Nur Text</button>
           <button class="btn bs" id="gen-hooks-btn">🪝 Hooks</button>
         </div>
         <div class="aibox" id="post-res"></div>
+        <div class="img-result" id="post-img-result">
+          <img id="post-gen-img" src="" alt="Generiertes Bild"/>
+          <div class="img-actions">
+            <a class="btn bp bsm" id="post-img-download" href="#" download="faruksueer-post.jpg" target="_blank">⬇️ Bild herunterladen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILD GENERIEREN (DALL-E 3) -->
+    <div class="page" id="page-imagegen">
+      <div class="ptitle">🎨 Bild generieren</div>
+      <div class="psub2">DALL-E 3 — KI generiert passende Bilder für deinen Content</div>
+      <div class="insight">💡 Beschreibe was du sehen möchtest. Der KI-Agent optimiert deinen Prompt automatisch für beste Ergebnisse.</div>
+      <div class="gc">
+        <div class="gc-title">Bild-Prompt</div>
+        <div class="qtags">
+          <span class="qtag" data-imgprompt="Cinematic sunset over Istanbul Bosphorus, golden hour, travel photography, moody atmosphere">🇹🇷 Istanbul Sonnenuntergang</span>
+          <span class="qtag" data-imgprompt="Underwater scuba diving in crystal clear turquoise water, tropical fish, coral reef, Ko Lipe Thailand, professional dive photography">🤿 Tauchen Ko Lipe</span>
+          <span class="qtag" data-imgprompt="Aerial view of Barcelona city and beach, sunny day, travel photography, vibrant colors">🇪🇸 Barcelona Aerial</span>
+          <span class="qtag" data-imgprompt="Underwater Red Sea diving, colorful coral reef, Egypt, crystal clear water, dramatic lighting">🇪🇬 Rotes Meer</span>
+          <span class="qtag" data-imgprompt="Person doing yoga meditation on a rooftop with Istanbul skyline in background, sunset, spiritual, peaceful">🧘 Yoga Istanbul</span>
+          <span class="qtag" data-imgprompt="Street food scene in Bangkok night market, colorful lights, Thai food, travel photography">🇹🇭 Bangkok Streetfood</span>
+          <span class="qtag" data-imgprompt="Phuket Thailand beach, turquoise water, white sand, palm trees, paradise, travel photography">🏖️ Phuket Beach</span>
+          <span class="qtag" data-imgprompt="Minimalist travel flat lay, passport, camera, sunglasses, maps, aesthetic content creator setup">📸 Travel Flatlay</span>
+        </div>
+        <textarea id="img-prompt" placeholder="Beschreibe dein gewünschtes Bild... z.B. 'Sonnenuntergang über dem Bosphorus in Istanbul, cinematic, travel photography'"></textarea>
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <select id="img-size" style="flex:1;min-width:140px">
+            <option value="1024x1024">1:1 Quadrat (IG Post)</option>
+            <option value="1792x1024">16:9 Quer (YT Thumbnail)</option>
+            <option value="1024x1792">9:16 Hoch (Stories/TikTok)</option>
+          </select>
+          <select id="img-style" style="flex:1;min-width:140px">
+            <option value="vivid">Vivid (lebhaft)</option>
+            <option value="natural">Natural (realistisch)</option>
+          </select>
+          <select id="img-pillar" style="flex:1;min-width:140px">
+            <option value="">Stil: Automatisch</option>
+            <option value="travel">✈️ Reisen (35mm Cinematic)</option>
+            <option value="yoga">🧘 Yoga (Pastell, ruhig)</option>
+            <option value="career">💼 Karriere (Business-Look)</option>
+            <option value="dive">🤿 Tauchen (NatGeo-Stil)</option>
+          </select>
+        </div>
+        <div class="brow">
+          <button class="btn bp" id="gen-img-btn">🎨 Bild generieren</button>
+          <button class="btn bs" id="improve-prompt-btn">✨ Prompt verbessern</button>
+        </div>
+        <div class="aibox" id="prompt-res"></div>
+      </div>
+      <div class="img-result" id="img-result">
+        <img id="gen-img" src="" alt="Generiertes Bild"/>
+        <div class="img-prompt-used" id="revised-prompt"></div>
+        <div class="img-actions">
+          <a class="btn bp" id="img-download" href="#" download="faruksueer-ai-image.jpg">⬇️ Herunterladen</a>
+          <button class="btn bs" id="img-regen-btn">🔄 Neu generieren</button>
+        </div>
       </div>
     </div>
 
@@ -486,15 +541,15 @@ select option{background:var(--s2)}
         <div class="dc" data-dest="Istanbul Tuerkei Insider-Tipps was kein Reisefuehrer zeigt"><div class="df">🇹🇷</div><div class="dn">Istanbul</div><div class="ds">Mehrfach besucht</div></div>
         <div class="dc" data-dest="Thailand Bangkok Ko Lipe Phuket Taucherlizenz gemacht"><div class="df">🇹🇭</div><div class="dn">Thailand</div><div class="ds">Bangkok · Ko Lipe · Phuket</div></div>
         <div class="dc" data-dest="Spanien Barcelona Valencia welche Stadt gewinnt"><div class="df">🇪🇸</div><div class="dn">Spanien</div><div class="ds">Barcelona · Valencia</div></div>
-        <div class="dc" data-dest="Aegypten Tauchen Rotes Meer Highlights Tipps"><div class="df">🇪🇬</div><div class="dn">Ägypten</div><div class="ds">Rotes Meer · Tauchen</div></div>
-        <div class="dc" data-dest="Dominikanische Republik Karibik Erfahrungen Tipps"><div class="df">🇩🇴</div><div class="dn">Dom. Republik</div><div class="ds">Karibik</div></div>
+        <div class="dc" data-dest="Aegypten Tauchen Rotes Meer beste Spots"><div class="df">🇪🇬</div><div class="dn">Ägypten</div><div class="ds">Rotes Meer · Tauchen</div></div>
+        <div class="dc" data-dest="Dominikanische Republik Karibik Highlights"><div class="df">🇩🇴</div><div class="dn">Dom. Republik</div><div class="ds">Karibik</div></div>
         <div class="dc" data-dest="Rom Italien Highlights Geheimtipps"><div class="df">🇮🇹</div><div class="dn">Rom</div><div class="ds">Italien</div></div>
-        <div class="dc" data-dest="Prag Tschechien unterschaetzte Hauptstadt Europa"><div class="df">🇨🇿</div><div class="dn">Prag</div><div class="ds">Tschechien</div></div>
+        <div class="dc" data-dest="Prag Tschechien unterschaetzte Hauptstadt"><div class="df">🇨🇿</div><div class="dn">Prag</div><div class="ds">Tschechien</div></div>
         <div class="dc" data-dest="Kopenhagen Daenemark teuerste Stadt lohnt sich"><div class="df">🇩🇰</div><div class="dn">Kopenhagen</div><div class="ds">Dänemark</div></div>
         <div class="dc" data-dest="Niederlande Tipps abseits Amsterdam"><div class="df">🇳🇱</div><div class="dn">Niederlande</div><div class="ds">Mehrfach besucht</div></div>
       </div>
-      <div class="gc" style="margin-top:14px">
-        <div class="gc-title">Content-Ideen generieren</div>
+      <div class="gc" style="margin-top:12px">
+        <div class="gc-title">Content-Ideen</div>
         <div class="brow">
           <button class="btn bp" data-prompt="reel10" data-target="rs-res">🎬 10 Reel-Ideen</button>
           <button class="btn bs" data-prompt="potenzial" data-target="rs-res">🏆 Bestes Potenzial?</button>
@@ -506,18 +561,18 @@ select option{background:var(--s2)}
     <!-- WACHSTUM -->
     <div class="page" id="page-wachstum">
       <div class="ptitle">Wachstumsstrategie</div>
-      <div class="psub2">Alle Daten live aus dem Web recherchiert</div>
+      <div class="psub2">Live aus dem Web recherchiert</div>
       <div class="gc">
-        <div class="gc-title">Top 5 Hebel <button class="btn bs bsm" data-prompt="hebel" data-target="hebel-res">🔄 Aktualisieren</button></div>
-        <div class="gi"><div class="gnum">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Höchste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment. Fehler-Formate performen am stärksten.</div></div></div>
-        <div class="gi"><div class="gnum">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Höchste Prio</span></div><div class="gs">4-5x pro Woche Instagram, 3-4x TikTok. Algorithmen belohnen Regelmäßigkeit.</div></div></div>
-        <div class="gi"><div class="gnum">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich — dein Vorteil gegenüber anderen Travel Creatorn.</div></div></div>
-        <div class="gi"><div class="gnum">4</div><div><div class="gt">Crossposting IG → TikTok → FB <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen. Kein Mehraufwand.</div></div></div>
-        <div class="gi"><div class="gnum">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Kommentare direkt beantworten — Early Engagement = mehr Reichweite.</div></div></div>
+        <div class="gc-title">Top 5 Hebel <button class="btn bs bsm" data-prompt="hebel" data-target="hebel-res" style="margin-left:auto">🔄 Aktualisieren</button></div>
+        <div class="gi"><div class="gnum">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Höchste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment.</div></div></div>
+        <div class="gi"><div class="gnum">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Höchste Prio</span></div><div class="gs">4-5x/Woche Instagram, 3-4x TikTok.</div></div></div>
+        <div class="gi"><div class="gnum">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich — dein Vorteil.</div></div></div>
+        <div class="gi"><div class="gnum">4</div><div><div class="gt">Crossposting IG → TikTok → FB <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen.</div></div></div>
+        <div class="gi"><div class="gnum">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Early Engagement = mehr Reichweite.</div></div></div>
         <div class="aibox" id="hebel-res"></div>
       </div>
       <div class="gc">
-        <div class="gc-title">Beste Posting-Zeiten <button class="btn bs bsm" data-prompt="postingzeiten" data-target="zeit-res">🔄 Aktualisieren</button></div>
+        <div class="gc-title">Beste Posting-Zeiten <button class="btn bs bsm" data-prompt="postingzeiten" data-target="zeit-res" style="margin-left:auto">🔄 Aktualisieren</button></div>
         <div class="prog"><div class="prlabel">📸 Instagram</div><div class="prbg"><div class="prfill" style="width:90%;background:linear-gradient(90deg,var(--pk),#e879a0)"></div></div><div class="prval">Mo-Fr 18-20 Uhr</div></div>
         <div class="prog"><div class="prlabel">🎵 TikTok</div><div class="prbg"><div class="prfill" style="width:85%;background:linear-gradient(90deg,var(--tt),#4ecdc4)"></div></div><div class="prval">Di-Sa 19-22 Uhr</div></div>
         <div class="prog"><div class="prlabel">▶️ YouTube</div><div class="prbg"><div class="prfill" style="width:70%;background:linear-gradient(90deg,var(--yt),#ff6b6b)"></div></div><div class="prval">Fr-Sa 15-18 Uhr</div></div>
@@ -541,7 +596,7 @@ select option{background:var(--s2)}
       <div class="insight">⏱️ In den ersten 30 Minuten nach dem Post antworten — das verdoppelt oft die Reichweite.</div>
       <div class="gc">
         <div class="gc-title">Kommentar beantworten</div>
-        <textarea id="comment-input" placeholder="Kommentar oder DM hier einfügen..."></textarea>
+        <textarea id="comment-input" placeholder="Kommentar oder DM einfügen..."></textarea>
         <div style="display:flex;gap:8px">
           <select id="reply-style" style="flex:1">
             <option>Warm & persönlich</option><option>Kurz & direkt</option>
@@ -581,19 +636,20 @@ select option{background:var(--s2)}
       <div class="aibox" id="tr-res"></div>
     </div>
 
-    <!-- CREATOR -->
+    <!-- CREATOR & NISCHE -->
     <div class="page" id="page-creator">
       <div class="ptitle">Creator & Nische</div>
-      <div class="psub2">Wer dominiert deine Nische — live mit Profilkarten</div>
+      <div class="psub2">Wer dominiert deine Nische — live recherchiert mit Profilkarten</div>
       <div class="gc">
-        <div class="gc-title">Suche</div>
+        <div class="gc-title">Suche konfigurieren</div>
         <div class="pills" id="creator-pills">
           <div class="pill on">Instagram</div>
           <div class="pill">TikTok</div>
           <div class="pill">YouTube</div>
         </div>
+        <div class="gc-title" style="margin-bottom:8px">Nische wählen</div>
         <div class="qtags">
-          <span class="qtag" data-nische="Travel Creator Tuerkei Istanbul">🇹🇷 Travel Türkei</span>
+          <span class="qtag" data-nische="Travel Creator Tuerkei Istanbul deutsch">🇹🇷 Travel Türkei</span>
           <span class="qtag" data-nische="Travel Creator Thailand Inseln">🇹🇭 Travel Thailand</span>
           <span class="qtag" data-nische="Scuba Diving Tauchen Creator">🤿 Tauchen</span>
           <span class="qtag" data-nische="Yoga Meditation Creator deutsch">🧘 Yoga deutsch</span>
@@ -606,10 +662,11 @@ select option{background:var(--s2)}
           <button class="btn bp" id="creator-search-btn">🔍 Top Creator suchen</button>
           <button class="btn bs" id="creator-post-btn">📊 Posts analysieren</button>
         </div>
+        <div class="aibox" id="cr-search-res"></div>
       </div>
-      <div id="creator-results" style="display:none">
+      <div id="creator-cards-section" style="display:none">
         <div class="gc">
-          <div class="gc-title" id="creator-results-title">Ergebnisse</div>
+          <div class="gc-title" id="creator-cards-title">Creator</div>
           <div class="creator-grid" id="creator-grid"></div>
         </div>
       </div>
@@ -638,123 +695,108 @@ select option{background:var(--s2)}
 
 <script>
 // =====================
-// CORE CONFIG
+// CONFIG
 // =====================
-var SYS = 'Du bist der Social Media Agent von Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT). Reisen: Istanbul, Thailand (Ko Lipe/Phuket/Bangkok, Taucherlizenz), Spanien (Barcelona/Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Themen: Reisen, Tauchen, Yoga/Meditation, Karriere. Stil: authentisch, spontan. Ziel: Community und Reichweite. Antworte auf Deutsch. Konkret und praxisnah.';
+var SYS = 'Du bist die KI-Engine eines High-Performance Social-Media-Dashboards fuer Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT, faruk.suer.77 FB). WISSENSDATENBANK: 31 Jahre, Prokurist und Innendienstleiter in Luedenscheid, tuerkische Wurzeln, in Koeln geboren, lebte als Kind 1 Jahr in Istanbul (Familienhaus dort). Werdegang: schwieriger Schulweg, mit 19 Neuanfang, Abschluesse auf Abendschule nachgeholt (Realschulabschluss 1,3), Ausbildung Buerokaufmann, Innendienstleitung, Prokura. Yoga und Meditation seit 2025. Verheiratet, Frau war grosse Stuetze. REISEN: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort), Spanien (Barcelona, Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. BRAND VOICE: authentisch, aesthetisch, spontan, kein Hochglanz, ehrlich, nahbar. Persoenlichen Werdegang NUR erwaehnen wenn explizit gefragt. REGELN: 1) Hook-First - erste Zeile MUSS fesseln (Neugier, Kontrast oder Nutzen). 2) Verknuepfe Trends mit seinen echten Erlebnissen fuer Authentizitaet. 3) Skripte max 45 Sek Sprechzeit. 4) Immer plattformspezifisch optimieren. Ziel: maximale organische Reichweite. Antworte auf Deutsch, kurz und konkret.';
 
 var P = {
-  wochenplan:'Recherchiere aktuelle Trends und erstelle einen Wochenplan fuer Instagram, TikTok, YouTube. Themen: Reisen, Tauchen, Yoga. Inkl. Posting-Zeiten.',
-  quickwins:'Recherchiere: 3 Quick Wins diese Woche fuer Reichweite auf Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
-  reel10:'Recherchiere aktuelle Trends. 10 Reel-Ideen fuer meine Reisen: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande.',
-  potenzial:'Recherchiere welche Reisedestinationen auf TikTok/IG gerade am meisten performen. Welche meiner Reisen hat das groesste Potenzial?',
-  challenge30:'Recherchiere Content-Strategien. 30-Tage Challenge fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
-  hooks:'Recherchiere virale Hooks. 5 starke Hooks fuer Travel und Dive Content: Istanbul, Ko Lipe, Phuket, Aegypten, Barcelona.',
+  wochenplan:'Recherchiere aktuelle Trends. Erstelle kompakten Wochenplan fuer Instagram, TikTok, YouTube. Themen: Reisen, Tauchen, Yoga.',
+  quickwins:'3 Quick Wins diese Woche fuer Reichweite auf Instagram und TikTok. Konkret, sofort umsetzbar.',
+  reel10:'10 Reel-Ideen fuer meine Reisen: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande.',
+  potenzial:'Welche meiner Reisen hat gerade das groesste Content-Potenzial auf TikTok/Instagram? Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande.',
+  challenge30:'30-Tage Content-Challenge fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
+  hooks:'5 starke Hooks fuer Travel und Dive Content. Istanbul, Ko Lipe, Phuket, Aegypten, Barcelona.',
   cta:'10 Call-to-Action Fragen fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
-  welcome:'Willkommensnachricht fuer neue Instagram Follower. Authentisch, herzlich. @faruksueer Travel und Dive Creator.',
-  trends:'Recherchiere jetzt aktuelle Trends auf Instagram und TikTok fuer Travel und Dive Creator. 5 konkrete Post-Ideen.',
-  hashtags:'Recherchiere Hashtag-Performance. 30 Hashtags fuer @faruksueer: gross (1M+), mittel (100K-1M), Nischen (<100K). Themen: Reisen, Tauchen, Yoga.',
-  hebel:'Recherchiere Top Wachstumsstrategien fuer Social Media Creator 2025/2026. Top 5 Hebel fuer Travel Creator.',
-  postingzeiten:'Recherchiere optimale Posting-Zeiten fuer Travel Creator auf IG, TikTok, YouTube, Facebook 2025/2026.',
-  competitor_ig:'Recherchiere TOP Travel und Diving Creator auf Instagram. 5 Accounts mit Handle, Follower, Posting-Frequenz, Content-Stil, Learnings fuer @faruksueer.',
-  competitor_tt:'Recherchiere TOP Travel und Diving Creator auf TikTok. 5 Accounts mit Handle, Views, Wachstum, Content-Strategie.',
-  competitor_yt:'Recherchiere TOP Travel und Diving Creator auf YouTube. 5 Kanaele mit Subscriber, Video-Formate, Learnings.',
-  content_gaps:'Recherchiere Travel und Diving Creator Markt. Welche Themen sind unterversorgt? Istanbul, Thailand, Tauchen, Yoga auf Reisen.',
-  viral_posts:'Recherchiere aktuell viralste Posts Travel und Diving auf TikTok und Instagram. 3 Post-Ideen fuer @faruksueer.'
+  welcome:'Kurze Willkommensnachricht fuer neue Instagram Follower. Authentisch. @faruksueer Travel und Dive Creator.',
+  trends:'Recherchiere aktuelle Trends auf Instagram und TikTok fuer Travel und Dive Creator. 5 konkrete Post-Ideen.',
+  hashtags:'30 Hashtags fuer @faruksueer: gross (1M+), mittel (100K-1M), Nischen (<100K). Reisen, Tauchen, Yoga.',
+  hebel:'Top 5 Wachstumsstrategien fuer Travel Creator auf Instagram und TikTok 2025/2026.',
+  postingzeiten:'Optimale Posting-Zeiten fuer Travel Creator auf IG, TikTok, YouTube, Facebook 2025/2026.',
+  competitor_ig:'TOP 5 Travel und Diving Creator auf Instagram. Handle, Follower, Content-Stil, Posting-Frequenz, 1 Learning fuer @faruksueer.',
+  competitor_tt:'TOP 5 Travel und Diving Creator auf TikTok. Handle, Views, Content-Strategie, 1 Learning.',
+  competitor_yt:'TOP 5 Travel und Diving Creator auf YouTube. Kanal, Subscriber, Video-Format, 1 Learning.',
+  content_gaps:'Welche Travel/Dive Themen sind unterversorgt aber gefragt? Istanbul, Thailand, Tauchen, Yoga auf Reisen.',
+  viral_posts:'Aktuell viralste Posts Travel und Diving auf TikTok und Instagram. 3 Post-Ideen fuer @faruksueer.'
 };
 
 // =====================
-// PIN KEYPAD
+// PIN
 // =====================
-var pinVal = '';
-var pinChecking = false;
+var pinVal = '', pinBusy = false;
 
 function updateDots() {
   for (var i = 0; i < 4; i++) {
-    var dot = document.getElementById('d' + i);
-    dot.classList.toggle('filled', i < pinVal.length);
+    document.getElementById('d' + i).classList.toggle('filled', i < pinVal.length);
   }
 }
 
-document.querySelectorAll('.pin-key').forEach(function(key) {
-  key.addEventListener('click', function() {
-    if (pinChecking) return;
-    var k = this.dataset.k;
-    if (k === 'del') {
-      pinVal = pinVal.slice(0, -1);
-      document.getElementById('pinerr').textContent = '';
-    } else if (k === 'ok') {
-      if (pinVal.length === 4) checkPin();
-    } else if (pinVal.length < 4) {
-      pinVal += k;
-      if (pinVal.length === 4) setTimeout(checkPin, 150);
-    }
+document.querySelectorAll('.pin-key').forEach(function(k) {
+  k.addEventListener('click', function() {
+    if (pinBusy) return;
+    var v = this.dataset.k;
+    var msg = document.getElementById('pinmsg');
+    msg.textContent = '';
+    msg.className = 'pin-msg';
+    if (v === 'del') { pinVal = pinVal.slice(0,-1); }
+    else if (v === 'ok') { if (pinVal.length === 4) doCheckPin(); }
+    else if (pinVal.length < 4) { pinVal += v; if (pinVal.length === 4) setTimeout(doCheckPin, 100); }
     updateDots();
   });
 });
 
 document.addEventListener('keydown', function(e) {
   if (document.getElementById('app').style.display !== 'none') return;
-  if (pinChecking) return;
+  if (pinBusy) return;
   if (e.key >= '0' && e.key <= '9' && pinVal.length < 4) {
-    pinVal += e.key;
-    updateDots();
-    if (pinVal.length === 4) setTimeout(checkPin, 150);
-  } else if (e.key === 'Backspace') {
-    pinVal = pinVal.slice(0, -1);
-    updateDots();
-  }
+    pinVal += e.key; updateDots();
+    if (pinVal.length === 4) setTimeout(doCheckPin, 100);
+  } else if (e.key === 'Backspace') { pinVal = pinVal.slice(0,-1); updateDots(); }
+  else if (e.key === 'Enter' && pinVal.length === 4) doCheckPin();
 });
 
-function checkPin() {
-  if (pinChecking || pinVal.length !== 4) return;
-  pinChecking = true;
-  document.getElementById('pinerr').textContent = '';
-  var checking = document.createElement('div');
-  checking.className = 'pin-checking';
-  checking.textContent = 'Verbinden...';
-  document.querySelector('.pin-box').appendChild(checking);
-
+function doCheckPin() {
+  if (pinBusy || pinVal.length !== 4) return;
+  pinBusy = true;
+  var msg = document.getElementById('pinmsg');
+  msg.className = 'pin-msg pin-ok';
+  msg.textContent = 'Verbinde...';
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pinVal },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 5, system: 'Say hi', messages: [{ role: 'user', content: 'hi' }] })
+    body: JSON.stringify({ max_tokens: 5, system: 'hi', messages: [{ role: 'user', content: 'hi' }] })
   }).then(function(r) {
-    checking.remove();
-    pinChecking = false;
+    pinBusy = false;
     if (r.status === 401) {
-      document.getElementById('pinerr').textContent = 'Falscher PIN';
-      pinVal = '';
-      updateDots();
+      msg.className = 'pin-msg pin-err';
+      msg.textContent = 'Falscher PIN';
+      pinVal = ''; updateDots();
     } else {
       sessionStorage.setItem('pin', pinVal);
       document.getElementById('pinscreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
-      // Instagram loads on tab open
     }
-  }).catch(function() {
-    checking.remove();
-    pinChecking = false;
-    document.getElementById('pinerr').textContent = 'Verbindungsfehler';
-    pinVal = '';
-    updateDots();
+  }).catch(function(e) {
+    pinBusy = false;
+    msg.className = 'pin-msg pin-err';
+    msg.textContent = 'Verbindungsfehler';
+    pinVal = ''; updateDots();
   });
 }
 
-// Auto-login if PIN cached
 if (sessionStorage.getItem('pin')) {
   document.getElementById('pinscreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  // Instagram loads on tab open
 }
 
-// =====================
-// LOGOUT
-// =====================
 document.getElementById('logoutbtn').addEventListener('click', function() {
   sessionStorage.removeItem('pin');
+  igCache = null; igLoaded = false;
   document.getElementById('app').style.display = 'none';
   document.getElementById('pinscreen').style.display = 'flex';
+  document.getElementById('ig-content').style.display = 'none';
+  document.getElementById('ig-loading').style.display = 'flex';
   pinVal = ''; updateDots();
+  document.getElementById('pinmsg').textContent = '';
 });
 
 // =====================
@@ -766,11 +808,9 @@ document.querySelectorAll('.ni').forEach(function(el) {
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
     el.classList.add('active');
     var pg = document.getElementById('page-' + el.dataset.page);
-    if (pg) pg.classList.add('active');
+    if (pg) { pg.classList.add('active'); }
     closeSB();
-    if (el.dataset.page === 'instagram') {
-      if (!igLoaded) loadIG(true);
-    }
+    if (el.dataset.page === 'instagram' && !igLoaded) loadIG();
   });
 });
 
@@ -798,7 +838,14 @@ document.querySelectorAll('[data-tp]').forEach(function(el) {
   });
 });
 document.querySelectorAll('[data-topic]').forEach(function(el) {
-  el.addEventListener('click', function() { document.getElementById('post-topic').value = el.dataset.topic; });
+  el.addEventListener('click', function() {
+    document.getElementById('post-topic').value = el.dataset.topic;
+  });
+});
+document.querySelectorAll('[data-imgprompt]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.getElementById('img-prompt').value = el.dataset.imgprompt;
+  });
 });
 document.querySelectorAll('[data-nische]').forEach(function(el) {
   el.addEventListener('click', function() {
@@ -823,19 +870,96 @@ document.querySelectorAll('[data-prompt]').forEach(function(el) {
 });
 
 // =====================
-// POST GENERATION
+// POST & HOOKS
 // =====================
+document.getElementById('gen-complete-btn').addEventListener('click', function() {
+  var topic = document.getElementById('post-topic').value.trim() || 'passendes Travel oder Dive Thema';
+  var format = document.getElementById('post-format').value;
+  var tone = document.getElementById('post-tone').value;
+  var plats = [];
+  document.querySelectorAll('#post-pills .pill.on').forEach(function(p) { plats.push(p.textContent.trim()); });
+  var plat = plats.join(', ') || 'Instagram';
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ Generiere Text...';
+  document.getElementById('post-img-result').className = 'img-result';
+
+  var box = document.getElementById('post-res');
+  box.className = 'aibox on';
+  box.innerHTML = mkLoader('Recherchiere Trends und erstelle Komplett-Post...');
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  var prompt = 'Recherchiere aktuelle Trends zum Thema und erstelle einen Komplett-Post fuer ' + plat + ' zum Thema: ' + topic + '. Ton: ' + tone + '. Format: ' + format + '. Struktur:\n## SKRIPT\n[Hook-First Skript, max 45 Sek Sprechzeit]\n## CAPTIONS\n[Plattformspezifische Captions]\n## SEO\n[5 staerkste Hashtags + 1 CTA-Frage]\n## BILDPROMPT\n[Praeziser englischer DALL-E Prompt fuer ein passendes aesthetisches Bild, eine Zeile]';
+
+  var pin = sessionStorage.getItem('pin');
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ max_tokens: 1200, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.error) {
+      btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
+      box.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(data.error) + '</div>';
+      return;
+    }
+    var text = data.text || '';
+    // Extract DALL-E prompt from response
+    var imgPrompt = '';
+    var m = text.match(/## BILDPROMPT\s*\n([\s\S]*?)($|\n##)/);
+    if (m) imgPrompt = m[1].trim().split('\n')[0];
+    // Show text result
+    var cid = 'cp-complete-' + Date.now();
+    box.innerHTML = mkAIHeader(cid) + renderAI(text);
+    setupCopy(cid, text);
+
+    if (imgPrompt) {
+      btn.textContent = '🎨 Generiere Bild...';
+      // Determine pillar from topic for styling
+      var t = topic.toLowerCase();
+      var style = '';
+      if (t.match(/tauch|dive|unterwasser|meer|riff/)) style = PILLAR_STYLES.dive;
+      else if (t.match(/yoga|meditation|mindset|achtsam/)) style = PILLAR_STYLES.yoga;
+      else if (t.match(/karriere|werdegang|erfolg|studium/)) style = PILLAR_STYLES.career;
+      else style = PILLAR_STYLES.travel;
+      fetch('/api/image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+        body: JSON.stringify({ prompt: imgPrompt + style, size: '1024x1024', style: 'vivid' })
+      }).then(function(r) { return r.json(); }).then(function(img) {
+        btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
+        if (img.error) {
+          box.innerHTML += '<div class="insight insight-warn" style="margin-top:10px">Bild konnte nicht generiert werden: ' + esc(img.error) + '</div>';
+          return;
+        }
+        var el = document.getElementById('post-gen-img');
+        el.src = img.url;
+        el.onload = function() {
+          document.getElementById('post-img-result').className = 'img-result on';
+          document.getElementById('post-img-download').href = img.url;
+        };
+      }).catch(function() {
+        btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
+      });
+    } else {
+      btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
+    }
+  }).catch(function(e) {
+    btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
+    box.innerHTML = 'Fehler: ' + esc(e.message);
+  });
+});
+
 document.getElementById('gen-post-btn').addEventListener('click', function() {
   var topic = document.getElementById('post-topic').value.trim() || 'passendes Travel oder Dive Thema';
   var format = document.getElementById('post-format').value;
   var tone = document.getElementById('post-tone').value;
   var plats = [];
   document.querySelectorAll('#post-pills .pill.on').forEach(function(p) { plats.push(p.textContent.trim()); });
-  callAI('Recherchiere aktuelle Trends. Erstelle ' + format + ' fuer ' + (plats.join(', ') || 'Instagram') + ' zum Thema: ' + topic + '. Ton: ' + tone + '. Inkl. Hashtags.', 'post-res');
+  callAI('Erstelle ' + format + ' fuer ' + (plats.join(', ') || 'Instagram') + ' zum Thema: ' + topic + '. Ton: ' + tone + '. Inkl. Hashtags.', 'post-res');
 });
 document.getElementById('gen-hooks-btn').addEventListener('click', function() {
   var topic = document.getElementById('post-topic').value.trim() || 'Travel und Tauchen';
-  callAI('Recherchiere virale Hooks. 5 starke Hooks fuer TikTok/Instagram zum Thema: ' + topic + '. Max 2 Saetze pro Hook.', 'post-res');
+  callAI('5 starke Hooks fuer TikTok/Instagram zum Thema: ' + topic + '. Max 2 Saetze pro Hook.', 'post-res');
 });
 
 // =====================
@@ -845,11 +969,74 @@ document.getElementById('reply-btn').addEventListener('click', function() {
   var c = document.getElementById('comment-input').value.trim();
   var s = document.getElementById('reply-style').value;
   var pl = document.getElementById('reply-platform').value;
-  callAI(c ? 'Antworte auf diesen ' + pl + '-Kommentar im Stil "' + s + '": "' + c + '". Authentisch, kurz.' : '5 Community-Tipps als Travel Creator auf ' + pl, 'cm-res');
+  callAI(c ? 'Antworte auf diesen ' + pl + '-Kommentar im Stil "' + s + '": "' + c + '".' : '5 Community-Tipps als Travel Creator auf ' + pl, 'cm-res');
 });
 
 // =====================
-// CREATOR SEARCH
+// IMAGE GENERATION (DALL-E 3)
+// =====================
+var PILLAR_STYLES = {
+  travel: ', cinematic sun-drenched lifestyle photography, 35mm film look, warm tones',
+  yoga: ', minimalist calming composition, soft pastel tones, peaceful atmosphere',
+  career: ', high contrast motivational style, modern business look, dynamic lighting',
+  dive: ', breathtaking underwater photography, National Geographic style, vivid deep blues'
+};
+
+document.getElementById('gen-img-btn').addEventListener('click', function() {
+  var prompt = document.getElementById('img-prompt').value.trim();
+  if (!prompt) { alert('Bitte einen Bild-Prompt eingeben.'); return; }
+  var pillar = document.getElementById('img-pillar').value;
+  if (pillar && PILLAR_STYLES[pillar]) prompt += PILLAR_STYLES[pillar];
+  var size = document.getElementById('img-size').value;
+  var style = document.getElementById('img-style').value;
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ Generiert...';
+  document.getElementById('img-result').className = 'img-result';
+  var pin = sessionStorage.getItem('pin');
+  fetch('/api/image', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ prompt: prompt, size: size, style: style })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    btn.disabled = false;
+    btn.textContent = '🎨 Bild generieren';
+    if (data.error) {
+      var box = document.getElementById('prompt-res');
+      box.className = 'aibox on';
+      box.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(data.error) + '</div>';
+      return;
+    }
+    var img = document.getElementById('gen-img');
+    img.src = data.url;
+    img.onload = function() {
+      document.getElementById('img-result').className = 'img-result on';
+      document.getElementById('img-download').href = data.url;
+      if (data.revised_prompt) {
+        document.getElementById('revised-prompt').textContent = 'Optimierter Prompt: ' + data.revised_prompt;
+      }
+    };
+  }).catch(function(e) {
+    btn.disabled = false;
+    btn.textContent = '🎨 Bild generieren';
+    var box = document.getElementById('prompt-res');
+    box.className = 'aibox on';
+    box.innerHTML = 'Fehler: ' + esc(e.message);
+  });
+});
+
+document.getElementById('improve-prompt-btn').addEventListener('click', function() {
+  var p = document.getElementById('img-prompt').value.trim();
+  if (!p) { alert('Bitte zuerst einen Prompt eingeben.'); return; }
+  callAI('Verbessere diesen DALL-E Bild-Prompt fuer Travel/Lifestyle Content fuer @faruksueer. Gib nur den verbesserten Prompt aus, nichts anderes: "' + p + '"', 'prompt-res');
+});
+
+document.getElementById('img-regen-btn').addEventListener('click', function() {
+  document.getElementById('gen-img-btn').click();
+});
+
+// =====================
+// CREATOR SEARCH — FIXED JSON PARSING
 // =====================
 document.getElementById('creator-search-btn').addEventListener('click', function() {
   var plats = [];
@@ -858,55 +1045,85 @@ document.getElementById('creator-search-btn').addEventListener('click', function
   var nische = sel ? sel.dataset.nische : 'Travel und Diving';
   var plat = plats.join(', ') || 'Instagram';
 
-  var box = document.getElementById('cr-res');
+  var box = document.getElementById('cr-search-res');
   box.className = 'aibox on';
   box.innerHTML = mkLoader('Suche Top Creator in "' + nische + '"...');
 
   var pin = sessionStorage.getItem('pin');
-  var prompt = 'Recherchiere TOP Creator in der Nische "' + nische + '" auf ' + plat + '. Antworte NUR mit JSON, kein Text davor/danach:\n{"creators":[{"name":"Name","handle":"@handle","platform":"' + plat + '","followers":"z.B. 450K","niche":"Nische","content":"Was sie posten","posting":"Frequenz","learn":"Learning fuer @faruksueer","emoji":"emoji"}]}';
+  // Ask for plain text list instead of JSON to avoid parse errors
+  var prompt = 'Recherchiere die TOP 5 Creator in der Nische "' + nische + '" auf ' + plat + '. Fuer jeden Creator:\nName: [Name]\nHandle: [@handle]\nFollower: [Anzahl]\nContent: [Was sie posten, 1 Satz]\nLearning: [1 konkretes Learning fuer @faruksueer]\n---';
 
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
-  }).then(function(r) { return r.text(); }).then(function(raw) {
-    try {
-      var lines = raw.split('\n');
-      var text = '';
-      lines.forEach(function(line) {
-        if (line.startsWith('data: ')) {
-          try { var d = JSON.parse(line.slice(6)); if (d.text) text = d.text; } catch(e) {}
-        }
-      });
-      var jm = text.match(/\{[\s\S]*\}/);
-      if (jm) {
-        var parsed = JSON.parse(jm[0]);
-        if (parsed.creators && parsed.creators.length) {
-          document.getElementById('creator-results').style.display = 'block';
-          document.getElementById('creator-results-title').textContent = 'Top Creator: ' + nische;
-          renderCreators(parsed.creators);
-          box.className = 'aibox';
-          return;
-        }
-      }
-      box.innerHTML = mkAIHeader() + renderAI(text);
-    } catch(e) { box.innerHTML = 'Fehler: ' + e.message; }
-  }).catch(function(e) { box.innerHTML = 'Fehler: ' + e.message; });
+    body: JSON.stringify({ max_tokens: 800, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.error) { box.innerHTML = 'Fehler: ' + esc(data.error); return; }
+    var text = data.text || '';
+    // Try to parse as structured creator cards
+    var creators = parseCreatorText(text);
+    if (creators.length >= 2) {
+      box.className = 'aibox';
+      document.getElementById('creator-cards-section').style.display = 'block';
+      document.getElementById('creator-cards-title').textContent = 'Top Creator: ' + nische;
+      renderCreators(creators);
+    } else {
+      // Fallback: show as formatted text
+      var cid = 'cp-crs-' + Date.now();
+      box.innerHTML = mkAIHeader(cid) + renderAI(text);
+      setupCopy(cid, text);
+    }
+  }).catch(function(e) { box.innerHTML = 'Fehler: ' + esc(e.message); });
 });
+
+function parseCreatorText(text) {
+  var creators = [];
+  var blocks = text.split('---').filter(function(b) { return b.trim(); });
+  blocks.forEach(function(block) {
+    var c = {};
+    var lines = block.split('\n');
+    lines.forEach(function(line) {
+      var m = line.match(/^(Name|Handle|Follower|Content|Learning|Posting):\s*(.+)/i);
+      if (m) {
+        var key = m[1].toLowerCase();
+        c[key] = m[2].trim();
+      }
+    });
+    if (c.name || c.handle) {
+      creators.push({
+        name: c.name || c.handle || 'Creator',
+        handle: c.handle || '',
+        followers: c.follower || c.followers || '-',
+        content: c.content || '',
+        learn: c.learning || '',
+        posting: c.posting || '-',
+        emoji: getEmoji(c.name || '')
+      });
+    }
+  });
+  return creators;
+}
+
+function getEmoji(name) {
+  var emojis = ['✈️','🤿','📸','🌍','🧘','🎬','💼','🏄','🌊','🏔️'];
+  var h = 0;
+  for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+  return emojis[h % emojis.length];
+}
 
 function renderCreators(creators) {
   var grid = document.getElementById('creator-grid');
   grid.innerHTML = '';
-  var grads = ['linear-gradient(135deg,#7c6fff,#a78bfa)','linear-gradient(135deg,#f472b6,#ec4899)','linear-gradient(135deg,#34d399,#059669)','linear-gradient(135deg,#fbbf24,#f59e0b)','linear-gradient(135deg,#69c9d0,#0891b2)'];
+  var grads = ['linear-gradient(135deg,#7c6fff,#a78bfa)','linear-gradient(135deg,#f472b6,#ec4899)','linear-gradient(135deg,#34d399,#059669)','linear-gradient(135deg,#fbbf24,#f59e0b)','linear-gradient(135deg,#69c9d0,#0891b2)','linear-gradient(135deg,#fb923c,#f43f5e)'];
   creators.forEach(function(c, i) {
     var card = document.createElement('div');
     card.className = 'creator-card';
     card.innerHTML =
-      '<div class="cav" style="background:' + grads[i % grads.length] + '">' + esc(c.emoji || c.name[0]) + '</div>' +
+      '<div class="cav" style="background:' + grads[i % grads.length] + '">' + esc(c.emoji || '✈️') + '</div>' +
       '<div class="cname">' + esc(c.name) + '</div>' +
       '<div class="chandle">' + esc(c.handle) + '</div>' +
-      '<div class="cstats"><div class="creator-stat"><div class="csval">' + esc(c.followers) + '</div><div class="cslabel">Follower</div></div><div class="creator-stat"><div class="csval">' + esc(c.posting) + '</div><div class="cslabel">Posts</div></div></div>' +
-      '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:3px"><span class="tag tp" style="font-size:10px">' + esc(c.niche) + '</span></div>' +
+      '<div class="cstats"><div><div class="csval">' + esc(c.followers) + '</div><div class="cslabel">Follower</div></div></div>' +
+      (c.content ? '<div style="font-size:11px;color:var(--tx3);margin:5px 0;line-height:1.4">' + esc(c.content) + '</div>' : '') +
       (c.learn ? '<div class="clearn"><span style="color:var(--ac2);font-weight:600">Learning: </span>' + esc(c.learn) + '</div>' : '');
     grid.appendChild(card);
   });
@@ -915,15 +1132,16 @@ function renderCreators(creators) {
 document.getElementById('creator-post-btn').addEventListener('click', function() {
   var sel = document.querySelector('[data-nische].sel');
   var nische = sel ? sel.dataset.nische : 'Travel und Diving';
-  callAI('Recherchiere aktuell viralste Posts in der Nische ' + nische + '. Neueste virale Posts, Themen, Formate. 3 Post-Ideen fuer @faruksueer.', 'cr-res');
+  callAI('Aktuell viralste Posts in der Nische ' + nische + '. 3 Post-Ideen fuer @faruksueer.', 'cr-search-res');
 });
+
 document.getElementById('creator-custom-btn').addEventListener('click', function() {
   var q = document.getElementById('creator-custom').value.trim();
   if (q) callAI('Recherchiere fuer @faruksueer als Travel und Dive Creator: ' + q, 'cr-custom-res');
 });
 
 // =====================
-// AI CALL (SSE)
+// AI CALL
 // =====================
 function callAI(prompt, boxId) {
   var pin = sessionStorage.getItem('pin');
@@ -931,53 +1149,46 @@ function callAI(prompt, boxId) {
   var box = document.getElementById(boxId);
   if (!box) return;
   box.className = 'aibox on';
-  box.innerHTML = mkLoader('Recherchiere im Web...');
+  box.innerHTML = mkLoader('Recherchiere...');
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
-  }).then(function(r) {
-    if (r.status === 401) { box.innerHTML = 'Falscher PIN.'; sessionStorage.removeItem('pin'); return; }
-    return r.text();
-  }).then(function(raw) {
-    if (!raw) return;
-    var text = '';
-    raw.split('\n').forEach(function(line) {
-      if (line.startsWith('data: ')) {
-        try { var d = JSON.parse(line.slice(6)); if (d.text) text = d.text; if (d.error) text = 'Fehler: ' + d.error; } catch(e) {}
-      }
-    });
+    body: JSON.stringify({ max_tokens: 1000, system: SYS, messages: [{ role: 'user', content: prompt }], useWebSearch: true })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.error) { box.innerHTML = '<div class="insight insight-err" style="margin:0">Fehler: ' + esc(data.error) + '</div>'; box.className = 'aibox on'; return; }
+    var text = data.text || '';
     var cid = 'cp-' + boxId + '-' + Date.now();
     box.innerHTML = mkAIHeader(cid) + renderAI(text);
-    var cpBtn = document.getElementById(cid);
-    if (cpBtn) {
-      cpBtn.addEventListener('click', function() {
-        navigator.clipboard.writeText(text);
-        cpBtn.textContent = '✓ Kopiert';
-        setTimeout(function() { cpBtn.textContent = 'Kopieren'; }, 2000);
-      });
-    }
-  }).catch(function(e) { box.innerHTML = 'Fehler: ' + e.message; });
+    setupCopy(cid, text);
+  }).catch(function(e) { box.innerHTML = 'Fehler: ' + esc(e.message); });
 }
 
 function mkLoader(msg) {
-  return '<div class="aihdr"><span class="ailive"><span class="aildot"></span>Live</span></div><div style="display:flex;align-items:center;gap:8px;color:var(--tx3);font-size:13px"><div class="sm-spin"></div>' + esc(msg) + '</div>';
+  return '<div style="display:flex;align-items:center;gap:8px;color:var(--tx3);font-size:13px"><div class="sm-spin"></div>' + esc(msg) + '</div>';
 }
 function mkAIHeader(cid) {
-  return '<div class="aihdr"><span class="ailive"><span class="aildot"></span>Live aus dem Web</span>' + (cid ? '<button class="aicopy" id="' + cid + '">Kopieren</button>' : '') + '</div>';
+  return '<div class="aihdr"><span class="ailive"><span class="aildot"></span>Live</span>' + (cid ? '<button class="aicopy" id="' + cid + '">Kopieren</button>' : '') + '</div>';
+}
+function setupCopy(cid, text) {
+  var btn = document.getElementById(cid);
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '✓ Kopiert';
+      setTimeout(function() { btn.textContent = 'Kopieren'; }, 2000);
+    });
+  });
 }
 
 // =====================
-// RENDER AI RESPONSE
+// RENDER AI
 // =====================
 function renderAI(text) {
-  if (!text) return '';
+  if (!text) return '<span style="color:var(--tx3)">Keine Antwort erhalten.</span>';
   var lines = text.split('\n');
-  var html = '';
-  var inList = false;
-
+  var html = '', inList = false;
   lines.forEach(function(line) {
     var t = line.trim();
     if (!t) {
@@ -985,49 +1196,43 @@ function renderAI(text) {
       html += '<div style="height:5px"></div>';
       return;
     }
-    // Section headings
-    if (t.match(/^#{1,3} /) || (t.startsWith('**') && t.endsWith('**') && t.length < 70 && !t.match(/\*\*.+\*\*.+/))) {
+    if (t.match(/^#{1,3} /) || (t.startsWith('**') && t.endsWith('**') && t.length < 60 && t.indexOf(' ** ') === -1)) {
       if (inList) { html += '</div>'; inList = false; }
       html += '<div class="ai-sec">' + esc(t.replace(/^#+\s*/,'').replace(/\*\*/g,'')) + '</div>';
       return;
     }
-    // Numbered
     var nm = t.match(/^(\d+)[\.\)]\s*(.*)/);
     if (nm) {
       if (inList) { html += '</div>'; inList = false; }
       var rest = nm[2];
       var bm = rest.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
-      var title = bm ? bm[1] : rest.split(':')[0];
+      var title = bm ? bm[1] : (rest.split(':')[0] || rest);
       var desc = bm ? bm[2] : (rest.includes(':') ? rest.split(':').slice(1).join(':').trim() : '');
-      html += '<div class="ai-num"><div class="ai-nbadge">' + nm[1] + '</div><div><div class="ai-ntitle">' + esc(title) + '</div>' + (desc ? '<div class="ai-ndesc">' + esc(desc) + '</div>' : '') + '</div></div>';
+      html += '<div class="ai-num"><div class="ai-nb">' + nm[1] + '</div><div><div class="ai-nt">' + esc(title) + '</div>' + (desc ? '<div class="ai-nd">' + esc(desc) + '</div>' : '') + '</div></div>';
       return;
     }
-    // Bullets
     if (t.match(/^[-*•] /)) {
       var item = t.replace(/^[-*•] /,'');
       var bm2 = item.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
       if (!inList) { html += '<div style="display:flex;flex-direction:column;gap:4px">'; inList = true; }
       if (bm2) {
-        html += '<div class="ai-bullet"><div class="ai-bdot"></div><div><span style="font-size:13px;font-weight:600;color:var(--tx)">' + esc(bm2[1]) + '</span>' + (bm2[2] ? '<span style="font-size:12px;color:var(--tx3)"> — ' + esc(bm2[2]) + '</span>' : '') + '</div></div>';
+        html += '<div class="ai-bul"><div class="ai-bd"></div><div><span style="font-size:13px;font-weight:600;color:var(--tx)">' + esc(bm2[1]) + '</span>' + (bm2[2] ? '<span style="font-size:12px;color:var(--tx3)"> — ' + esc(bm2[2]) + '</span>' : '') + '</div></div>';
       } else {
-        html += '<div class="ai-bullet"><div class="ai-bdot"></div><div style="font-size:13px;color:var(--tx2);line-height:1.5">' + esc(item) + '</div></div>';
+        html += '<div class="ai-bul"><div class="ai-bd"></div><div style="font-size:13px;color:var(--tx2);line-height:1.5">' + esc(item) + '</div></div>';
       }
       return;
     }
-    // Hashtag lines
-    if (t.match(/^#\w/) && t.split(' ').filter(function(w){return w.startsWith('#');}).length > 2) {
+    if (t.split(' ').filter(function(w){return w.startsWith('#');}).length > 2) {
       if (inList) { html += '</div>'; inList = false; }
-      html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:5px 0">';
-      t.split(' ').forEach(function(w) { if (w.startsWith('#')) html += '<span class="ai-htag">' + esc(w) + '</span>'; });
+      html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:4px 0">';
+      t.split(' ').forEach(function(w) { if (w.startsWith('#')) html += '<span class="ai-ht">' + esc(w) + '</span>'; });
       html += '</div>';
       return;
     }
-    // Regular text
     if (inList) { html += '</div>'; inList = false; }
     var fmt = t.replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--tx)">$1</strong>').replace(/\*(.+?)\*/g,'<em style="color:var(--ac2)">$1</em>');
-    html += '<div class="ai-text">' + fmt + '</div>';
+    html += '<div class="ai-tx">' + fmt + '</div>';
   });
-
   if (inList) html += '</div>';
   return html;
 }
@@ -1041,15 +1246,15 @@ function esc(s) {
 // TRENDS
 // =====================
 var TD = {
-  ig:[['Insider-Tipp Travel','"Was kein Tourist weiss" — meistgespeichert',96],['Ko Lipe / Phuket Vergleich','Thailand-Inseln — hohes Suchvolumen',87],['Tauchen POV Clips','Visuell stark + ruhige Musik',79],['Fehler die Touristen machen','Kontrast-Hook + Mehrwert',71],['Yoga an besonderen Orten','Wellness + Travel',55]],
-  tt:[['Tourist vs Insider','Zwei Cuts, ein Kontrast — hohe Completion',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren',88],['Tauchen POV Rotes Meer','Aegypten + Unterwasser — wenig Konkurrenz',78],['Istanbul Geheimtipps','Tuerkei-Content steigt stark',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
-  yt:[['Reise-Vlogs Storytelling','Thailand oder Istanbul — hohe Watchtime',90],['Tauch-Guide Einsteiger','Educational + Passion',78],['Destination Vergleiche','Barcelona vs Valencia, Ko Lipe vs Phuket',68],['Lohnt es sich wirklich?','Kopenhagen, Dom. Republik, Prag',59],['Yoga unterwegs','Reisen + Wellness — wachsende Nische',44]]
+  ig:[['Insider-Tipp Travel','"Was kein Tourist weiss" — meistgespeichert',96],['Ko Lipe / Phuket Vergleich','Thailand-Inseln — hohes Suchvolumen',87],['Tauchen POV Clips','Visuell stark + Musik',79],['Fehler die Touristen machen','Kontrast-Hook + Mehrwert',71],['Yoga an besonderen Orten','Wellness + Travel',55]],
+  tt:[['Tourist vs Insider','Kontrast — hohe Completion',97],['Thailand Travel Clips','Ko Lipe und Phuket explodieren',88],['Tauchen POV Rotes Meer','Aegypten + Unterwasser',78],['Istanbul Geheimtipps','Tuerkei-Content steigt',67],['Yoga auf Reisen','Ehrlicher Wellness-Content',52]],
+  yt:[['Reise-Vlogs Storytelling','Thailand oder Istanbul — hohe Watchtime',90],['Tauch-Guide Einsteiger','Educational + Passion',78],['Destination Vergleiche','Barcelona vs Valencia',68],['Lohnt es sich wirklich?','Kopenhagen, Dom. Republik',59],['Yoga unterwegs','Wachsende Nische',44]]
 };
 function showTrends(k) {
   var d = TD[k];
   var n = {ig:'Instagram',tt:'TikTok',yt:'YouTube'};
   var html = '<div class="gc-title">Trends auf ' + n[k] + '</div>';
-  d.forEach(function(item,i) {
+  d.forEach(function(item, i) {
     html += '<div class="ti"><div class="tr2">' + (i+1) + '</div><div style="flex:1"><div class="tn">' + item[0] + '</div><div class="ts">' + item[1] + '</div><div class="tbb"><div class="tbf" style="width:' + item[2] + '%"></div></div></div></div>';
   });
   document.getElementById('trends-static').innerHTML = html;
@@ -1059,18 +1264,18 @@ showTrends('ig');
 // =====================
 // INSTAGRAM
 // =====================
-var igLoaded = false;
-var igCache = null;
+var igLoaded = false, igCache = null;
 
 function fmtN(n) {
   if (!n && n !== 0) return '-';
+  n = parseInt(n) || 0;
   if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
   if (n >= 1000) return (n/1000).toFixed(1) + 'K';
   return '' + n;
 }
 
-function loadIG(show) {
-  // Always show loading state
+function loadIG() {
+  igLoaded = true;
   document.getElementById('ig-loading').style.display = 'flex';
   document.getElementById('ig-content').style.display = 'none';
   document.getElementById('ig-error').style.display = 'none';
@@ -1078,45 +1283,37 @@ function loadIG(show) {
   if (igCache) { renderIG(igCache); return; }
 
   var pin = sessionStorage.getItem('pin');
-  if (!pin) {
-    document.getElementById('ig-loading').style.display = 'none';
-    document.getElementById('ig-error').style.display = 'block';
-    document.getElementById('ig-error').textContent = 'Nicht eingeloggt.';
-    return;
-  }
+  if (!pin) { showIGError('Nicht eingeloggt.'); return; }
 
-  // Timeout after 15 seconds
-  var timeout = setTimeout(function() {
-    document.getElementById('ig-loading').style.display = 'none';
-    document.getElementById('ig-error').style.display = 'block';
-    document.getElementById('ig-error').textContent = 'Zeitüberschreitung — Instagram API antwortet nicht. Prüfe ob INSTAGRAM_TOKEN und INSTAGRAM_USER_ID in Vercel gesetzt sind.';
+  var timer = setTimeout(function() {
+    showIGError('Zeitueberschreitung. Pruefe ob INSTAGRAM_TOKEN und INSTAGRAM_USER_ID in Vercel korrekt gesetzt sind.');
     igLoaded = false;
-  }, 15000);
+  }, 20000);
 
   fetch('/api/instagram', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
     body: JSON.stringify({ type: 'all' })
   }).then(function(r) {
-    clearTimeout(timeout);
+    clearTimeout(timer);
     return r.json();
   }).then(function(data) {
-    igLoaded = true;
     document.getElementById('ig-loading').style.display = 'none';
-    if (data.error) {
-      document.getElementById('ig-error').style.display = 'block';
-      document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
-      return;
-    }
+    if (data.error) { showIGError(data.error); return; }
     igCache = data;
     renderIG(data);
   }).catch(function(e) {
-    clearTimeout(timeout);
+    clearTimeout(timer);
+    showIGError('Verbindungsfehler: ' + e.message);
     igLoaded = false;
-    document.getElementById('ig-loading').style.display = 'none';
-    document.getElementById('ig-error').style.display = 'block';
-    document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
   });
+}
+
+function showIGError(msg) {
+  document.getElementById('ig-loading').style.display = 'none';
+  var err = document.getElementById('ig-error');
+  err.style.display = 'block';
+  err.textContent = msg;
 }
 
 function renderIG(data) {
@@ -1125,11 +1322,26 @@ function renderIG(data) {
 
   if (data.profile && !data.profile.error) {
     var p = data.profile;
+    // Profile picture in sidebar and insights
+    if (p.profile_picture_url) {
+      var av = document.getElementById('sidebar-avatar');
+      var avBig = document.getElementById('ig-avatar-big');
+      var img1 = new Image();
+      img1.onload = function() {
+        av.innerHTML = '';
+        var i = document.createElement('img');
+        i.src = p.profile_picture_url;
+        i.style.cssText = 'width:100%;height:100%;object-fit:cover';
+        av.appendChild(i);
+      };
+      img1.src = p.profile_picture_url;
+      avBig.innerHTML = '<img src="' + esc(p.profile_picture_url) + '" style="width:100%;height:100%;object-fit:cover" alt="Profilbild"/>';
+    }
+    document.getElementById('ig-uname').textContent = '@' + (p.username || 'faruksueer');
+    document.getElementById('ig-bio').textContent = p.biography || '';
     document.getElementById('ig-followers').textContent = fmtN(p.followers_count);
     document.getElementById('ig-following').textContent = fmtN(p.follows_count);
     document.getElementById('ig-posts-count').textContent = fmtN(p.media_count);
-    document.getElementById('ig-username-disp').textContent = '@' + (p.username || 'faruksueer');
-    document.getElementById('ig-bio-disp').textContent = p.biography || '';
   }
 
   if (data.media && data.media.data && data.media.data.length) {
@@ -1140,115 +1352,90 @@ function renderIG(data) {
       div.className = 'ig-post';
       var isVideo = post.media_type === 'VIDEO' || post.media_type === 'REELS';
 
-      if (isVideo && post.media_url) {
-        // Show thumbnail with play button
-        var thumb = post.thumbnail_url || post.media_url;
+      if (isVideo) {
         if (post.thumbnail_url) {
-          var img = document.createElement('img');
-          img.src = post.thumbnail_url;
-          img.alt = '';
-          img.loading = 'lazy';
-          div.appendChild(img);
+          var tImg = document.createElement('img');
+          tImg.src = post.thumbnail_url;
+          tImg.alt = '';
+          tImg.loading = 'lazy';
+          div.appendChild(tImg);
         } else {
           div.style.background = 'var(--s3)';
-          div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px">🎬</div>';
+          div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">🎬</div>';
         }
-        // Play button overlay
         var playDiv = document.createElement('div');
         playDiv.className = 'ig-play';
-        playDiv.innerHTML = '<div class="ig-play-btn">▶</div>';
+        playDiv.innerHTML = '<div class="ig-playbtn">▶</div>';
         div.appendChild(playDiv);
-        // Type badge
-        var typeBadge = document.createElement('div');
-        typeBadge.className = 'ig-type';
-        typeBadge.textContent = '🎬';
-        div.appendChild(typeBadge);
-        // Click opens modal with video
-        div.addEventListener('click', (function(p) {
-          return function() { openVideoModal(p); };
-        })(post));
+        var badge = document.createElement('div');
+        badge.className = 'ig-type';
+        badge.textContent = '🎬';
+        div.appendChild(badge);
+        div.addEventListener('click', (function(p) { return function() { openModal(p, true); }; })(post));
       } else if (post.media_url) {
-        var img2 = document.createElement('img');
-        img2.src = post.media_url;
-        img2.alt = '';
-        img2.loading = 'lazy';
-        img2.onerror = function() {
-          div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">📸</div>';
-        };
-        div.appendChild(img2);
-        // Click opens image modal
-        div.addEventListener('click', (function(p) {
-          return function() { openImageModal(p); };
-        })(post));
+        var img = document.createElement('img');
+        img.src = post.media_url;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.onerror = function() { div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">📸</div>'; };
+        div.appendChild(img);
+        div.addEventListener('click', (function(p) { return function() { openModal(p, false); }; })(post));
       } else {
         div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:28px">📸</div>';
       }
 
-      // Stats overlay
       var ov = document.createElement('div');
-      ov.className = 'ig-overlay';
-      ov.innerHTML = '<span class="ig-stat">❤️ ' + fmtN(post.like_count) + '</span><span class="ig-stat">💬 ' + fmtN(post.comments_count) + '</span>';
+      ov.className = 'ig-ov';
+      ov.innerHTML = '<span class="ig-st">❤️ ' + fmtN(post.like_count) + '</span><span class="ig-st">💬 ' + fmtN(post.comments_count) + '</span>';
       div.appendChild(ov);
       grid.appendChild(div);
     });
   }
 }
 
-// VIDEO MODAL
-function openVideoModal(post) {
-  document.getElementById('modal-title').textContent = post.media_type || 'Video';
-  document.getElementById('modal-video').src = post.media_url || '';
-  document.getElementById('modal-caption').textContent = post.caption || '';
-  document.getElementById('modal-likes').textContent = '❤️ ' + fmtN(post.like_count);
-  document.getElementById('modal-comments').textContent = '💬 ' + fmtN(post.comments_count);
-  document.getElementById('modal-date').textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString('de') : '';
-  document.getElementById('video-modal').classList.add('on');
-}
-
-function openImageModal(post) {
-  // For images, show in modal too
-  var modal = document.getElementById('video-modal');
-  var vid = document.getElementById('modal-video');
-  // Replace video with image temporarily
-  vid.style.display = 'none';
-  var existing = document.getElementById('modal-img');
-  if (existing) existing.remove();
-  var img = document.createElement('img');
-  img.id = 'modal-img';
-  img.src = post.media_url;
-  img.style.cssText = 'width:100%;max-height:60vh;object-fit:contain;background:#000;display:block';
-  vid.parentNode.insertBefore(img, vid);
-  document.getElementById('modal-title').textContent = '📸 Post';
-  document.getElementById('modal-caption').textContent = post.caption || '';
-  document.getElementById('modal-likes').textContent = '❤️ ' + fmtN(post.like_count);
-  document.getElementById('modal-comments').textContent = '💬 ' + fmtN(post.comments_count);
-  document.getElementById('modal-date').textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString('de') : '';
+// MODAL
+function openModal(post, isVideo) {
+  var modal = document.getElementById('vmodal');
+  var mimg = document.getElementById('mimg');
+  var mvid = document.getElementById('mvid');
+  document.getElementById('mtitle').textContent = isVideo ? '🎬 Video' : '📸 Post';
+  document.getElementById('mcap').textContent = post.caption || '';
+  document.getElementById('mlikes').textContent = '❤️ ' + fmtN(post.like_count);
+  document.getElementById('mcomments').textContent = '💬 ' + fmtN(post.comments_count);
+  document.getElementById('mdate').textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString('de') : '';
+  if (isVideo && post.media_url) {
+    mimg.style.display = 'none';
+    mvid.style.display = 'block';
+    mvid.src = post.media_url;
+    mvid.play().catch(function(){});
+  } else {
+    mvid.style.display = 'none';
+    mimg.style.display = 'block';
+    mimg.src = post.media_url || '';
+  }
   modal.classList.add('on');
 }
 
-document.getElementById('modal-close').addEventListener('click', function() {
-  document.getElementById('video-modal').classList.remove('on');
-  document.getElementById('modal-video').pause();
-  document.getElementById('modal-video').src = '';
-  document.getElementById('modal-video').style.display = 'block';
-  var img = document.getElementById('modal-img');
-  if (img) img.remove();
-});
-document.getElementById('video-modal').addEventListener('click', function(e) {
-  if (e.target === this) document.getElementById('modal-close').click();
-});
+document.getElementById('mclose').addEventListener('click', closeModal);
+document.getElementById('vmodal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+function closeModal() {
+  document.getElementById('vmodal').classList.remove('on');
+  var v = document.getElementById('mvid');
+  v.pause(); v.src = '';
+  document.getElementById('mimg').src = '';
+}
 
-// IG Analysis with real data
+// IG Analysis
 document.getElementById('ig-analyze-btn').addEventListener('click', function() {
   var p = igCache && igCache.profile ? igCache.profile : {};
-  callAI('Analysiere @faruksueer Instagram: ' + (p.followers_count||'?') + ' Follower, ' + (p.media_count||'?') + ' Posts. Top 3 Handlungsempfehlungen fuer Wachstum.', 'ig-ai-res');
+  callAI('Analysiere @faruksueer Instagram: ' + (p.followers_count||'?') + ' Follower, ' + (p.media_count||'?') + ' Posts. Top 3 Empfehlungen fuer Wachstum.', 'ig-ai-res');
 });
 document.getElementById('ig-strategy-btn').addEventListener('click', function() {
   var fc = igCache && igCache.profile ? igCache.profile.followers_count : '?';
-  callAI('Erstelle 30-Tage Wachstumsstrategie fuer @faruksueer auf Instagram (aktuell ' + fc + ' Follower). Themen: Reisen, Tauchen, Yoga. Recherchiere aktuelle Algorithmus-Updates.', 'ig-ai-res');
+  callAI('30-Tage Wachstumsstrategie fuer @faruksueer auf Instagram (' + fc + ' Follower). Themen: Reisen, Tauchen, Yoga.', 'ig-ai-res');
 });
 document.getElementById('ig-refresh-btn').addEventListener('click', function() {
-  igCache = null; igLoaded = false;
+  igCache = null; igLoaded = false; loadIG();
 });
 </script>
 </body>
