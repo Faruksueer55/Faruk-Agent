@@ -108,10 +108,13 @@ textarea:focus,select:focus{border-color:var(--ac)}
 .df{font-size:20px;margin-bottom:4px}
 .dn{font-size:12px;font-weight:500}
 .ds{font-size:10px;color:var(--mt);margin-top:1px}
-.aibox{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-top:14px;font-size:14px;line-height:1.75;display:none;white-space:pre-wrap;word-break:break-word}
+.aibox{background:var(--s);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-top:14px;display:none;word-break:break-word}
 .aibox.on{display:block}
-.aicopy{float:right;font-size:11px;color:var(--mt);cursor:pointer;margin-top:-2px}
-.aicopy:hover{color:var(--ac2)}
+.aibox-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
+.ailive{font-size:11px;padding:3px 8px;border-radius:20px;background:rgba(74,222,128,0.12);color:var(--gn);font-weight:500}
+.aicopy{font-size:11px;color:var(--mt);cursor:pointer;padding:3px 8px;border-radius:6px;border:1px solid var(--bd);background:var(--s2)}
+.aicopy:hover{color:var(--ac2);border-color:var(--ac)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
@@ -160,6 +163,7 @@ textarea:focus,select:focus{border-color:var(--ac)}
       <div class="ni" data-page="wachstum">Wachstum</div>
       <div class="ni" data-page="kommentare">Kommentare</div>
       <div class="ni" data-page="trends">Trends</div>
+      <div class="ni" data-page="creator">Creator & Nische</div>
     </nav>
   </aside>
 
@@ -280,27 +284,45 @@ textarea:focus,select:focus{border-color:var(--ac)}
 
     <div class="page" id="page-wachstum">
       <div class="ptitle">Wachstumsstrategie</div>
-      <div class="psub2">Die wichtigsten Hebel fuer Reichweite und Community</div>
+      <div class="psub2">Alles live aus dem Web recherchiert</div>
+
       <div class="sc">
-        <div class="sct">Top 5 Hebel</div>
-        <div class="gi"><div class="gn2">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Hoechste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment. Fehler-Formate und Geheimtipps performen am staerksten.</div></div></div>
-        <div class="gi"><div class="gn2">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Hoechste Prio</span></div><div class="gs">4-5x pro Woche Instagram, 3-4x TikTok. Algorithmen belohnen Regelmaessigkeit.</div></div></div>
-        <div class="gi"><div class="gn2">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich - das ist dein Vorteil gegenueber anderen Travel Creatorn.</div></div></div>
-        <div class="gi"><div class="gn2">4</div><div><div class="gt">Crossposting IG TikTok Facebook <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen. Facebook holt dir die 30-45 jaehrige Zielgruppe.</div></div></div>
-        <div class="gi"><div class="gn2">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Kommentare direkt beantworten - der Algorithmus misst Early Engagement als Reichweiten-Signal.</div></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="sct" style="margin-bottom:0">Top 5 Wachstums-Hebel</div>
+          <button class="btn bs bsm" data-prompt="hebel" data-target="hebel-res">Aktuell recherchieren</button>
+        </div>
+        <div id="hebel-static">
+          <div class="gi"><div class="gn2">1</div><div><div class="gt">Hook in den ersten 2 Sekunden <span class="badge bg2">Hoechste Prio</span></div><div class="gs">TikTok und Reels entscheiden im ersten Moment. Fehler-Formate und Geheimtipps performen am staerksten.</div></div></div>
+          <div class="gi"><div class="gn2">2</div><div><div class="gt">Konsistenz vor Perfektion <span class="badge bg2">Hoechste Prio</span></div><div class="gs">4-5x pro Woche Instagram, 3-4x TikTok. Algorithmen belohnen Regelmaessigkeit.</div></div></div>
+          <div class="gi"><div class="gn2">3</div><div><div class="gt">Insider-Tipp Format <span class="badge ba">Wichtig</span></div><div class="gs">Du kennst diese Orte wirklich - das ist dein Vorteil gegenueber anderen Travel Creatorn.</div></div></div>
+          <div class="gi"><div class="gn2">4</div><div><div class="gt">Crossposting IG TikTok Facebook <span class="badge ba">Effizient</span></div><div class="gs">Ein Reel, drei Plattformen. Facebook holt dir die 30-45 jaehrige Zielgruppe.</div></div></div>
+          <div class="gi"><div class="gn2">5</div><div><div class="gt">Erste 30 Min nach dem Post <span class="badge ba">Wichtig</span></div><div class="gs">Kommentare direkt beantworten - der Algorithmus misst Early Engagement als Reichweiten-Signal.</div></div></div>
+        </div>
+        <div class="aibox" id="hebel-res"></div>
       </div>
+
       <div class="sc">
-        <div class="sct">Beste Posting-Zeiten</div>
-        <div class="prog"><div class="prlabel">Instagram</div><div class="prbg"><div class="prfill" style="width:90%;background:#e1306c"></div></div><div class="prval">Mo-Fr 18-20 Uhr</div></div>
-        <div class="prog"><div class="prlabel">TikTok</div><div class="prbg"><div class="prfill" style="width:85%;background:var(--ac)"></div></div><div class="prval">Di-Sa 19-22 Uhr</div></div>
-        <div class="prog"><div class="prlabel">YouTube</div><div class="prbg"><div class="prfill" style="width:70%;background:var(--yt)"></div></div><div class="prval">Fr-Sa 15-18 Uhr</div></div>
-        <div class="prog"><div class="prlabel">Facebook</div><div class="prbg"><div class="prfill" style="width:55%;background:var(--ac2)"></div></div><div class="prval">Mi & So 12-14 Uhr</div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="sct" style="margin-bottom:0">Beste Posting-Zeiten</div>
+          <button class="btn bs bsm" data-prompt="postingzeiten" data-target="zeit-res">Aktuell recherchieren</button>
+        </div>
+        <div id="zeit-static">
+          <div class="prog"><div class="prlabel">Instagram</div><div class="prbg"><div class="prfill" style="width:90%;background:#e1306c"></div></div><div class="prval">Mo-Fr 18-20 Uhr</div></div>
+          <div class="prog"><div class="prlabel">TikTok</div><div class="prbg"><div class="prfill" style="width:85%;background:var(--ac)"></div></div><div class="prval">Di-Sa 19-22 Uhr</div></div>
+          <div class="prog"><div class="prlabel">YouTube</div><div class="prbg"><div class="prfill" style="width:70%;background:var(--yt)"></div></div><div class="prval">Fr-Sa 15-18 Uhr</div></div>
+          <div class="prog"><div class="prlabel">Facebook</div><div class="prbg"><div class="prfill" style="width:55%;background:var(--ac2)"></div></div><div class="prval">Mi & So 12-14 Uhr</div></div>
+        </div>
+        <div class="aibox" id="zeit-res"></div>
       </div>
-      <div class="brow">
-        <button class="btn bp" data-prompt="challenge30" data-target="wt-res">30-Tage Challenge</button>
-        <button class="btn bs" data-prompt="hooks" data-target="wt-res">Hook-Ideen</button>
+
+      <div class="sc">
+        <div class="sct">KI-Aktionen</div>
+        <div class="brow">
+          <button class="btn bp" data-prompt="challenge30" data-target="wt-res">30-Tage Challenge</button>
+          <button class="btn bs" data-prompt="hooks" data-target="wt-res">Hook-Ideen</button>
+        </div>
+        <div class="aibox" id="wt-res"></div>
       </div>
-      <div class="aibox" id="wt-res"></div>
     </div>
 
     <div class="page" id="page-kommentare">
@@ -352,6 +374,55 @@ textarea:focus,select:focus{border-color:var(--ac)}
       <div class="aibox" id="tr-res"></div>
     </div>
 
+    <div class="page" id="page-creator">
+      <div class="ptitle">Creator & Nische</div>
+      <div class="psub2">Wer dominiert gerade deine Nische - live recherchiert</div>
+      <div class="insight">Alle Ergebnisse werden live aus dem Web geholt - aktuelle Posts, Follower-Zahlen und Content-Strategien.</div>
+
+      <div class="sc">
+        <div class="sct">Plattform waehlen</div>
+        <div class="pills" id="creator-pills">
+          <div class="pill on">Instagram</div>
+          <div class="pill">TikTok</div>
+          <div class="pill">YouTube</div>
+        </div>
+        <div class="sct" style="margin-top:4px">Nische waehlen</div>
+        <div class="qtags">
+          <span class="qtag" data-nische="Travel Creator Tuerkei Istanbul">Travel Tuerkei</span>
+          <span class="qtag" data-nische="Travel Creator Thailand">Travel Thailand</span>
+          <span class="qtag" data-nische="Scuba Diving Creator Tauchen">Tauchen & Diving</span>
+          <span class="qtag" data-nische="Yoga Meditation Creator deutsch">Yoga & Meditation</span>
+          <span class="qtag" data-nische="Travel Creator deutsch deutschsprachig">Travel Deutsch</span>
+          <span class="qtag" data-nische="Career Motivation Creator ohne Studium">Karriere ohne Studium</span>
+          <span class="qtag" data-nische="Budget Travel Creator Europa">Budget Travel Europa</span>
+          <span class="qtag" data-nische="Underwater Photography Diving">Unterwasser Fotografie</span>
+        </div>
+        <div class="brow">
+          <button class="btn bp" id="creator-search-btn">Top Creator suchen</button>
+          <button class="btn bs" id="creator-post-btn">Beste Posts analysieren</button>
+        </div>
+        <div class="aibox" id="cr-res"></div>
+      </div>
+
+      <div class="sc">
+        <div class="sct">Direktsuche</div>
+        <textarea id="creator-custom" style="min-height:60px" placeholder="z.B. Wer sind die Top Travel Creator auf TikTok die auch tauchen? Was posten sie gerade?"></textarea>
+        <button class="btn bp" id="creator-custom-btn">Recherchieren</button>
+        <div class="aibox" id="cr-custom-res"></div>
+      </div>
+
+      <div class="sc">
+        <div class="sct">Schnell-Analysen</div>
+        <div class="brow">
+          <button class="btn bs bsm" data-prompt="competitor_ig" data-target="cr-res">Top 5 Instagram</button>
+          <button class="btn bs bsm" data-prompt="competitor_tt" data-target="cr-res">Top 5 TikTok</button>
+          <button class="btn bs bsm" data-prompt="competitor_yt" data-target="cr-res">Top 5 YouTube</button>
+          <button class="btn bs bsm" data-prompt="content_gaps" data-target="cr-res">Content-Luecken finden</button>
+          <button class="btn bs bsm" data-prompt="viral_posts" data-target="cr-res">Virale Posts analysieren</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 </div>
@@ -370,7 +441,14 @@ var PROMPTS = {
   cta: 'Recherchiere aktuelle Engagement-Strategien und erstelle 10 Call-to-Action Fragen fuer Instagram und TikTok. Themen: Reisen, Tauchen, Yoga.',
   welcome: 'Schreibe eine kurze Willkommensnachricht fuer neue Instagram Follower. Ton: authentisch, herzlich. Ich bin Travel und Dive Creator @faruksueer.',
   trends: 'Recherchiere jetzt aktuelle Trends auf Instagram und TikTok fuer Travel Creator und Dive Creator. Was performt gerade am besten? Erstelle 5 konkrete Post-Ideen fuer meine Reiseziele: Istanbul, Thailand, Spanien, Aegypten, Dom. Republik, Rom, Prag, Kopenhagen.',
-  hashtags: 'Recherchiere aktuelle Hashtag-Performance auf Instagram. Gib mir 30 Hashtags fuer @faruksueer aufgeteilt in gross (1M+), mittel (100K-1M) und Nischen (unter 100K). Themen: Reisen, Tauchen, Yoga.'
+  hashtags: 'Recherchiere aktuelle Hashtag-Performance auf Instagram. Gib mir 30 Hashtags fuer @faruksueer aufgeteilt in gross (1M+), mittel (100K-1M) und Nischen (unter 100K). Themen: Reisen, Tauchen, Yoga.',
+  competitor_ig: 'Recherchiere jetzt die erfolgreichsten Travel und Diving Creator auf Instagram. Welche 5 Accounts wachsen gerade am staerksten? Was posten sie, welche Formate nutzen sie, wie oft posten sie? Gib mir konkrete Insights die ich fuer @faruksueer nutzen kann.',
+  competitor_tt: 'Recherchiere jetzt die erfolgreichsten Travel und Diving Creator auf TikTok. Welche 5 Accounts haben gerade die meisten Views und das staerkste Wachstum? Was ist ihr Content-Stil, welche Hooks nutzen sie? Konkrete Insights fuer @faruksueer.',
+  competitor_yt: 'Recherchiere jetzt erfolgreiche Travel und Diving Creator auf YouTube. Welche 5 Kanaele wachsen gerade am staerksten? Welche Video-Formate und Themen performen am besten? Was kann @faruksueer davon lernen?',
+  content_gaps: 'Recherchiere den Travel und Diving Creator Markt auf Instagram und TikTok. Welche Themen und Formate sind noch unterversorgt - also wo gibt es wenig gute Creator aber hohe Nachfrage? Besonders fuer: Istanbul/Tuerkei, Thailand-Inseln, Tauchen Mittelmeer/Rotes Meer, Yoga auf Reisen.',
+  viral_posts: 'Recherchiere die aktuell viralensten Posts und Videos im Travel und Diving Bereich auf TikTok und Instagram. Was haben sie gemeinsam? Welche Hooks, Formate und Themen funktionieren gerade am besten? Erstelle daraus 3 konkrete Post-Ideen fuer @faruksueer.',
+  hebel: 'Recherchiere aktuell die wichtigsten Wachstums-Strategien fuer Social Media Creator auf Instagram und TikTok in 2025/2026. Was sind die Top 5 Hebel fuer Travel und Lifestyle Creator um Reichweite und Community aufzubauen? Basiere die Antwort auf aktuellen Studien und Creator-Erfolgsgeschichten.',
+  postingzeiten: 'Recherchiere die aktuell optimalen Posting-Zeiten fuer Travel Creator auf Instagram, TikTok, YouTube und Facebook in 2025/2026. Wann ist die Zielgruppe am aktivsten? Gibt es Unterschiede je nach Content-Typ? Nenne konkrete Uhrzeiten und Wochentage.'
 };
 
 // Check login
@@ -518,7 +596,7 @@ function callAI(prompt, boxId) {
   if (!pin) { doLogout(); return; }
   var box = document.getElementById(boxId);
   box.className = 'aibox on';
-  box.innerHTML = 'Recherchiere im Web...';
+  box.innerHTML = '<div class="aibox-header"><span class="ailive">Live aus dem Web</span></div><div style="color:var(--mt);font-size:13px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ac);animation:pulse 1s infinite"></span>Recherchiere gerade im Web...</div>';
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   fetch('/api/chat', {
     method: 'POST',
@@ -530,7 +608,13 @@ function callAI(prompt, boxId) {
     if (res.status === 401) { box.innerHTML = 'Falscher PIN. Bitte neu einloggen.'; sessionStorage.removeItem('pin'); return; }
     if (res.status !== 200) { box.innerHTML = 'Fehler: ' + (res.data.error || 'Unbekannt'); return; }
     var text = res.data.text || '';
-    box.innerHTML = '<span class="aicopy" data-box="' + boxId + '">Kopieren</span>' + escText(text);
+    box.innerHTML = '<div class="aibox-header"><span class="ailive">Live aus dem Web</span><span class="aicopy" id="copy-' + boxId + '">Kopieren</span></div>' + renderAI(text);
+    document.getElementById('copy-' + boxId).addEventListener('click', function() {
+      navigator.clipboard.writeText(text).then(function() {
+        document.getElementById('copy-' + boxId).textContent = 'Kopiert!';
+        setTimeout(function() { var el = document.getElementById('copy-' + boxId); if(el) el.textContent = 'Kopieren'; }, 2000);
+      });
+    });
     box.querySelector('.aicopy').addEventListener('click', function() {
       var t = box.innerText.replace('Kopieren\n', '');
       navigator.clipboard.writeText(t).then(function() {
@@ -545,6 +629,83 @@ function callAI(prompt, boxId) {
 
 function escText(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderAI(text) {
+  // Convert markdown-style text to modern HTML cards
+  var lines = text.split('\n');
+  var html = '';
+  var inList = false;
+
+  lines.forEach(function(line) {
+    var t = line.trim();
+    if (!t) {
+      if (inList) { html += '</div>'; inList = false; }
+      html += '<div style="height:8px"></div>';
+      return;
+    }
+
+    // H2 headings (## or **Title**)
+    if (t.startsWith('## ') || (t.startsWith('**') && t.endsWith('**') && t.length < 80)) {
+      if (inList) { html += '</div>'; inList = false; }
+      var heading = t.replace(/^## /, '').replace(/\*\*/g, '');
+      html += '<div style="font-size:13px;font-weight:600;color:var(--ac2);text-transform:uppercase;letter-spacing:0.08em;margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--bd)">' + escText(heading) + '</div>';
+      return;
+    }
+
+    // Numbered items (1. 2. 3.)
+    var numMatch = t.match(/^(\d+)[\.\)]/);
+    if (numMatch) {
+      if (inList) { html += '</div>'; inList = false; }
+      var num = numMatch[1];
+      var rest = t.replace(/^\d+[\.\)]\s*/, '');
+      // Extract bold title if present
+      var boldMatch = rest.match(/^\*\*(.+?)\*\*/);
+      var title = boldMatch ? boldMatch[1] : rest.split(':')[0];
+      var desc = boldMatch ? rest.replace(/^\*\*.+?\*\*:?\s*/, '') : rest.replace(/^[^:]+:\s*/, '');
+      html += '<div style="display:flex;gap:12px;padding:12px 14px;background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.15);border-radius:10px;margin-bottom:8px;align-items:flex-start">';
+      html += '<div style="min-width:28px;height:28px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0">' + num + '</div>';
+      html += '<div><div style="font-size:14px;font-weight:600;color:var(--tx);margin-bottom:3px">' + escText(title) + '</div>';
+      if (desc) html += '<div style="font-size:12px;color:var(--mt);line-height:1.5">' + escText(desc) + '</div>';
+      html += '</div></div>';
+      return;
+    }
+
+    // Bullet points (- or *)
+    if (t.startsWith('- ') || t.startsWith('* ')) {
+      var item = t.replace(/^[-*] /, '');
+      var boldItem = item.match(/^\*\*(.+?)\*\*:?\s*(.*)/);
+      if (!inList) { html += '<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0">'; inList = true; }
+      if (boldItem) {
+        html += '<div style="display:flex;gap:8px;align-items:flex-start;padding:8px 12px;background:var(--s2);border-radius:8px"><div style="width:6px;height:6px;border-radius:50%;background:var(--ac);margin-top:5px;flex-shrink:0"></div><div><span style="font-size:13px;font-weight:600;color:var(--tx)">' + escText(boldItem[1]) + '</span>' + (boldItem[2] ? '<span style="font-size:12px;color:var(--mt)"> — ' + escText(boldItem[2]) + '</span>' : '') + '</div></div>';
+      } else {
+        html += '<div style="display:flex;gap:8px;align-items:flex-start;padding:8px 12px;background:var(--s2);border-radius:8px"><div style="width:6px;height:6px;border-radius:50%;background:var(--ac);margin-top:5px;flex-shrink:0"></div><div style="font-size:13px;color:var(--tx);line-height:1.5">' + escText(item) + '</div></div>';
+      }
+      return;
+    }
+
+    // Hashtags line
+    if (t.startsWith('#') && t.includes(' #')) {
+      if (inList) { html += '</div>'; inList = false; }
+      var tags = t.split(' ').filter(function(w) { return w.startsWith('#'); });
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin:8px 0">';
+      tags.forEach(function(tag) {
+        html += '<span style="padding:4px 10px;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.25);border-radius:20px;font-size:12px;color:var(--ac2)">' + escText(tag) + '</span>';
+      });
+      html += '</div>';
+      return;
+    }
+
+    // Bold inline text
+    if (inList) { html += '</div>'; inList = false; }
+    var formatted = t
+      .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--tx)">$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em style="color:var(--ac2)">$1</em>');
+    html += '<div style="font-size:13px;color:var(--mt);line-height:1.7;margin:2px 0">' + formatted + '</div>';
+  });
+
+  if (inList) html += '</div>';
+  return html;
 }
 
 // Trends static data
@@ -571,6 +732,45 @@ document.querySelectorAll('[data-tp]').forEach(function(el) {
 });
 
 showTrends('ig');
+
+// Creator search button
+document.getElementById('creator-search-btn').addEventListener('click', function() {
+  var platforms = [];
+  document.querySelectorAll('#creator-pills .pill.on').forEach(function(p) { platforms.push(p.textContent); });
+  var nische = document.querySelector('.qtag.selected') ? document.querySelector('.qtag.selected').dataset.nische : 'Travel und Diving';
+  var plat = platforms.join(', ') || 'Instagram';
+  callAI('Recherchiere jetzt die erfolgreichsten Creator in der Nische ' + nische + ' auf ' + plat + '. Welche Accounts wachsen am staerksten? Was posten sie aktuell, wie oft, welche Formate? Gib mir konkrete Namen, Follower-Zahlen und Content-Strategie. Was kann @faruksueer davon lernen?', 'cr-res');
+});
+
+document.getElementById('creator-post-btn').addEventListener('click', function() {
+  var platforms = [];
+  document.querySelectorAll('#creator-pills .pill.on').forEach(function(p) { platforms.push(p.textContent); });
+  var nische = document.querySelector('.qtag.selected') ? document.querySelector('.qtag.selected').dataset.nische : 'Travel und Diving';
+  var plat = platforms.join(', ') || 'Instagram';
+  callAI('Recherchiere die aktuell erfolgreichsten Posts in der Nische ' + nische + ' auf ' + plat + '. Was sind die neusten viralen Posts? Welche Themen, Formate und Hooks funktionieren gerade? Erstelle 3 konkrete Post-Ideen fuer @faruksueer basierend auf diesen Erkenntnissen.', 'cr-res');
+});
+
+document.getElementById('creator-custom-btn').addEventListener('click', function() {
+  var q = document.getElementById('creator-custom').value.trim();
+  if (!q) return;
+  callAI('Recherchiere folgendes fuer @faruksueer als Travel und Dive Creator: ' + q, 'cr-custom-res');
+});
+
+// Nische tag selection
+document.querySelectorAll('[data-nische]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('[data-nische]').forEach(function(t) { t.classList.remove('selected'); });
+    el.classList.add('selected');
+    el.style.borderColor = 'var(--ac)';
+    el.style.color = 'var(--ac2)';
+    document.querySelectorAll('[data-nische]').forEach(function(t) {
+      if (!t.classList.contains('selected')) {
+        t.style.borderColor = '';
+        t.style.color = '';
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
