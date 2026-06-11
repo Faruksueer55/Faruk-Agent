@@ -729,8 +729,7 @@ function checkPin() {
       sessionStorage.setItem('pin', pinVal);
       document.getElementById('pinscreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
-      // Preload Instagram in background
-      setTimeout(function() { loadIG(false); }, 800);
+      // Instagram loads on tab open
     }
   }).catch(function() {
     checking.remove();
@@ -745,7 +744,7 @@ function checkPin() {
 if (sessionStorage.getItem('pin')) {
   document.getElementById('pinscreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  setTimeout(function() { loadIG(false); }, 500);
+  // Instagram loads on tab open
 }
 
 // =====================
@@ -1071,36 +1070,52 @@ function fmtN(n) {
 }
 
 function loadIG(show) {
+  // Always show loading state
+  document.getElementById('ig-loading').style.display = 'flex';
+  document.getElementById('ig-content').style.display = 'none';
+  document.getElementById('ig-error').style.display = 'none';
+
   if (igCache) { renderIG(igCache); return; }
-  if (show) {
-    document.getElementById('ig-loading').style.display = 'flex';
-    document.getElementById('ig-content').style.display = 'none';
-    document.getElementById('ig-error').style.display = 'none';
-  }
+
   var pin = sessionStorage.getItem('pin');
+  if (!pin) {
+    document.getElementById('ig-loading').style.display = 'none';
+    document.getElementById('ig-error').style.display = 'block';
+    document.getElementById('ig-error').textContent = 'Nicht eingeloggt.';
+    return;
+  }
+
+  // Timeout after 15 seconds
+  var timeout = setTimeout(function() {
+    document.getElementById('ig-loading').style.display = 'none';
+    document.getElementById('ig-error').style.display = 'block';
+    document.getElementById('ig-error').textContent = 'Zeitüberschreitung — Instagram API antwortet nicht. Prüfe ob INSTAGRAM_TOKEN und INSTAGRAM_USER_ID in Vercel gesetzt sind.';
+    igLoaded = false;
+  }, 15000);
+
   fetch('/api/instagram', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
     body: JSON.stringify({ type: 'all' })
-  }).then(function(r) { return r.json(); }).then(function(data) {
+  }).then(function(r) {
+    clearTimeout(timeout);
+    return r.json();
+  }).then(function(data) {
     igLoaded = true;
+    document.getElementById('ig-loading').style.display = 'none';
     if (data.error) {
-      if (show) {
-        document.getElementById('ig-loading').style.display = 'none';
-        document.getElementById('ig-error').style.display = 'block';
-        document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
-      }
+      document.getElementById('ig-error').style.display = 'block';
+      document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
       return;
     }
     igCache = data;
-    if (show) renderIG(data);
+    renderIG(data);
   }).catch(function(e) {
-    igLoaded = true;
-    if (show) {
-      document.getElementById('ig-loading').style.display = 'none';
-      document.getElementById('ig-error').style.display = 'block';
-      document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
-    }
+    clearTimeout(timeout);
+    igLoaded = false;
+    document.getElementById('ig-loading').style.display = 'none';
+    document.getElementById('ig-error').style.display = 'block';
+    document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
   });
 }
 
@@ -1239,7 +1254,6 @@ document.getElementById('ig-strategy-btn').addEventListener('click', function() 
 });
 document.getElementById('ig-refresh-btn').addEventListener('click', function() {
   igCache = null; igLoaded = false;
-  loadIG(true);
 });
 </script>
 </body>
