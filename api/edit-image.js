@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     form.append('image', blob, 'image.png');
     form.append('prompt', prompt);
     form.append('size', size || '1024x1024');
-    form.append('quality', 'medium');
+    form.append('quality', 'high');
 
     const response = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
