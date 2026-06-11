@@ -482,7 +482,7 @@ const PROMPTS = {
 };
 
 function runPrompt(key, responseId) {
-  ask(PROMPTS[key], responseId);
+  ask(PROMPTS[key], responseId, true);
 }
 
 const SYSTEM = `Du bist der persoenliche Social Media Agent von Ömer Faruk Süer (@faruksueer auf Instagram und TikTok, @Faruksueer55 auf YouTube, faruk.suer.77 auf Facebook). 
@@ -530,12 +530,12 @@ window.addEventListener('load', () => {
 });
 
 // AI CALL
-async function ask(prompt, responseId) {
+async function ask(prompt, responseId, useWebSearch) {
   const key = getKey();
   if (!key) { changeKey(); return; }
   const box = document.getElementById(responseId);
   box.className = 'ai-box visible';
-  box.innerHTML = '<span class="ai-loading">✨ Agent denkt nach...</span>';
+  box.innerHTML = '<span class="ai-loading">🌐 Recherchiere im Web...</span>';
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   try {
     const res = await fetch('/api/chat', {
@@ -546,22 +546,23 @@ async function ask(prompt, responseId) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1500,
+        max_tokens: 2000,
         system: SYSTEM,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: prompt }],
+        useWebSearch: !!useWebSearch
       })
     });
     if (!res.ok) {
       const err = await res.json();
-      if (res.status === 401) { box.innerHTML = '❌ API Key ungültig. Bitte neu eingeben.'; changeKey(); return; }
-      box.innerHTML = `❌ Fehler: ${err.error?.message || 'Unbekannter Fehler'}`;
+      if (res.status === 401) { box.innerHTML = 'API Key ungueltig. Bitte neu eingeben.'; changeKey(); return; }
+      box.innerHTML = 'Fehler: ' + (err.error?.message || 'Unbekannter Fehler');
       return;
     }
     const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-    box.innerHTML = `<span class="ai-copy" onclick="copyText('${responseId}')">Kopieren</span>${escapeHtml(text)}`;
+    const text = data.text || data.content?.[0]?.text || '';
+    box.innerHTML = '<span class="ai-copy" onclick="copyText('' + responseId + '')">Kopieren</span>' + escapeHtml(text);
   } catch(e) {
-    box.innerHTML = `❌ Verbindungsfehler: ${e.message}`;
+    box.innerHTML = 'Verbindungsfehler: ' + e.message;
   }
 }
 
@@ -585,20 +586,20 @@ function generatePost() {
   const tone = document.getElementById('post-tone').value;
   const platforms = [...document.querySelectorAll('#post-pills .pill.active')].map(p=>p.textContent).join(', ');
   const t = topic || 'ein passendes Travel oder Dive Thema aus meinen Reisen';
-  ask(`Erstelle mir ein ${format} für ${platforms} zum Thema: "${t}". Ton: ${tone}. Passe an jede Plattform an. Inkl. Hashtags wo sinnvoll.`, 'post-response');
+  ask(`Erstelle mir ein ${format} für ${platforms} zum Thema: "${t}". Ton: ${tone}. Passe an jede Plattform an. Inkl. Hashtags wo sinnvoll.`, 'post-response', true);
 }
 
 function generateHooks() {
   const topic = document.getElementById('post-topic').value.trim() || 'Travel und Tauchen';
-  ask(`Erstelle mir 5 starke Hooks (erste 1–2 Sätze) für TikTok und Instagram Reels zum Thema: "${topic}". Stil: direkt, Insider-Tipp oder Kontrast-Hook. Jeder Hook max. 2 Sätze.`, 'post-response');
+  ask(`Erstelle mir 5 starke Hooks (erste 1–2 Sätze) für TikTok und Instagram Reels zum Thema: "${topic}". Stil: direkt, Insider-Tipp oder Kontrast-Hook. Jeder Hook max. 2 Sätze.`, 'post-response', true);
 }
 
 function generateReply() {
   const comment = document.getElementById('comment-input').value.trim();
   const style = document.getElementById('reply-style').value;
   const platform = document.getElementById('reply-platform').value;
-  if (!comment) { ask(`Gib mir 5 Tipps wie ich als Travel & Dive Creator auf ${platform} am besten mit meiner Community interagiere.`, 'comment-response'); return; }
-  ask(`Schreibe eine Antwort auf diesen ${platform}-Kommentar im Stil "${style}":\n\n"${comment}"\n\nAuthentisch, kurz, zu mir passend.`, 'comment-response');
+  if (!comment) { ask(`Gib mir 5 Tipps wie ich als Travel & Dive Creator auf ${platform} am besten mit meiner Community interagiere.`, 'comment-response', true); return; }
+  ask(`Schreibe eine Antwort auf diesen ${platform}-Kommentar im Stil "${style}":\n\n"${comment}"\n\nAuthentisch, kurz, zu mir passend.`, 'comment-response', true);
 }
 
 function reisePost(dest) {
