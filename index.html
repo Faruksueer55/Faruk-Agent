@@ -521,13 +521,11 @@ async function ask(prompt, responseId) {
   box.innerHTML = '<span class="ai-loading">✨ Agent denkt nach...</span>';
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
+        'x-api-key': key
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
