@@ -257,6 +257,14 @@ select option{background:var(--s2)}
 .spin{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin 0.7s linear infinite}
 .sm-spin{width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:var(--ac2);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
 
+/* LIGHTROOM SLIDERS */
+.lr-slider{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.lr-label{font-size:12px;color:var(--tx2);min-width:80px;font-weight:500}
+.lr-val{font-size:11px;color:var(--tx3);min-width:36px;text-align:right}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:5px;background:var(--s3);border-radius:3px;outline:none;margin:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ac);cursor:pointer;border:2px solid var(--bg);box-shadow:0 0 8px rgba(124,111,255,0.4)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--ac);cursor:pointer;border:2px solid var(--bg)}
+.lr-presets{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
@@ -379,7 +387,7 @@ select option{background:var(--s2)}
       <div class="gc">
         <div class="gc-title">Content-Säulen & Reisen</div>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px">
-          <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span>
+          <span class="tag tpk">✈️ Reisen</span><span class="tag tt2">🤿 Tauchen</span><span class="tag tp">📷 Landschaft Cinematic</span>
           <span class="tag ta">🧘 Yoga</span><span class="tag tg">💼 Karriere</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:4px">
@@ -455,6 +463,8 @@ select option{background:var(--s2)}
           <span class="qtag" data-topic="Erster Tauchgang was wirklich passiert">🌊 Erster Tauchgang</span>
           <span class="qtag" data-topic="Bangkok 48 Stunden ehrlicher Guide">🇹🇭 Bangkok Guide</span>
           <span class="qtag" data-topic="Dominikanische Republik was ich nicht erwartet haette">🇩🇴 Dom. Republik</span>
+          <span class="qtag" data-topic="Cinematische Landschaftsfotografie wie ich meine Reels color grade fuer den Film-Look">📷 Cinematic Landschaft</span>
+          <span class="qtag" data-topic="Hinter den Kulissen Landschaftsvideografie welche Spots Einstellungen und Drohnenshots wirklich funktionieren">🎥 BTS Videografie</span>
         </div>
         <textarea id="post-topic" placeholder="Eigenes Thema eingeben..."></textarea>
         <div style="display:flex;gap:8px">
@@ -504,8 +514,8 @@ select option{background:var(--s2)}
         <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
           <select id="img-size" style="flex:1;min-width:140px">
             <option value="1024x1024">1:1 Quadrat (IG Post)</option>
-            <option value="1792x1024">16:9 Quer (YT Thumbnail)</option>
-            <option value="1024x1792">9:16 Hoch (Stories/TikTok)</option>
+            <option value="1536x1024">Quer (YT Thumbnail)</option>
+            <option value="1024x1536">Hoch (Stories/TikTok)</option>
           </select>
           <select id="img-style" style="flex:1;min-width:140px">
             <option value="vivid">Vivid (lebhaft)</option>
@@ -517,6 +527,7 @@ select option{background:var(--s2)}
             <option value="yoga">🧘 Yoga (Pastell, ruhig)</option>
             <option value="career">💼 Karriere (Business-Look)</option>
             <option value="dive">🤿 Tauchen (NatGeo-Stil)</option>
+            <option value="landscape">📷 Landschaft (Cinematic)</option>
           </select>
         </div>
         <div class="brow">
@@ -539,8 +550,9 @@ select option{background:var(--s2)}
         <div class="insight">Lade ein Foto aus deiner Galerie hoch und beschreibe was die KI ändern soll — z.B. Hintergrund tauschen, Stil ändern, Objekte entfernen.</div>
         <input type="file" id="upload-input" accept="image/*" style="display:none"/>
         <button class="btn bs" id="upload-btn" style="width:100%;justify-content:center;padding:14px;border-style:dashed">📷 Bild aus Galerie wählen</button>
-        <div id="upload-preview-wrap" style="display:none;margin-top:10px">
+        <div id="upload-preview-wrap" style="display:none;margin-top:10px;position:relative">
           <img id="upload-preview" src="" alt="Vorschau" style="width:100%;max-height:280px;object-fit:contain;border-radius:12px;background:var(--s3)"/>
+          <button id="upload-remove-btn" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:1px solid var(--bd2);border-radius:8px;color:var(--tx);font-size:12px;font-weight:600;padding:5px 10px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s">✕ Entfernen</button>
           <div style="font-size:11px;color:var(--tx3);margin-top:5px;text-align:center" id="upload-info"></div>
         </div>
         <div style="margin-top:10px">
@@ -561,6 +573,36 @@ select option{background:var(--s2)}
           <div class="img-actions">
             <a class="btn bp bsm" id="edit-download" href="#" download="faruksueer-edited.png">⬇️ Herunterladen</a>
             <button class="btn bs bsm" id="edit-again-btn">🔄 Nochmal bearbeiten</button>
+            <button class="btn bs bsm" id="edit-remove-btn" style="color:var(--rd);border-color:rgba(248,113,113,0.3)">✕ Entfernen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gc" style="margin-top:14px" id="lr-card">
+        <div class="gc-title">🎛️ Lightroom-Stil Editor</div>
+        <div class="insight">Bearbeite dein hochgeladenes Bild manuell mit Reglern — wie in Lightroom. Kostenlos, läuft direkt im Browser, kein KI-Guthaben nötig.</div>
+        <div id="lr-empty" style="font-size:12px;color:var(--tx3);text-align:center;padding:16px">⬆️ Lade oben zuerst ein Bild aus deiner Galerie hoch</div>
+        <div id="lr-editor" style="display:none">
+          <img id="lr-preview" src="" alt="Editor Vorschau" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;background:var(--s3);margin-bottom:14px"/>
+          <div class="gc-title" style="margin-bottom:8px">Cinematic Presets</div>
+          <div class="lr-presets">
+            <span class="qtag" data-preset="100,100,100,0,0">🔄 Original</span>
+            <span class="qtag" data-preset="103,118,115,18,-12">🎬 Teal & Orange</span>
+            <span class="qtag" data-preset="86,122,82,8,0">🌑 Moody Dark</span>
+            <span class="qtag" data-preset="106,104,118,32,0">🌇 Golden Hour</span>
+            <span class="qtag" data-preset="105,112,135,0,0">🌿 Crisp Nature</span>
+            <span class="qtag" data-preset="102,118,0,0,0">⬛ Schwarz-Weiß</span>
+            <span class="qtag" data-preset="95,125,108,12,8">🏔️ Epic Landscape</span>
+          </div>
+          <div class="gc-title" style="margin-bottom:8px">Manuelle Regler</div>
+          <div class="lr-slider"><div class="lr-label">☀️ Belichtung</div><input type="range" id="lr-bright" min="50" max="150" value="100"/><div class="lr-val" id="lr-bright-v">100</div></div>
+          <div class="lr-slider"><div class="lr-label">◐ Kontrast</div><input type="range" id="lr-contrast" min="50" max="160" value="100"/><div class="lr-val" id="lr-contrast-v">100</div></div>
+          <div class="lr-slider"><div class="lr-label">🎨 Sättigung</div><input type="range" id="lr-sat" min="0" max="200" value="100"/><div class="lr-val" id="lr-sat-v">100</div></div>
+          <div class="lr-slider"><div class="lr-label">🔥 Wärme</div><input type="range" id="lr-warm" min="0" max="60" value="0"/><div class="lr-val" id="lr-warm-v">0</div></div>
+          <div class="lr-slider"><div class="lr-label">🌈 Farbton</div><input type="range" id="lr-hue" min="-40" max="40" value="0"/><div class="lr-val" id="lr-hue-v">0</div></div>
+          <div class="brow" style="margin-top:12px">
+            <button class="btn bp" id="lr-export-btn">⬇️ Bearbeitetes Bild speichern</button>
+            <button class="btn bs bsm" id="lr-reset-btn">🔄 Zurücksetzen</button>
           </div>
         </div>
       </div>
@@ -580,6 +622,8 @@ select option{background:var(--s2)}
           <span class="qtag" data-vidprompt="Person doing yoga at sunrise on a rooftop terrace, peaceful atmosphere, soft golden light, slow camera movement">🧘 Yoga Sunrise</span>
           <span class="qtag" data-vidprompt="Busy Bangkok night market street food scene, colorful neon lights, steam rising from food stalls, vibrant atmosphere">🇹🇭 Bangkok Nacht</span>
           <span class="qtag" data-vidprompt="Cinematic shot of Red Sea coral reef Egypt, school of fish, deep blue water, National Geographic documentary style">🇪🇬 Rotes Meer</span>
+          <span class="qtag" data-vidprompt="Epic cinematic landscape shot, dramatic mountains at golden hour, moving clouds timelapse style, teal and orange color grading, film look">🏔️ Cinematic Berge</span>
+          <span class="qtag" data-vidprompt="Slow cinematic drone shot over misty forest at sunrise, god rays through fog, epic nature documentary style, moody atmosphere">🌲 Nebelwald Drohne</span>
         </div>
         <textarea id="vid-prompt" placeholder="Beschreibe dein Video... am besten auf Englisch für beste Ergebnisse. z.B. 'Cinematic drone shot over Istanbul at sunset'"></textarea>
         <div style="display:flex;gap:8px;margin-bottom:10px">
@@ -729,6 +773,7 @@ select option{background:var(--s2)}
           <span class="qtag" data-nische="Karriere Motivation ohne Studium">💼 Karriere</span>
           <span class="qtag" data-nische="Underwater Photography Diving">📸 Unterwasser</span>
           <span class="qtag" data-nische="Budget Travel Europa">💰 Budget Travel</span>
+          <span class="qtag" data-nische="Landscape Photography Videography Cinematic Reels">📷 Landschaft Cinematic</span>
         </div>
         <div class="brow">
           <button class="btn bp" id="creator-search-btn">🔍 Top Creator suchen</button>
@@ -769,7 +814,7 @@ select option{background:var(--s2)}
 // =====================
 // CONFIG
 // =====================
-var SYS = 'Du bist die KI-Engine eines High-Performance Social-Media-Dashboards fuer Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT, faruk.suer.77 FB). WISSENSDATENBANK: 31 Jahre, Prokurist und Innendienstleiter in Luedenscheid, tuerkische Wurzeln, in Koeln geboren, lebte als Kind 1 Jahr in Istanbul (Familienhaus dort). Werdegang: schwieriger Schulweg, mit 19 Neuanfang, Abschluesse auf Abendschule nachgeholt (Realschulabschluss 1,3), Ausbildung Buerokaufmann, Innendienstleitung, Prokura. Yoga und Meditation seit 2025. Verheiratet, Frau war grosse Stuetze. REISEN: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort), Spanien (Barcelona, Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. BRAND VOICE: authentisch, aesthetisch, spontan, kein Hochglanz, ehrlich, nahbar. Persoenlichen Werdegang NUR erwaehnen wenn explizit gefragt. REGELN: 1) Hook-First - erste Zeile MUSS fesseln (Neugier, Kontrast oder Nutzen). 2) Verknuepfe Trends mit seinen echten Erlebnissen fuer Authentizitaet. 3) Skripte max 45 Sek Sprechzeit. 4) Immer plattformspezifisch optimieren. Ziel: maximale organische Reichweite. Antworte auf Deutsch, kurz und konkret.';
+var SYS = 'Du bist die KI-Engine eines High-Performance Social-Media-Dashboards fuer Oemer Faruk Suer (@faruksueer IG/TikTok, @Faruksueer55 YT, faruk.suer.77 FB). WISSENSDATENBANK: 31 Jahre, Prokurist und Innendienstleiter in Luedenscheid, tuerkische Wurzeln, in Koeln geboren, lebte als Kind 1 Jahr in Istanbul (Familienhaus dort). Werdegang: schwieriger Schulweg, mit 19 Neuanfang, Abschluesse auf Abendschule nachgeholt (Realschulabschluss 1,3), Ausbildung Buerokaufmann, Innendienstleitung, Prokura. Yoga und Meditation seit 2025. Verheiratet, Frau war grosse Stuetze. REISEN: Istanbul/Tuerkei (mehrfach), Thailand (Bangkok, Ko Lipe, Phuket, Taucherlizenz dort), Spanien (Barcelona, Valencia), Aegypten (Tauchen Rotes Meer), Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. BRAND VOICE: authentisch, aesthetisch, spontan, kein Hochglanz, ehrlich, nahbar. NEUE SAEULE: Professionelle Landschaftsfotografie und -videografie mit cinematischem Look, verarbeitet in kurzen Reels und Shorts (Color Grading, Teal-Orange, Golden Hour, dramatische Natur). Persoenlichen Werdegang NUR erwaehnen wenn explizit gefragt. REGELN: 1) Hook-First - erste Zeile MUSS fesseln (Neugier, Kontrast oder Nutzen). 2) Verknuepfe Trends mit seinen echten Erlebnissen fuer Authentizitaet. 3) Skripte max 45 Sek Sprechzeit. 4) Immer plattformspezifisch optimieren. Ziel: maximale organische Reichweite. Antworte auf Deutsch, kurz und konkret.';
 
 var P = {
   wochenplan:'Recherchiere aktuelle Trends. Erstelle kompakten Wochenplan fuer Instagram, TikTok, YouTube. Themen: Reisen, Tauchen, Yoga.',
@@ -989,25 +1034,27 @@ document.getElementById('gen-complete-btn').addEventListener('click', function()
       // Determine pillar from topic for styling
       var t = topic.toLowerCase();
       var style = '';
-      if (t.match(/tauch|dive|unterwasser|meer|riff/)) style = PILLAR_STYLES.dive;
+      if (t.match(/landschaft|landscape|cinematic|fotografie|videografie|berge|natur/)) style = PILLAR_STYLES.landscape;
+      else if (t.match(/tauch|dive|unterwasser|meer|riff/)) style = PILLAR_STYLES.dive;
       else if (t.match(/yoga|meditation|mindset|achtsam/)) style = PILLAR_STYLES.yoga;
       else if (t.match(/karriere|werdegang|erfolg|studium/)) style = PILLAR_STYLES.career;
       else style = PILLAR_STYLES.travel;
       fetch('/api/image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-        body: JSON.stringify({ prompt: imgPrompt + style, size: '1024x1024', style: 'vivid' })
+        body: JSON.stringify({ prompt: imgPrompt + style, size: '1024x1024', styleHint: 'vivid' })
       }).then(function(r) { return r.json(); }).then(function(img) {
         btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
         if (img.error) {
           box.innerHTML += '<div class="insight insight-warn" style="margin-top:10px">Bild konnte nicht generiert werden: ' + esc(img.error) + '</div>';
           return;
         }
+        var imgUrl = 'data:image/png;base64,' + img.b64;
         var el = document.getElementById('post-gen-img');
-        el.src = img.url;
+        el.src = imgUrl;
         el.onload = function() {
           document.getElementById('post-img-result').className = 'img-result on';
-          document.getElementById('post-img-download').href = img.url;
+          document.getElementById('post-img-download').href = imgUrl;
         };
       }).catch(function() {
         btn.disabled = false; btn.textContent = '🚀 Komplett-Post (Text + Bild)';
@@ -1048,6 +1095,7 @@ document.getElementById('reply-btn').addEventListener('click', function() {
 // IMAGE GENERATION (DALL-E 3)
 // =====================
 var PILLAR_STYLES = {
+  landscape: ', epic cinematic landscape photography, dramatic light, teal and orange color grading, ultra wide composition, film look',
   travel: ', cinematic sun-drenched lifestyle photography, 35mm film look, warm tones',
   yoga: ', minimalist calming composition, soft pastel tones, peaceful atmosphere',
   career: ', high contrast motivational style, modern business look, dynamic lighting',
@@ -1065,11 +1113,12 @@ document.getElementById('gen-img-btn').addEventListener('click', function() {
   btn.disabled = true;
   btn.textContent = '⏳ Generiert...';
   document.getElementById('img-result').className = 'img-result';
+  document.getElementById('revised-prompt').textContent = '';
   var pin = sessionStorage.getItem('pin');
   fetch('/api/image', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-pin': pin },
-    body: JSON.stringify({ prompt: prompt, size: size, style: style })
+    body: JSON.stringify({ prompt: prompt, size: size, styleHint: style })
   }).then(function(r) { return r.json(); }).then(function(data) {
     btn.disabled = false;
     btn.textContent = '🎨 Bild generieren';
@@ -1079,14 +1128,12 @@ document.getElementById('gen-img-btn').addEventListener('click', function() {
       box.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(data.error) + '</div>';
       return;
     }
+    var dataUrl = 'data:image/png;base64,' + data.b64;
     var img = document.getElementById('gen-img');
-    img.src = data.url;
+    img.src = dataUrl;
     img.onload = function() {
       document.getElementById('img-result').className = 'img-result on';
-      document.getElementById('img-download').href = data.url;
-      if (data.revised_prompt) {
-        document.getElementById('revised-prompt').textContent = 'Optimierter Prompt: ' + data.revised_prompt;
-      }
+      document.getElementById('img-download').href = dataUrl;
     };
   }).catch(function(e) {
     btn.disabled = false;
@@ -1132,6 +1179,7 @@ document.getElementById('upload-input').addEventListener('change', function() {
       canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
       var dataUrl = canvas.toDataURL('image/png');
       uploadedB64 = dataUrl.split(',')[1];
+      lrLoadImage(dataUrl);
       document.getElementById('upload-preview').src = dataUrl;
       document.getElementById('upload-preview-wrap').style.display = 'block';
       document.getElementById('upload-info').textContent = canvas.width + 'x' + canvas.height + 'px · bereit zur Bearbeitung';
@@ -1191,6 +1239,112 @@ document.getElementById('edit-again-btn').addEventListener('click', function() {
   document.getElementById('edit-prompt').focus();
   document.getElementById('edit-prompt').scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
+
+document.getElementById('upload-remove-btn').addEventListener('click', function() {
+  uploadedB64 = null;
+  document.getElementById('upload-input').value = '';
+  document.getElementById('upload-preview').src = '';
+  document.getElementById('upload-preview-wrap').style.display = 'none';
+  document.getElementById('upload-info').textContent = '';
+  document.getElementById('edit-img-btn').disabled = true;
+  document.getElementById('upload-btn').textContent = '📷 Bild aus Galerie wählen';
+  document.getElementById('edit-prompt').value = '';
+  // Also clear edited result since source is gone
+  document.getElementById('edit-result').className = 'img-result';
+  document.getElementById('edited-img').src = '';
+  lrClear();
+});
+
+document.getElementById('edit-remove-btn').addEventListener('click', function() {
+  document.getElementById('edit-result').className = 'img-result';
+  document.getElementById('edited-img').src = '';
+  document.getElementById('edit-download').href = '#';
+});
+
+// =====================
+// LIGHTROOM-STYLE EDITOR
+// =====================
+var lrUploadedDataUrl = null;
+
+function lrFilterString() {
+  var b = document.getElementById('lr-bright').value;
+  var c = document.getElementById('lr-contrast').value;
+  var s = document.getElementById('lr-sat').value;
+  var w = document.getElementById('lr-warm').value;
+  var h = document.getElementById('lr-hue').value;
+  return 'brightness(' + b + '%) contrast(' + c + '%) saturate(' + s + '%) sepia(' + w + '%) hue-rotate(' + h + 'deg)';
+}
+
+function lrUpdate() {
+  document.getElementById('lr-bright-v').textContent = document.getElementById('lr-bright').value;
+  document.getElementById('lr-contrast-v').textContent = document.getElementById('lr-contrast').value;
+  document.getElementById('lr-sat-v').textContent = document.getElementById('lr-sat').value;
+  document.getElementById('lr-warm-v').textContent = document.getElementById('lr-warm').value;
+  document.getElementById('lr-hue-v').textContent = document.getElementById('lr-hue').value;
+  document.getElementById('lr-preview').style.filter = lrFilterString();
+}
+
+['lr-bright','lr-contrast','lr-sat','lr-warm','lr-hue'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', lrUpdate);
+});
+
+document.querySelectorAll('[data-preset]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    var v = el.dataset.preset.split(',');
+    document.getElementById('lr-bright').value = v[0];
+    document.getElementById('lr-contrast').value = v[1];
+    document.getElementById('lr-sat').value = v[2];
+    document.getElementById('lr-warm').value = v[3];
+    document.getElementById('lr-hue').value = v[4];
+    lrUpdate();
+  });
+});
+
+document.getElementById('lr-reset-btn').addEventListener('click', function() {
+  document.getElementById('lr-bright').value = 100;
+  document.getElementById('lr-contrast').value = 100;
+  document.getElementById('lr-sat').value = 100;
+  document.getElementById('lr-warm').value = 0;
+  document.getElementById('lr-hue').value = 0;
+  lrUpdate();
+});
+
+document.getElementById('lr-export-btn').addEventListener('click', function() {
+  if (!lrUploadedDataUrl) return;
+  var btn = this;
+  btn.textContent = '⏳ Exportiere...';
+  var img = new Image();
+  img.onload = function() {
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext('2d');
+    ctx.filter = lrFilterString();
+    ctx.drawImage(img, 0, 0);
+    var url = canvas.toDataURL('image/jpeg', 0.92);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'faruksueer-lightroom.jpg';
+    a.click();
+    btn.textContent = '⬇️ Bearbeitetes Bild speichern';
+  };
+  img.src = lrUploadedDataUrl;
+});
+
+function lrLoadImage(dataUrl) {
+  lrUploadedDataUrl = dataUrl;
+  document.getElementById('lr-preview').src = dataUrl;
+  document.getElementById('lr-empty').style.display = 'none';
+  document.getElementById('lr-editor').style.display = 'block';
+  document.getElementById('lr-reset-btn').click();
+}
+
+function lrClear() {
+  lrUploadedDataUrl = null;
+  document.getElementById('lr-preview').src = '';
+  document.getElementById('lr-editor').style.display = 'none';
+  document.getElementById('lr-empty').style.display = 'block';
+}
 
 // =====================
 // VIDEO GENERATION (Sora 2)
