@@ -58,6 +58,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 .hlink{font-size:11px;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:5px;padding:3px 5px;border-radius:6px;transition:all 0.15s}
 .hlink:hover{background:var(--s2);color:var(--ac2)}
 .hdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.hicon{width:13px;height:13px;flex-shrink:0}
 .kstatus{margin-top:10px;font-size:11px;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,0.1);color:var(--gn);border:1px solid rgba(52,211,153,0.2)}
 .kchange{font-size:11px;color:var(--tx3);cursor:pointer;margin-top:5px;display:inline-block}
 .kchange:hover{color:var(--rd)}
@@ -327,10 +328,10 @@ select option{background:var(--s2)}
       <div class="pname">Ömer Faruk Süer</div>
       <div class="psub">Prokurist · Creator</div>
       <div class="handles">
-        <a class="hlink" href="https://instagram.com/faruksueer" target="_blank"><span class="hdot" style="background:var(--pk)"></span>@faruksueer</a>
-        <a class="hlink" href="https://tiktok.com/@faruksueer" target="_blank"><span class="hdot" style="background:var(--tt)"></span>@faruksueer</a>
-        <a class="hlink" href="https://youtube.com/@Faruksueer55" target="_blank"><span class="hdot" style="background:var(--yt)"></span>@Faruksueer55</a>
-        <a class="hlink" href="https://facebook.com/faruk.suer.77" target="_blank"><span class="hdot" style="background:#1877f2"></span>faruk.suer.77</a>
+        <a class="hlink" href="https://instagram.com/faruksueer" target="_blank"><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.3" fill="var(--pk)" stroke="none"/></svg>@faruksueer</a>
+        <a class="hlink" href="https://tiktok.com/@faruksueer" target="_blank"><svg class="hicon" viewBox="0 0 24 24" fill="var(--tt)"><path d="M19.6 7.1c-1.6-.4-2.9-1.5-3.5-3-.2-.4-.3-.9-.3-1.3h-3.1v12.5c0 1.4-1.2 2.6-2.6 2.6S7.5 16.7 7.5 15.3s1.2-2.6 2.6-2.6c.3 0 .5 0 .8.1V9.6c-.3 0-.5-.1-.8-.1-3.2 0-5.8 2.6-5.8 5.8s2.6 5.8 5.8 5.8 5.8-2.6 5.8-5.8V9.5c1.2.9 2.7 1.4 4.3 1.4V7.7c-.2 0-.4-.3-.6-.6z"/></svg>@faruksueer</a>
+        <a class="hlink" href="https://youtube.com/@Faruksueer55" target="_blank"><svg class="hicon" viewBox="0 0 24 24" fill="var(--yt)"><path d="M23 7.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.6 3.6 12 3.6 12 3.6s-4.6 0-7.7.3c-.4.1-1.4.1-2.4 1-.7.7-.9 2.3-.9 2.3S.8 9.1.8 11v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 7.5.3 7.5.3s4.6 0 7.7-.3c.4-.1 1.4-.1 2.4-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8V11c0-1.9-.2-3.8-.2-3.8zM9.8 15V8.6l6.2 3.2L9.8 15z"/></svg>@Faruksueer55</a>
+        <a class="hlink" href="https://facebook.com/faruk.suer.77" target="_blank"><svg class="hicon" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.1C24 5.4 18.6 0 12 0S0 5.4 0 12.1c0 6 4.4 11 10.1 11.9v-8.4H7.1v-3.5h3V9.5c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.2h3.4l-.5 3.5h-2.9V24C19.6 23.1 24 18.1 24 12.1z"/></svg>faruk.suer.77</a>
       </div>
       <div class="kstatus"><span style="width:6px;height:6px;border-radius:50%;background:var(--gn);display:inline-block;flex-shrink:0"></span>Agent aktiv</div>
       <div class="kchange" id="logoutbtn">Ausloggen</div>
@@ -342,6 +343,7 @@ select option{background:var(--s2)}
       <div class="nav-sec">Content</div>
       <div class="ni" data-page="posts"><span class="ni-ic">✏️</span>Post erstellen</div>
       <div class="ni" data-page="imagegen"><span class="ni-ic">🎨</span>Bild generieren</div>
+      <div class="ni" data-page="videogen"><span class="ni-ic">🎬</span>Video generieren</div>
       <div class="ni" data-page="reisen"><span class="ni-ic">✈️</span>Meine Reisen</div>
       <div class="ni" data-page="kommentare"><span class="ni-ic">💬</span>Kommentare</div>
       <div class="nav-sec">Strategie</div>
@@ -529,6 +531,76 @@ select option{background:var(--s2)}
         <div class="img-actions">
           <a class="btn bp" id="img-download" href="#" download="faruksueer-ai-image.jpg">⬇️ Herunterladen</a>
           <button class="btn bs" id="img-regen-btn">🔄 Neu generieren</button>
+        </div>
+      </div>
+
+      <div class="gc" style="margin-top:14px">
+        <div class="gc-title">📷 Eigenes Bild mit KI bearbeiten</div>
+        <div class="insight">Lade ein Foto aus deiner Galerie hoch und beschreibe was die KI ändern soll — z.B. Hintergrund tauschen, Stil ändern, Objekte entfernen.</div>
+        <input type="file" id="upload-input" accept="image/*" style="display:none"/>
+        <button class="btn bs" id="upload-btn" style="width:100%;justify-content:center;padding:14px;border-style:dashed">📷 Bild aus Galerie wählen</button>
+        <div id="upload-preview-wrap" style="display:none;margin-top:10px">
+          <img id="upload-preview" src="" alt="Vorschau" style="width:100%;max-height:280px;object-fit:contain;border-radius:12px;background:var(--s3)"/>
+          <div style="font-size:11px;color:var(--tx3);margin-top:5px;text-align:center" id="upload-info"></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="qtags">
+            <span class="qtag" data-editprompt="Ersetze den Hintergrund durch einen cinematischen Sonnenuntergang">🌅 Sonnenuntergang-BG</span>
+            <span class="qtag" data-editprompt="Wandle das Bild in einen warmen 35mm Film-Look um, Travel-Aesthetik">🎞️ 35mm Film-Look</span>
+            <span class="qtag" data-editprompt="Mache das Bild heller und lebendiger, kraeftige Farben, Instagram-Aesthetik">✨ IG-Aesthetik</span>
+            <span class="qtag" data-editprompt="Entferne stoerende Objekte und Personen im Hintergrund">🧹 Hintergrund säubern</span>
+            <span class="qtag" data-editprompt="Wandle das Bild in einen dramatischen Unterwasser National Geographic Stil um">🤿 NatGeo-Stil</span>
+            <span class="qtag" data-editprompt="Fuege weiches goldenes Licht hinzu, golden hour Stimmung">🌇 Golden Hour</span>
+          </div>
+          <textarea id="edit-prompt" placeholder="Was soll die KI an deinem Bild ändern?" style="min-height:60px"></textarea>
+          <button class="btn bp" id="edit-img-btn" disabled>🪄 Bild bearbeiten</button>
+        </div>
+        <div class="aibox" id="edit-status"></div>
+        <div class="img-result" id="edit-result">
+          <img id="edited-img" src="" alt="Bearbeitetes Bild"/>
+          <div class="img-actions">
+            <a class="btn bp bsm" id="edit-download" href="#" download="faruksueer-edited.png">⬇️ Herunterladen</a>
+            <button class="btn bs bsm" id="edit-again-btn">🔄 Nochmal bearbeiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO GENERIEREN (Sora 2) -->
+    <div class="page" id="page-videogen">
+      <div class="ptitle">🎬 Video generieren</div>
+      <div class="psub2">Sora 2 — KI generiert kurze Videos für Reels, TikTok & Shorts</div>
+      <div class="insight">💡 Die Generierung dauert 1–5 Minuten. Kosten: ca. $0,40 pro 4-Sek.-Video. Ideal für B-Roll, Intros und visuelle Hooks.</div>
+      <div class="gc">
+        <div class="gc-title">Video-Prompt</div>
+        <div class="qtags">
+          <span class="qtag" data-vidprompt="Cinematic drone shot flying over Istanbul Bosphorus at golden hour, warm sunlight reflecting on water, travel film aesthetic">🇹🇷 Istanbul Drohne</span>
+          <span class="qtag" data-vidprompt="Underwater scuba diving POV in crystal clear turquoise water, colorful coral reef, tropical fish swimming by, sun rays through water">🤿 Unterwasser POV</span>
+          <span class="qtag" data-vidprompt="Slow motion waves on a white sand beach in Thailand, palm trees swaying, paradise island, cinematic travel shot">🏖️ Thailand Beach</span>
+          <span class="qtag" data-vidprompt="Person doing yoga at sunrise on a rooftop terrace, peaceful atmosphere, soft golden light, slow camera movement">🧘 Yoga Sunrise</span>
+          <span class="qtag" data-vidprompt="Busy Bangkok night market street food scene, colorful neon lights, steam rising from food stalls, vibrant atmosphere">🇹🇭 Bangkok Nacht</span>
+          <span class="qtag" data-vidprompt="Cinematic shot of Red Sea coral reef Egypt, school of fish, deep blue water, National Geographic documentary style">🇪🇬 Rotes Meer</span>
+        </div>
+        <textarea id="vid-prompt" placeholder="Beschreibe dein Video... am besten auf Englisch für beste Ergebnisse. z.B. 'Cinematic drone shot over Istanbul at sunset'"></textarea>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <select id="vid-size" style="flex:1">
+            <option value="720x1280">9:16 Hochformat (Reels/TikTok/Shorts)</option>
+            <option value="1280x720">16:9 Querformat (YouTube)</option>
+          </select>
+          <select id="vid-seconds" style="flex:1">
+            <option value="4">4 Sekunden (~$0,40)</option>
+            <option value="8">8 Sekunden (~$0,80)</option>
+            <option value="12">12 Sekunden (~$1,20)</option>
+          </select>
+        </div>
+        <button class="btn bp" id="gen-vid-btn">🎬 Video generieren</button>
+        <div class="aibox" id="vid-status"></div>
+      </div>
+      <div class="img-result" id="vid-result">
+        <video id="gen-vid" controls playsinline loop style="width:100%;border-radius:14px;background:#000;display:block"></video>
+        <div class="img-actions">
+          <a class="btn bp bsm" id="vid-download" href="#" download="faruksueer-video.mp4">⬇️ Video herunterladen</a>
+          <button class="btn bs bsm" id="vid-again-btn">🔄 Neues Video</button>
         </div>
       </div>
     </div>
@@ -1033,6 +1105,198 @@ document.getElementById('improve-prompt-btn').addEventListener('click', function
 
 document.getElementById('img-regen-btn').addEventListener('click', function() {
   document.getElementById('gen-img-btn').click();
+});
+
+// =====================
+// IMAGE UPLOAD & EDIT (gpt-image-1)
+// =====================
+var uploadedB64 = null;
+
+document.getElementById('upload-btn').addEventListener('click', function() {
+  document.getElementById('upload-input').click();
+});
+
+document.getElementById('upload-input').addEventListener('change', function() {
+  var file = this.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      // Downscale to max 1024px for speed and Vercel size limit
+      var max = 1024;
+      var scale = Math.min(1, max / Math.max(img.width, img.height));
+      var canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      var dataUrl = canvas.toDataURL('image/png');
+      uploadedB64 = dataUrl.split(',')[1];
+      document.getElementById('upload-preview').src = dataUrl;
+      document.getElementById('upload-preview-wrap').style.display = 'block';
+      document.getElementById('upload-info').textContent = canvas.width + 'x' + canvas.height + 'px · bereit zur Bearbeitung';
+      document.getElementById('edit-img-btn').disabled = false;
+      document.getElementById('upload-btn').textContent = '📷 Anderes Bild wählen';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+document.querySelectorAll('[data-editprompt]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.getElementById('edit-prompt').value = el.dataset.editprompt;
+  });
+});
+
+document.getElementById('edit-img-btn').addEventListener('click', function() {
+  if (!uploadedB64) { alert('Bitte zuerst ein Bild hochladen.'); return; }
+  var prompt = document.getElementById('edit-prompt').value.trim();
+  if (!prompt) { alert('Bitte beschreiben was geaendert werden soll.'); return; }
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ KI bearbeitet... (30-60 Sek)';
+  document.getElementById('edit-result').className = 'img-result';
+  var status = document.getElementById('edit-status');
+  status.className = 'aibox on';
+  status.innerHTML = mkLoader('Bild wird von der KI bearbeitet, das dauert 30-60 Sekunden...');
+
+  var pin = sessionStorage.getItem('pin');
+  fetch('/api/edit-image', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ image: uploadedB64, prompt: prompt, size: '1024x1024' })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    btn.disabled = false;
+    btn.textContent = '🪄 Bild bearbeiten';
+    status.className = 'aibox';
+    if (data.error) {
+      status.className = 'aibox on';
+      status.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(data.error) + '</div>';
+      return;
+    }
+    var dataUrl = 'data:image/png;base64,' + data.b64;
+    document.getElementById('edited-img').src = dataUrl;
+    document.getElementById('edit-download').href = dataUrl;
+    document.getElementById('edit-result').className = 'img-result on';
+  }).catch(function(e) {
+    btn.disabled = false;
+    btn.textContent = '🪄 Bild bearbeiten';
+    status.className = 'aibox on';
+    status.innerHTML = '<div class="insight insight-err" style="margin:0">Fehler: ' + esc(e.message) + '</div>';
+  });
+});
+
+document.getElementById('edit-again-btn').addEventListener('click', function() {
+  document.getElementById('edit-prompt').focus();
+  document.getElementById('edit-prompt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+// =====================
+// VIDEO GENERATION (Sora 2)
+// =====================
+var vidPolling = null;
+
+document.querySelectorAll('[data-vidprompt]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.getElementById('vid-prompt').value = el.dataset.vidprompt;
+  });
+});
+
+document.getElementById('gen-vid-btn').addEventListener('click', function() {
+  var prompt = document.getElementById('vid-prompt').value.trim();
+  if (!prompt) { alert('Bitte einen Video-Prompt eingeben.'); return; }
+  var size = document.getElementById('vid-size').value;
+  var seconds = document.getElementById('vid-seconds').value;
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ Starte Generierung...';
+  document.getElementById('vid-result').className = 'img-result';
+  var status = document.getElementById('vid-status');
+  status.className = 'aibox on';
+  status.innerHTML = mkLoader('Video-Job wird gestartet...');
+
+  var pin = sessionStorage.getItem('pin');
+  fetch('/api/video', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ action: 'create', prompt: prompt, size: size, seconds: seconds })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.error) {
+      btn.disabled = false; btn.textContent = '🎬 Video generieren';
+      status.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(data.error) + '</div>';
+      return;
+    }
+    pollVideo(data.id, btn, status, pin);
+  }).catch(function(e) {
+    btn.disabled = false; btn.textContent = '🎬 Video generieren';
+    status.innerHTML = '<div class="insight insight-err" style="margin:0">Fehler: ' + esc(e.message) + '</div>';
+  });
+});
+
+function pollVideo(id, btn, status, pin) {
+  var checks = 0;
+  vidPolling = setInterval(function() {
+    checks++;
+    if (checks > 80) { // max ~7 min
+      clearInterval(vidPolling);
+      btn.disabled = false; btn.textContent = '🎬 Video generieren';
+      status.innerHTML = '<div class="insight insight-err" style="margin:0">Zeitueberschreitung. Bitte erneut versuchen.</div>';
+      return;
+    }
+    fetch('/api/video', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+      body: JSON.stringify({ action: 'status', id: id })
+    }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.error) {
+        clearInterval(vidPolling);
+        btn.disabled = false; btn.textContent = '🎬 Video generieren';
+        status.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(d.error) + '</div>';
+        return;
+      }
+      if (d.status === 'completed') {
+        clearInterval(vidPolling);
+        status.innerHTML = mkLoader('Video wird geladen...');
+        btn.textContent = '⏳ Lade Video...';
+        // Fetch video as blob
+        fetch('/api/video', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+          body: JSON.stringify({ action: 'content', id: id })
+        }).then(function(r) {
+          if (!r.ok) throw new Error('Video-Download fehlgeschlagen');
+          return r.blob();
+        }).then(function(blob) {
+          var url = URL.createObjectURL(blob);
+          var vid = document.getElementById('gen-vid');
+          vid.src = url;
+          document.getElementById('vid-download').href = url;
+          document.getElementById('vid-result').className = 'img-result on';
+          status.className = 'aibox';
+          btn.disabled = false;
+          btn.textContent = '🎬 Video generieren';
+          vid.play().catch(function(){});
+        }).catch(function(e) {
+          btn.disabled = false; btn.textContent = '🎬 Video generieren';
+          status.innerHTML = '<div class="insight insight-err" style="margin:0">' + esc(e.message) + '</div>';
+        });
+      } else if (d.status === 'failed') {
+        clearInterval(vidPolling);
+        btn.disabled = false; btn.textContent = '🎬 Video generieren';
+        status.innerHTML = '<div class="insight insight-err" style="margin:0">Generierung fehlgeschlagen' + (d.error ? ': ' + esc(d.error) : '') + '</div>';
+      } else {
+        var pct = d.progress ? Math.round(d.progress) : 0;
+        btn.textContent = '⏳ Generiert... ' + pct + '%';
+        status.innerHTML = mkLoader('Sora generiert dein Video... ' + pct + '% (1-5 Min.)');
+      }
+    }).catch(function(){});
+  }, 5000);
+}
+
+document.getElementById('vid-again-btn').addEventListener('click', function() {
+  document.getElementById('vid-prompt').focus();
+  document.getElementById('vid-prompt').scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 
 // =====================
