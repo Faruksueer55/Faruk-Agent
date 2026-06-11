@@ -12,19 +12,26 @@ export default async function handler(req, res) {
   const key = process.env.OPENAI_API_KEY;
   if (!key) return res.status(500).json({ error: 'OPENAI_API_KEY nicht in Vercel gesetzt.' });
 
-  const { action, prompt, seconds, size, id } = req.body;
+  const { action, prompt, seconds, size, id, model } = req.body;
 
   try {
     // 1. Video-Job erstellen
     if (action === 'create') {
+      const useModel = model === 'sora-2-pro' ? 'sora-2-pro' : 'sora-2';
+      // Pro supports higher resolutions
+      let vidSize = size || '720x1280';
+      if (useModel === 'sora-2-pro') {
+        if (vidSize === '720x1280') vidSize = '1024x1792';
+        if (vidSize === '1280x720') vidSize = '1792x1024';
+      }
       const r = await fetch('https://api.openai.com/v1/videos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
         body: JSON.stringify({
-          model: 'sora-2',
+          model: useModel,
           prompt: prompt,
           seconds: seconds || '4',
-          size: size || '720x1280'
+          size: vidSize
         })
       });
       const data = await r.json();
