@@ -164,6 +164,7 @@ textarea:focus,select:focus{border-color:var(--ac)}
       <div class="ni" data-page="kommentare">Kommentare</div>
       <div class="ni" data-page="trends">Trends</div>
       <div class="ni" data-page="creator">Creator & Nische</div>
+      <div class="ni" data-page="instagram">Instagram Insights</div>
     </nav>
   </aside>
 
@@ -420,6 +421,64 @@ textarea:focus,select:focus{border-color:var(--ac)}
           <button class="btn bs bsm" data-prompt="content_gaps" data-target="cr-res">Content-Luecken finden</button>
           <button class="btn bs bsm" data-prompt="viral_posts" data-target="cr-res">Virale Posts analysieren</button>
         </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-instagram">
+      <div class="ptitle">Instagram Insights</div>
+      <div class="psub2">Deine echten Daten von @faruksueer</div>
+
+      <div id="ig-loading" style="text-align:center;padding:40px;color:var(--mt)">
+        <div style="font-size:32px;margin-bottom:12px">📊</div>
+        <div>Insights werden geladen...</div>
+      </div>
+
+      <div id="ig-error" style="display:none" class="insight" style="background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.3);color:var(--rd)"></div>
+
+      <div id="ig-content" style="display:none">
+
+        <!-- Profile Card -->
+        <div class="sc" id="ig-profile-card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff;flex-shrink:0" id="ig-avatar">OF</div>
+            <div>
+              <div style="font-size:16px;font-weight:600" id="ig-username">@faruksueer</div>
+              <div style="font-size:12px;color:var(--mt);margin-top:2px" id="ig-bio"></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="ig-stats">
+            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
+              <div style="font-size:20px;font-weight:600" id="ig-followers">-</div>
+              <div style="font-size:11px;color:var(--mt);margin-top:2px">Follower</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
+              <div style="font-size:20px;font-weight:600" id="ig-following">-</div>
+              <div style="font-size:11px;color:var(--mt);margin-top:2px">Following</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:var(--s2);border-radius:var(--rs)">
+              <div style="font-size:20px;font-weight:600" id="ig-posts">-</div>
+              <div style="font-size:11px;color:var(--mt);margin-top:2px">Posts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Posts -->
+        <div class="sc">
+          <div class="sct">Letzte Posts</div>
+          <div id="ig-media-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div>
+        </div>
+
+        <!-- AI Analysis -->
+        <div class="sc">
+          <div class="sct">KI-Analyse deiner Insights</div>
+          <div class="brow">
+            <button class="btn bp" id="ig-analyze-btn">Insights analysieren</button>
+            <button class="btn bs" id="ig-strategy-btn">Strategie vorschlagen</button>
+            <button class="btn bs" id="ig-refresh-btn">Daten aktualisieren</button>
+          </div>
+          <div class="aibox" id="ig-ai-res"></div>
+        </div>
+
       </div>
     </div>
 
@@ -732,6 +791,101 @@ document.querySelectorAll('[data-tp]').forEach(function(el) {
 });
 
 showTrends('ig');
+
+// Instagram Insights
+var igData = {};
+
+function loadInstagram() {
+  document.getElementById('ig-loading').style.display = 'block';
+  document.getElementById('ig-content').style.display = 'none';
+  document.getElementById('ig-error').style.display = 'none';
+
+  var pin = sessionStorage.getItem('pin');
+  fetch('/api/instagram', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-pin': pin },
+    body: JSON.stringify({ type: 'all' })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.error) {
+      document.getElementById('ig-loading').style.display = 'none';
+      document.getElementById('ig-error').style.display = 'block';
+      document.getElementById('ig-error').textContent = 'Fehler: ' + data.error;
+      return;
+    }
+    igData = data;
+    renderInstagram(data);
+  }).catch(function(e) {
+    document.getElementById('ig-loading').style.display = 'none';
+    document.getElementById('ig-error').style.display = 'block';
+    document.getElementById('ig-error').textContent = 'Verbindungsfehler: ' + e.message;
+  });
+}
+
+function formatNum(n) {
+  if (!n) return '-';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+function renderInstagram(data) {
+  document.getElementById('ig-loading').style.display = 'none';
+  document.getElementById('ig-content').style.display = 'block';
+
+  if (data.profile && !data.profile.error) {
+    var p = data.profile;
+    document.getElementById('ig-username').textContent = '@' + (p.username || 'faruksueer');
+    document.getElementById('ig-bio').textContent = p.biography || '';
+    document.getElementById('ig-followers').textContent = formatNum(p.followers_count);
+    document.getElementById('ig-following').textContent = formatNum(p.follows_count);
+    document.getElementById('ig-posts').textContent = formatNum(p.media_count);
+  }
+
+  if (data.media && data.media.data) {
+    var grid = document.getElementById('ig-media-grid');
+    grid.innerHTML = '';
+    data.media.data.forEach(function(post) {
+      var div = document.createElement('div');
+      div.style.cssText = 'position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--s2);cursor:pointer';
+      if (post.media_url) {
+        var img = document.createElement('img');
+        img.src = post.media_url;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+        img.onerror = function() { div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:24px">' + (post.media_type === 'VIDEO' ? '🎬' : '📸') + '</div>'; };
+        div.appendChild(img);
+      } else {
+        div.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:24px">' + (post.media_type === 'VIDEO' ? '🎬' : '📸') + '</div>';
+      }
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:8px 6px 5px;display:flex;gap:8px';
+      overlay.innerHTML = '<span style="font-size:11px;color:#fff">❤️ ' + formatNum(post.like_count) + '</span><span style="font-size:11px;color:#fff">💬 ' + formatNum(post.comments_count) + '</span>';
+      div.appendChild(overlay);
+      grid.appendChild(div);
+    });
+  }
+}
+
+document.getElementById('ig-analyze-btn').addEventListener('click', function() {
+  if (!igData.profile) { loadInstagram(); return; }
+  var p = igData.profile;
+  var mediaInfo = igData.media && igData.media.data ? igData.media.data.slice(0,5).map(function(m) {
+    return 'Post vom ' + new Date(m.timestamp).toLocaleDateString('de') + ': ' + formatNum(m.like_count) + ' Likes, ' + formatNum(m.comments_count) + ' Kommentare';
+  }).join('; ') : 'keine Daten';
+  callAI('Analysiere diese Instagram Insights von @faruksueer: Follower: ' + p.followers_count + ', Following: ' + p.follows_count + ', Posts: ' + p.media_count + '. Letzte Posts: ' + mediaInfo + '. Was laeuft gut, was kann verbessert werden? Gib konkrete Handlungsempfehlungen.', 'ig-ai-res');
+});
+
+document.getElementById('ig-strategy-btn').addEventListener('click', function() {
+  if (!igData.profile) { loadInstagram(); return; }
+  var p = igData.profile;
+  callAI('Basierend auf diesen Instagram Daten von @faruksueer (Follower: ' + p.followers_count + ', Posts: ' + p.media_count + '): Erstelle eine konkrete Wachstumsstrategie fuer die naechsten 30 Tage. Themen: Reisen, Tauchen, Yoga. Recherchiere aktuelle Best Practices.', 'ig-ai-res');
+});
+
+document.getElementById('ig-refresh-btn').addEventListener('click', loadInstagram);
+
+// Load Instagram when tab is opened
+document.querySelector('[data-page="instagram"]').addEventListener('click', function() {
+  if (!igData.profile) loadInstagram();
+});
 
 // Creator search button
 document.getElementById('creator-search-btn').addEventListener('click', function() {
