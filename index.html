@@ -228,16 +228,16 @@
 </head>
 <body>
 
-<!-- API KEY SETUP SCREEN -->
+<!-- PIN LOGIN SCREEN -->
 <div class="key-screen" id="key-screen">
   <div class="key-box">
-    <div class="key-logo">🤖</div>
+    <div class="key-logo">🔐</div>
     <div class="key-title">@faruksueer Agent</div>
-    <div class="key-sub">Gib deinen Anthropic API Key ein um den Agenten zu starten. Der Key wird nur in deinem Browser gespeichert und nie weitergegeben.</div>
-    <input class="key-input" type="password" id="key-input" placeholder="sk-ant-api03-..." />
-    <div class="key-note">🔒 Dein Key bleibt lokal auf deinem Gerät. Hol ihn dir auf console.anthropic.com unter "API Keys".</div>
+    <div class="key-sub">Gib deinen 4-stelligen PIN ein um den Agenten zu starten.</div>
+    <input class="key-input" type="password" id="key-input" placeholder="••••" maxlength="4" inputmode="numeric" />
+    <div id="pin-error" style="color:#f87171;font-size:13px;margin-bottom:12px;display:none">Falscher PIN. Bitte nochmal versuchen.</div>
     <div class="btn-row">
-      <button class="btn btn-primary" style="width:100%" onclick="saveKey()">Agent starten →</button>
+      <button class="btn btn-primary" style="width:100%" onclick="saveKey()">Einloggen →</button>
     </div>
   </div>
 </div>
@@ -258,7 +258,7 @@
           <a class="handle-link" href="https://facebook.com/faruk.suer.77" target="_blank">👤 faruk.suer.77</a>
         </div>
         <div class="key-status">🟢 Agent aktiv</div>
-        <div class="key-change" onclick="changeKey()">API Key ändern</div>
+        <div class="key-change" onclick="changeKey()">Ausloggen</div>
       </div>
       <nav class="nav">
         <div class="nav-item active" onclick="showPage('dashboard',this)">🏠 &nbsp;Dashboard</div>
@@ -501,24 +501,25 @@ Antworte auf Deutsch. Sei konkret, direkt und praxisnah.`;
 
 // KEY MANAGEMENT
 function saveKey() {
-  const key = document.getElementById('key-input').value.trim();
-  if (!key.startsWith('sk-ant-')) {
-    alert('Bitte einen gültigen Anthropic API Key eingeben (beginnt mit sk-ant-)');
+  const pin = document.getElementById('key-input').value.trim();
+  if (pin.length !== 4) {
+    document.getElementById('pin-error').style.display = 'block';
     return;
   }
-  sessionStorage.setItem('faruk_api_key', key);
+  sessionStorage.setItem('faruk_pin', pin);
+  document.getElementById('pin-error').style.display = 'none';
   document.getElementById('key-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 }
 
 function changeKey() {
-  sessionStorage.removeItem('faruk_api_key');
+  sessionStorage.removeItem('faruk_pin');
   document.getElementById('app').style.display = 'none';
   document.getElementById('key-screen').style.display = 'flex';
   document.getElementById('key-input').value = '';
 }
 
-function getKey() { return sessionStorage.getItem('faruk_api_key'); }
+function getKey() { return sessionStorage.getItem('faruk_pin'); }
 
 // Check on load
 window.addEventListener('load', () => {
@@ -527,6 +528,15 @@ window.addEventListener('load', () => {
     document.getElementById('app').style.display = 'block';
   }
   switchTrends('ig', document.getElementById('tp-ig'));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('key-input');
+  if (input) {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') saveKey();
+    });
+  }
 });
 
 // AI CALL
@@ -542,7 +552,7 @@ async function ask(prompt, responseId, useWebSearch) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': key
+        'x-pin': key
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
@@ -554,7 +564,7 @@ async function ask(prompt, responseId, useWebSearch) {
     });
     if (!res.ok) {
       const err = await res.json();
-      if (res.status === 401) { box.innerHTML = 'API Key ungueltig. Bitte neu eingeben.'; changeKey(); return; }
+      if (res.status === 401) { box.innerHTML = 'Falscher PIN. Bitte neu einloggen.'; changeKey(); return; }
       box.innerHTML = 'Fehler: ' + (err.error?.message || 'Unbekannter Fehler');
       return;
     }
