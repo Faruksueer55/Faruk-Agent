@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   const body = {
     model: model || 'claude-sonnet-4-6',
-    max_tokens: max_tokens || 2000,
+    max_tokens: max_tokens || 1200,
     system,
     messages
   };
@@ -25,11 +25,6 @@ export default async function handler(req, res) {
   if (useWebSearch) {
     body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
   }
-
-  // Stream response for faster perceived speed
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -44,9 +39,7 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     if (!response.ok) {
-      res.write(`data: ${JSON.stringify({ error: data.error?.message || 'API Error' })}\n\n`);
-      res.end();
-      return;
+      return res.status(response.status).json({ error: data.error?.message || 'API Error' });
     }
 
     const textBlocks = (data.content || [])
@@ -54,10 +47,8 @@ export default async function handler(req, res) {
       .map(b => b.text)
       .join('\n\n');
 
-    res.write(`data: ${JSON.stringify({ text: textBlocks, done: true })}\n\n`);
-    res.end();
+    return res.status(200).json({ text: textBlocks });
   } catch (error) {
-    res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
-    res.end();
+    return res.status(500).json({ error: error.message });
   }
 }
