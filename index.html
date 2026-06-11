@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Media Agent – @faruksueer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0e0e10;
+      --surface: #18181b;
+      --surface2: #232329;
+      --border: #2e2e36;
+      --accent: #6c63ff;
+      --accent2: #a78bfa;
+      --text: #f4f4f5;
+      --muted: #71717a;
+      --green: #4ade80;
+      --amber: #fbbf24;
+      --red: #f87171;
+      --ig: #e1306c;
+      --tt: #ffffff;
+      --yt: #ff0000;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+    }
+    /* LAYOUT */
+    .shell { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 24px;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      transition: transform 0.25s;
+    }
+    .sidebar.hidden { transform: translateX(-100%); }
+    .main { margin-left: 240px; flex: 1; min-height: 100vh; }
+
+    /* PROFILE */
+    .profile {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 600; color: #fff;
+      margin-bottom: 10px;
+    }
+    .profile-name { font-weight: 600; font-size: 15px; }
+    .profile-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .handles { margin-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+    .handle-link {
+      font-size: 11px; color: var(--accent2);
+      text-decoration: none; display: flex; align-items: center; gap: 5px;
+    }
+    .handle-link:hover { color: #fff; }
+
+    /* NAV */
+    .nav { padding: 12px 10px; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { background: var(--surface2); color: var(--text); }
+    .nav-item .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-left: auto; flex-shrink: 0;
+    }
+
+    /* MOBILE TOPBAR */
+    .topbar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-title { font-weight: 600; font-size: 15px; }
+    .hamburger {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); font-size: 22px; padding: 2px;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+    }
+    .overlay.visible { display: block; }
+
+    /* PAGE */
+    .page { display: none; padding: 28px 28px; }
+    .page.active { display: block; }
+    .page-title { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+    .page-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+    /* CARDS GRID */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card-title { font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+    .card-value { font-size: 20px; font-weight: 600; }
+    .card-delta { font-size: 12px; margin-top: 4px; }
+    .up { color: var(--green); }
+    .down { color: var(--red); }
+
+    /* INSIGHT BOX */
+    .insight {
+      background: rgba(108,99,255,0.1);
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--accent2);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* SECTION CARD */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .section-card-title {
+      font-size: 15px; font-weight: 600; margin-bottom: 16px;
+    }
+
+    /* PLATFORM ITEM */
+    .platform-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .platform-item:last-child { border-bottom: none; }
+    .platform-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .platform-icon.ig { background: rgba(225,48,108,0.15); color: var(--ig); }
+    .platform-icon.tt { background: rgba(255,255,255,0.1); color: var(--tt); }
+    .platform-icon.yt { background: rgba(255,0,0,0.15); color: var(--yt); }
+    .platform-icon.fb { background: rgba(108,99,255,0.15); color: var(--accent2); }
+    .platform-label { font-size: 14px; font-weight: 500; }
+    .platform-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+
+    /* TAGS */
+    .tag {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 20px; font-size: 11px; font-weight: 500;
+      margin: 2px;
+    }
+    .tag-purple { background: rgba(108,99,255,0.2); color: var(--accent2); }
+    .tag-green { background: rgba(74,222,128,0.15); color: var(--green); }
+    .tag-amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+    .tag-muted { background: var(--surface2); color: var(--muted); }
+    .tag-teal { background: rgba(45,212,191,0.15); color: #2dd4bf; }
+
+    /* FORM ELEMENTS */
+    textarea, select, input[type=text] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    textarea:focus, select:focus, input[type=text]:focus {
+      border-color: var(--accent);
+    }
+    textarea { min-height: 90px; }
+    select option { background: var(--surface2); }
+
+    /* QUICK TAGS */
+    .quick-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+    .quick-tag {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface2);
+      transition: all 0.15s;
+    }
+    .quick-tag:hover { border-color: var(--accent); color: var(--accent2); }
+
+    /* BUTTONS */
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #5b52e0; }
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
+
+    /* PLATFORM PILLS */
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .pill {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: transparent;
+      transition: all 0.15s;
+    }
+    .pill.active {
+      background: rgba(108,99,255,0.2);
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    /* GROWTH ITEMS */
+    .growth-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .growth-item:last-child { border-bottom: none; }
+    .growth-num {
+      font-size: 20px; font-weight: 600;
+      color: var(--accent);
+      min-width: 28px;
+    }
+    .growth-title { font-size: 14px; font-weight: 500; }
+    .growth-sub { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      border-radius: 10px; font-size: 11px; font-weight: 500;
+      margin-left: 6px; vertical-align: middle;
+    }
+    .badge-green { background: rgba(74,222,128,0.15); color: var(--green); }
+    .badge-amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+
+    /* PROGRESS BARS */
+    .progress-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .progress-label { font-size: 13px; color: var(--muted); min-width: 100px; }
+    .progress-bg { flex: 1; height: 5px; background: var(--surface2); border-radius: 3px; }
+    .progress-fill { height: 5px; border-radius: 3px; }
+    .progress-val { font-size: 12px; color: var(--muted); min-width: 70px; text-align: right; }
+
+    /* TREND ITEMS */
+    .trend-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .trend-item:last-child { border-bottom: none; }
+    .trend-rank { font-size: 16px; font-weight: 600; color: var(--muted); min-width: 24px; }
+    .trend-name { font-size: 14px; font-weight: 500; }
+    .trend-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .trend-bar-bg { height: 3px; background: var(--surface2); border-radius: 2px; margin-top: 6px; }
+    .trend-bar { height: 3px; border-radius: 2px; background: var(--accent); }
+
+    /* DESTINATIONS */
+    .dest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .dest-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .dest-card:hover { border-color: var(--accent); }
+    .dest-flag { font-size: 22px; margin-bottom: 5px; }
+    .dest-name { font-size: 13px; font-weight: 500; }
+    .dest-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* RESPONSE BOX */
+    .response-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      display: none;
+      white-space: pre-wrap;
+    }
+    .response-box.visible { display: block; }
+    .response-loading { color: var(--muted); font-style: italic; }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .topbar { display: flex; }
+      .page { padding: 18px 16px; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-title { font-size: 19px; }
+    }
+    @media (max-width: 420px) {
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="profile">
+      <div class="avatar">ÖF</div>
+      <div class="profile-name">Ömer Faruk Süer</div>
+      <div class="profile-sub">Prokurist · Reisen · Tauchen · Mindset</div>
+      <div class="handles">
+        <a class="handle-link" href="https://instagram.com/faruksueer" target="_blank">📸 @faruksueer</a>
+        <a class="handle-link" href="https://tiktok.com/@faruksueer" target="_blank">🎵 @faruksueer</a>
+        <a class="handle-link" href="https://youtube.com/@Faruksueer55" target="_blank">▶️ @Faruksueer55</a>
+        <a class="handle-link" href="https://facebook.com/faruk.suer.77" target="_blank">👤 faruk.suer.77</a>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" onclick="showPage('dashboard', this)">🏠 &nbsp;Dashboard</div>
+      <div class="nav-item" onclick="showPage('posts', this)">✏️ &nbsp;Posts erstellen</div>
+      <div class="nav-item" onclick="showPage('reisen', this)">✈️ &nbsp;Meine Reisen</div>
+      <div class="nav-item" onclick="showPage('wachstum', this)">🚀 &nbsp;Wachstum</div>
+      <div class="nav-item" onclick="showPage('kommentare', this)">💬 &nbsp;Kommentare</div>
+      <div class="nav-item" onclick="showPage('trends', this)">📈 &nbsp;Trends</div>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Mobile topbar -->
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <span class="topbar-title">@faruksueer Agent</span>
+      <span style="width:32px"></span>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-title">Hallo Ömer 👋</div>
+      <div class="page-sub">Dein persönlicher Social Media Agent</div>
+      <div class="insight">💡 <strong>Fokus:</strong> Nischen-Content zuerst — Reisen, Tauchen, Yoga. Deine persönliche Story teilst du wann du bereit bist.</div>
+      <div class="grid-3">
+        <div class="card"><div class="card-title">Instagram</div><div class="card-value" style="font-size:15px;margin-top:4px">@faruksueer</div><div class="card-delta" style="color:var(--muted)">Visitenkarte</div></div>
+        <div class="card"><div class="card-title">TikTok</div><div class="card-value" style="font-size:15px;margin-top:4px">@faruksueer</div><div class="card-delta up">Wachstumsmotor</div></div>
+        <div class="card"><div class="card-title">YouTube</div><div class="card-value" style="font-size:15px;margin-top:4px">@Faruksueer55</div><div class="card-delta" style="color:var(--muted)">Tiefe & Vlogs</div></div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-title">Deine Content-Säulen</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="tag tag-purple">✈️ Reisen & Istanbul</span>
+          <span class="tag tag-teal">🤿 Tauchen & Natur</span>
+          <span class="tag tag-amber">🧘 Yoga & Meditation</span>
+          <span class="tag tag-green">💼 Karriere & Werdegang</span>
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <div class="card-title" style="margin-bottom:10px">Deine Reisen</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag tag-muted">🇹🇷 Istanbul</span>
+            <span class="tag tag-muted">🇹🇭 Thailand</span>
+            <span class="tag tag-muted">🇪🇸 Barcelona & Valencia</span>
+            <span class="tag tag-muted">🇩🇴 Dom. Republik</span>
+            <span class="tag tag-muted">🇮🇹 Rom</span>
+            <span class="tag tag-muted">🇨🇿 Prag</span>
+            <span class="tag tag-muted">🇩🇰 Kopenhagen</span>
+            <span class="tag tag-muted">🇪🇬 Ägypten</span>
+            <span class="tag tag-muted">🇳🇱 Niederlande</span>
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="sendPrompt('Erstelle mir einen Wochenplan für Instagram, TikTok und YouTube. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Ägypten), Tauchen, Yoga/Meditation. Kein persönlicher Werdegang, rein nischen-fokussierter Content. Ton: authentisch, direkt.')">Wochenplan erstellen</button>
+        <button class="btn btn-secondary" onclick="sendPrompt('Welche 3 Quick Wins kann ich diese Woche umsetzen um auf Instagram und TikTok mehr Reichweite zu gewinnen? Meine Themen: Reisen, Tauchen, Yoga.')">Quick Wins</button>
+      </div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="page" id="page-posts">
+      <div class="page-title">Post erstellen</div>
+      <div class="page-sub">Wähle Plattform, Thema und Format</div>
+      <div class="pills" id="post-pills">
+        <div class="pill active" onclick="togglePill(this)">Instagram</div>
+        <div class="pill active" onclick="togglePill(this)">TikTok</div>
+        <div class="pill" onclick="togglePill(this)">YouTube</div>
+        <div class="pill" onclick="togglePill(this)">Facebook</div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-title">Schnell-Themen</div>
+        <div class="quick-tags">
+          <span class="quick-tag" onclick="setTopic('Istanbul — die versteckten Ecken der Stadt die kein Tourist kennt')">🇹🇷 Istanbul Geheimtipps</span>
+          <span class="quick-tag" onclick="setTopic('Ko Lipe vs Phuket — welche Insel lohnt sich wirklich?')">🇹🇭 Ko Lipe vs Phuket</span>
+          <span class="quick-tag" onclick="setTopic('Taucherlizenz in Thailand machen — alles was du wissen musst')">🤿 Taucherlizenz Thailand</span>
+          <span class="quick-tag" onclick="setTopic('Barcelona vs Valencia — welche Stadt gewinnt?')">🇪🇸 Barcelona vs Valencia</span>
+          <span class="quick-tag" onclick="setTopic('Ägypten unter Wasser — die schönsten Tauchspots im Roten Meer')">🇪🇬 Tauchen Ägypten</span>
+          <span class="quick-tag" onclick="setTopic('Kopenhagen — die teuerste Stadt Europas, lohnt sie sich wirklich?')">🇩🇰 Kopenhagen ehrlich</span>
+          <span class="quick-tag" onclick="setTopic('30 Tage Meditation — was sich wirklich verändert hat, ehrlich und ohne Hochglanz')">🧘 Meditation 30 Tage</span>
+          <span class="quick-tag" onclick="setTopic('Was du beim ersten Mal Tauchen wirklich erwartest — und was wirklich passiert')">🌊 Erster Tauchgang</span>
+          <span class="quick-tag" onclick="setTopic('Bangkok in 48 Stunden — mein ehrlicher Guide')">🇹🇭 Bangkok Guide</span>
+          <span class="quick-tag" onclick="setTopic('Dom. Republik — was ich nicht erwartet hätte')">🇩🇴 Dom. Republik</span>
+        </div>
+        <textarea id="post-topic" placeholder="Oder eigenes Thema eingeben..."></textarea>
+        <div style="display:flex;gap:10px">
+          <select id="post-format" style="flex:1">
+            <option>Caption + Hashtags</option>
+            <option>Reels-Skript 30–60s</option>
+            <option>TikTok-Skript mit Hook</option>
+            <option>Karussell 5–7 Slides</option>
+            <option>YouTube Vlog-Outline</option>
+            <option>YouTube Short</option>
+            <option>Story-Serie</option>
+          </select>
+          <select id="post-tone" style="flex:1">
+            <option>Authentisch & direkt</option>
+            <option>Insider-Tipp Stil</option>
+            <option>Nachdenklich & tiefgründig</option>
+            <option>Leicht & humorvoll</option>
+            <option>Motivierend</option>
+          </select>
+        </div>
+        <div class="btn-row" style="margin-top:4px">
+          <button class="btn btn-primary" onclick="generatePost()">Post generieren ✨</button>
+          <button class="btn btn-secondary" onclick="generateHooks()">Nur Hooks generieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REISEN -->
+    <div class="page" id="page-reisen">
+      <div class="page-title">Meine Reisen</div>
+      <div class="page-sub">9 Länder · 12+ Destinationen · Monate an Content</div>
+      <div class="dest-grid">
+        <div class="dest-card" onclick="reisePost('Istanbul & Türkei', '🇹🇷')">
+          <div class="dest-flag">🇹🇷</div>
+          <div class="dest-name">Istanbul & Türkei</div>
+          <div class="dest-sub">Mehrfach besucht</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Thailand: Bangkok, Ko Lipe, Phuket', '🇹🇭')">
+          <div class="dest-flag">🇹🇭</div>
+          <div class="dest-name">Thailand</div>
+          <div class="dest-sub">Bangkok · Ko Lipe · Phuket · Taucherlizenz</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Spanien: Barcelona & Valencia', '🇪🇸')">
+          <div class="dest-flag">🇪🇸</div>
+          <div class="dest-name">Spanien</div>
+          <div class="dest-sub">Barcelona · Valencia</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Ägypten & Tauchen im Roten Meer', '🇪🇬')">
+          <div class="dest-flag">🇪🇬</div>
+          <div class="dest-name">Ägypten</div>
+          <div class="dest-sub">Rotes Meer · Tauchen</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Dominikanische Republik', '🇩🇴')">
+          <div class="dest-flag">🇩🇴</div>
+          <div class="dest-name">Dom. Republik</div>
+          <div class="dest-sub">Karibik</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Rom, Italien', '🇮🇹')">
+          <div class="dest-flag">🇮🇹</div>
+          <div class="dest-name">Rom</div>
+          <div class="dest-sub">Italien</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Prag, Tschechien', '🇨🇿')">
+          <div class="dest-flag">🇨🇿</div>
+          <div class="dest-name">Prag</div>
+          <div class="dest-sub">Tschechien</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Kopenhagen, Dänemark', '🇩🇰')">
+          <div class="dest-flag">🇩🇰</div>
+          <div class="dest-name">Kopenhagen</div>
+          <div class="dest-sub">Dänemark</div>
+        </div>
+        <div class="dest-card" onclick="reisePost('Niederlande', '🇳🇱')">
+          <div class="dest-flag">🇳🇱</div>
+          <div class="dest-name">Niederlande</div>
+          <div class="dest-sub">Mehrfach besucht</div>
+        </div>
+      </div>
+      <div class="section-card" style="margin-top:16px">
+        <div class="section-card-title">Content-Ideen aus deinen Reisen</div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="sendPrompt('Erstelle mir eine Liste mit 10 Reels-Ideen basierend auf meinen Reisen: Istanbul/Türkei, Thailand (Ko Lipe, Phuket, Bangkok), Spanien (Barcelona, Valencia), Ägypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande. Tauchen-Lizenz in Thailand. Kein persönlicher Werdegang, rein Travel-Content. Format: TikTok/Instagram Reel.')">10 Reel-Ideen aus meinen Reisen</button>
+          <button class="btn btn-secondary" onclick="sendPrompt('Welche meiner Reisen hat das größte Content-Potenzial für TikTok und Instagram? Bewerte: Istanbul, Thailand (Ko Lipe/Phuket/Bangkok), Spanien, Ägypten, Dom. Republik, Rom, Prag, Kopenhagen, Niederlande.')">Welche Reise hat meisten Potenzial?</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WACHSTUM -->
+    <div class="page" id="page-wachstum">
+      <div class="page-title">Wachstumsstrategie</div>
+      <div class="page-sub">Die wichtigsten Hebel für Reichweite & Community</div>
+      <div class="section-card">
+        <div class="section-card-title">Top 5 Hebel für dich</div>
+        <div class="growth-item">
+          <div class="growth-num">1</div>
+          <div>
+            <div class="growth-title">Hook in den ersten 2 Sekunden <span class="badge badge-green">Höchste Prio</span></div>
+            <div class="growth-sub">TikTok & Reels entscheiden im ersten Moment. "Istanbul-Touristen machen immer den gleichen Fehler" schlägt "Meine Istanbul-Reise" jedes Mal.</div>
+          </div>
+        </div>
+        <div class="growth-item">
+          <div class="growth-num">2</div>
+          <div>
+            <div class="growth-title">Konsistenz — 4–5x Woche IG, 3–4x TikTok <span class="badge badge-green">Höchste Prio</span></div>
+            <div class="growth-sub">Algorithmen belohnen Regelmäßigkeit mehr als Perfektion. Lieber öfter und etwas schlichter als selten und perfect.</div>
+          </div>
+        </div>
+        <div class="growth-item">
+          <div class="growth-num">3</div>
+          <div>
+            <div class="growth-title">Insider-Tipp Format <span class="badge badge-amber">Wichtig</span></div>
+            <div class="growth-sub">Dein Vorteil: Du kennst diese Orte wirklich. "Was kein Reiseführer zeigt" und "Fehler die Touristen machen" performen auf beiden Plattformen konstant stark.</div>
+          </div>
+        </div>
+        <div class="growth-item">
+          <div class="growth-num">4</div>
+          <div>
+            <div class="growth-title">Crossposting IG → TikTok → Facebook <span class="badge badge-amber">Effizient</span></div>
+            <div class="growth-sub">Ein Reel, drei Plattformen. Facebook holt dir die 30–45-jährige Zielgruppe die Travel-Content konsumiert.</div>
+          </div>
+        </div>
+        <div class="growth-item">
+          <div class="growth-num">5</div>
+          <div>
+            <div class="growth-title">Erste 30 Minuten nach dem Post <span class="badge badge-amber">Wichtig</span></div>
+            <div class="growth-sub">Kommentare in den ersten 30 Min nach dem Posting beantworten — der Algorithmus misst Early Engagement als Signal für Reichweite.</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-title">Beste Posting-Zeiten</div>
+        <div class="progress-item"><div class="progress-label">Instagram</div><div class="progress-bg"><div class="progress-fill" style="width:90%;background:#e1306c"></div></div><div class="progress-val">Mo–Fr 18–20 Uhr</div></div>
+        <div class="progress-item"><div class="progress-label">TikTok</div><div class="progress-bg"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div><div class="progress-val">Di–Sa 19–22 Uhr</div></div>
+        <div class="progress-item"><div class="progress-label">YouTube</div><div class="progress-bg"><div class="progress-fill" style="width:70%;background:#ff0000"></div></div><div class="progress-val">Fr–Sa 15–18 Uhr</div></div>
+        <div class="progress-item"><div class="progress-label">Facebook</div><div class="progress-bg"><div class="progress-fill" style="width:55%;background:var(--accent2)"></div></div><div class="progress-val">Mi & So 12–14 Uhr</div></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="sendPrompt('Erstelle mir eine 30-Tage Content-Challenge für Instagram und TikTok. Meine Themen: Reisen (Istanbul, Thailand, Spanien, Ägypten), Tauchen, Yoga/Meditation. Kein persönlicher Werdegang. Ziel: Reichweite und Community aufbauen.')">30-Tage Challenge</button>
+        <button class="btn btn-secondary" onclick="sendPrompt('Schreibe mir 5 starke Hooks für Travel-Content auf TikTok und Instagram Reels. Basierend auf meinen Reisen: Istanbul, Ko Lipe, Phuket, Ägypten, Barcelona. Format: „Fehler vermeiden" oder „Geheimtipp" Stil.')">Hook-Ideen</button>
+      </div>
+    </div>
+
+    <!-- KOMMENTARE -->
+    <div class="page" id="page-kommentare">
+      <div class="page-title">Kommentare & Community</div>
+      <div class="page-sub">Antworten die zu dir klingen</div>
+      <div class="insight">⏱️ <strong>Tipp:</strong> In den ersten 30 Minuten nach dem Post antworten — das verdoppelt oft die Reichweite.</div>
+      <div class="section-card">
+        <div class="section-card-title">Kommentar beantworten</div>
+        <textarea id="comment-input" placeholder="Kommentar oder DM hier einfügen..."></textarea>
+        <div style="display:flex;gap:10px">
+          <select id="reply-style" style="flex:1">
+            <option>Warm & persönlich</option>
+            <option>Kurz & direkt</option>
+            <option>Humorvoll</option>
+            <option>Professionell (Kollabo)</option>
+          </select>
+          <select id="reply-platform" style="flex:1">
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>YouTube</option>
+            <option>Facebook</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="generateReply()">Antwort generieren ✨</button>
+      </div>
+      <div class="section-card">
+        <div class="section-card-title">Community Tools</div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="sendPrompt('Erstelle mir 10 Call-to-Action Fragen für Instagram und TikTok Posts die Kommentare fördern. Passend zu meinen Themen: Reisen, Tauchen, Yoga. Kurz und direkt.')">CTA-Fragen</button>
+          <button class="btn btn-secondary" onclick="sendPrompt('Schreibe mir eine kurze Willkommensnachricht für neue Follower auf Instagram. Ton: authentisch, herzlich, nicht übertrieben. Ich bin Travel & Dive Creator.')">Willkommens-DM</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDS -->
+    <div class="page" id="page-trends">
+      <div class="page-title">Trends</div>
+      <div class="page-sub">Was gerade auf deinen Plattformen funktioniert</div>
+      <div class="pills" id="trend-pills">
+        <div class="pill active" id="tp-ig" onclick="switchTrends('ig', this)">Instagram</div>
+        <div class="pill" id="tp-tt" onclick="switchTrends('tt', this)">TikTok</div>
+        <div class="pill" id="tp-yt" onclick="switchTrends('yt', this)">YouTube</div>
+      </div>
+      <div class="section-card" id="trends-list"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="sendPrompt('Recherchiere aktuelle Trends 2026 auf Instagram und TikTok für Travel Creator und Dive Creator. Meine Reisen: Istanbul, Thailand (Ko Lipe, Phuket, Bangkok), Spanien, Ägypten, Dom. Republik, Rom, Prag, Kopenhagen. Erstelle 5 konkrete Post-Ideen.')">Trends recherchieren</button>
+        <button class="btn btn-secondary" onclick="sendPrompt('Welche Hashtag-Strategie empfiehlst du für @faruksueer auf Instagram? Themen: Reisen, Tauchen, Yoga, Karriere. Gib mir 30 Hashtags in groß, mittel und Nischen.')">Hashtag-Strategie</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// --- Navigation ---
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  el.classList.add('active');
+  closeSidebar();
+}
+
+// --- Sidebar Mobile ---
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('visible');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('visible');
+}
+
+// --- Pills ---
+function togglePill(el) { el.classList.toggle('active'); }
+
+// --- Post Topic ---
+function setTopic(text) {
+  document.getElementById('post-topic').value = text;
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.includes('Posts')) n.click();
+  });
+}
+
+// --- Reise Post ---
+function reisePost(dest, flag) {
+  setTopic(`${dest} — Insider-Tipps und was kein Reiseführer zeigt`);
+}
+
+// --- Generate Post ---
+function generatePost() {
+  const topic = document.getElementById('post-topic').value.trim();
+  const format = document.getElementById('post-format').value;
+  const tone = document.getElementById('post-tone').value;
+  const platforms = [...document.querySelectorAll('#post-pills .pill.active')].map(p => p.textContent).join(', ');
+  const ctx = 'Ich bin @faruksueer (Instagram/TikTok) und @Faruksueer55 (YouTube). Travel & Dive Creator. Reisen: Istanbul/Türkei, Thailand (Ko Lipe, Phuket, Bangkok, Taucherlizenz dort gemacht), Spanien (Barcelona, Valencia), Ägypten (Rotes Meer, Tauchen), Dominikanische Republik, Rom, Prag, Kopenhagen, Niederlande. Themen: Reisen, Tauchen, Yoga/Meditation. Kein persönlicher Werdegang erwähnen. Stil: authentisch, ästhetisch, spontan. Ziel: Reichweite und Community aufbauen.';
+  const t = topic || 'ein passendes Travel oder Dive Thema aus meinen Reisen';
+  sendPrompt(`${ctx}\n\nErstelle mir ein ${format} für ${platforms} zum Thema: "${t}". Ton: ${tone}. Inkl. Hashtags wo sinnvoll. Passe an jede Plattform an.`);
+}
+
+function generateHooks() {
+  const topic = document.getElementById('post-topic').value.trim() || 'Travel und Tauchen';
+  sendPrompt(`Erstelle mir 5 starke Hooks (erste 1–2 Sätze) für TikTok und Instagram Reels zum Thema: "${topic}". Ich bin Travel & Dive Creator (@faruksueer). Stil: direkt, Insider-Tipp oder Kontrast-Hook.`);
+}
+
+// --- Generate Reply ---
+function generateReply() {
+  const comment = document.getElementById('comment-input').value.trim();
+  const style = document.getElementById('reply-style').value;
+  const platform = document.getElementById('reply-platform').value;
+  if (!comment) {
+    sendPrompt('Gib mir Tipps wie ich als Travel & Dive Creator auf ' + platform + ' am besten mit meiner Community interagiere.');
+    return;
+  }
+  sendPrompt(`Ich bin @faruksueer, Travel & Dive Creator. Schreibe eine Antwort auf diesen ${platform}-Kommentar im Stil "${style}":\n\n"${comment}"\n\nAuthentisch, kurz, zu mir passend.`);
+}
+
+// --- Trends Data ---
+const trendsData = {
+  ig: { title: 'Instagram', items: [
+    ['Insider-Tipp Travel Format', '"Was kein Tourist weiß" — meistgespeichertes Format für Travel Creator', 96],
+    ['Ko Lipe / Phuket Vergleich', 'Thailand-Inseln im Vergleich — hohes Suchvolumen, wenig gute Accounts', 87],
+    ['Tauchen POV Unterwasser-Clips', 'Visuell stark + ruhige Musik = Stop-Scroll — perfekt für dein Material', 79],
+    ['„Fehler die Touristen machen"', 'Kontrast-Hook + Mehrwert = viral. Funktioniert für alle deine Reiseziele', 71],
+    ['Yoga an außergewöhnlichen Orten', 'Meditation am Meer, auf Reisen — Wellness + Travel Nische kombiniert', 55]
+  ]},
+  tt: { title: 'TikTok', items: [
+    ['„Tourist vs. Insider" Format', 'Zwei Cuts, ein Kontrast — einfach zu produzieren, hohe Completion Rate', 97],
+    ['Thailand Travel Clips', 'Ko Lipe und Phuket Content explodiert gerade — du hast das Material', 88],
+    ['Tauchen POV Rotes Meer', 'Ägypten + Unterwasser = Nische mit wenig Konkurrenz auf TikTok', 78],
+    ['Istanbul Geheimtipps', 'Türkei-Content steigt 2026 stark — dein Vorteil: du kennst die Stadt wirklich', 67],
+    ['Yoga auf Reisen — kein Hochglanz', 'Ehrliche Wellness-Content schlägt Studio-Videos auf TikTok klar', 52]
+  ]},
+  yt: { title: 'YouTube', items: [
+    ['Reise-Vlogs mit Storytelling', 'Thailand oder Istanbul — emotionale Narrative, hohe Watchtime', 90],
+    ['Tauch-Guide für Einsteiger', 'Educational + Passion = treue Subscriber-Nische', 78],
+    ['Destination Vergleiche', 'Barcelona vs Valencia, Ko Lipe vs Phuket — hohes Suchvolumen', 68],
+    ['„Lohnt es sich wirklich?"', 'Kopenhagen, Dom. Republik, Prag — ehrliche Bewertungen performen stark', 59],
+    ['Yoga & Meditation unterwegs', 'Reisen + Wellness kombiniert — wachsende YouTube-Nische', 44]
+  ]}
+};
+
+function switchTrends(p, el) {
+  document.querySelectorAll('#trend-pills .pill').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  const d = trendsData[p];
+  let html = `<div class="section-card-title">Trends für dich auf ${d.title}</div>`;
+  d.items.forEach((item, i) => {
+    html += `<div class="trend-item">
+      <div class="trend-rank">#${i + 1}</div>
+      <div style="flex:1">
+        <div class="trend-name">${item[0]}</div>
+        <div class="trend-sub">${item[1]}</div>
+        <div class="trend-bar-bg"><div class="trend-bar" style="width:${item[2]}%"></div></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('trends-list').innerHTML = html;
+}
+
+switchTrends('ig', document.getElementById('tp-ig'));
+</script>
+</body>
+</html>
